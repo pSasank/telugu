@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Twolingo — Survival Telugu for Hyderabad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Hanken+Grotesque:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b2422; --ink-2:#102f2c; --ink-3:#164039;
+    --brass:#d9a441; --brass-soft:#ecca85;
+    --pearl:#f4efe4; --muted:#9db0a7;
+    --rose:#e0795f;
+    --line:rgba(244,239,228,.12);
+    --line-2:rgba(244,239,228,.07);
+    --display:'Fraunces',Georgia,serif;
+    --telugu:'Noto Sans Telugu',sans-serif;
+    --ui:'Hanken Grotesque',system-ui,-apple-system,sans-serif;
+    --r:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--ink);color:var(--pearl);font-family:var(--ui);-webkit-font-smoothing:antialiased;line-height:1.5;min-height:100vh}
+  ::selection{background:var(--brass);color:var(--ink)}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(11,36,34,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .bar{max-width:1080px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:11px;margin-right:auto;cursor:default}
+  .glyph{font-family:var(--telugu);font-weight:700;font-size:28px;line-height:1;color:var(--ink);background:var(--brass);width:44px;height:44px;border-radius:12px;display:grid;place-items:center;box-shadow:0 0 0 1px rgba(217,164,65,.4),0 8px 22px -10px rgba(217,164,65,.6)}
+  .brand h1{font-family:var(--display);font-weight:600;font-size:19px;margin:0;letter-spacing:.2px}
+  .brand p{margin:0;font-size:11.5px;color:var(--muted);letter-spacing:.4px;text-transform:uppercase}
+  .search{position:relative;flex:1;min-width:160px;max-width:300px}
+  .search input{width:100%;padding:10px 14px 10px 38px;background:var(--ink-2);border:1px solid var(--line);border-radius:11px;color:var(--pearl);font-family:var(--ui);font-size:14px;outline:none;transition:border-color .15s,box-shadow .15s}
+  .search input::placeholder{color:var(--muted)}
+  .search input:focus{border-color:var(--brass);box-shadow:0 0 0 3px rgba(217,164,65,.16)}
+  .search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted)}
+  .hipill{font-family:var(--ui);font-size:13px;font-weight:600;padding:9px 13px;border-radius:11px;cursor:pointer;background:var(--ink-2);border:1px solid var(--line);color:var(--muted);transition:.15s;display:inline-flex;align-items:center;gap:7px}
+  .hipill[aria-pressed="true"]{background:var(--brass);color:var(--ink);border-color:var(--brass)}
+  .hipill:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
+  .hipill .dv{font-weight:700}
+  .modes{display:flex;background:var(--ink-2);border:1px solid var(--line);border-radius:11px;padding:3px;gap:2px}
+  .modes button{font-family:var(--ui);font-size:13px;font-weight:600;padding:7px 14px;border:0;border-radius:8px;cursor:pointer;background:transparent;color:var(--muted);transition:.15s}
+  .modes button[aria-pressed="true"]{background:var(--brass);color:var(--ink)}
+  .modes button:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
+
+  .hero{max-width:1080px;margin:0 auto;padding:40px 20px 6px;position:relative;overflow:hidden}
+  .hero .watermark{position:absolute;right:-10px;top:-30px;font-family:var(--telugu);font-weight:700;font-size:230px;line-height:.8;color:rgba(217,164,65,.06);pointer-events:none;user-select:none}
+  .hero h2{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);margin:0 0 8px;letter-spacing:-.5px;line-height:1.06;max-width:18ch}
+  .hero h2 em{font-style:normal;color:var(--brass)}
+  .hero p{margin:0;color:var(--muted);font-size:15.5px;max-width:56ch}
+
+  .tierbar{max-width:1080px;margin:22px auto 0;padding:0 20px;display:flex;gap:10px;flex-wrap:wrap}
+  .tierbtn{flex:1;min-width:150px;text-align:left;background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:12px 15px;cursor:pointer;transition:.15s;color:var(--pearl)}
+  .tierbtn:hover{border-color:rgba(217,164,65,.4)}
+  .tierbtn[aria-pressed="true"]{border-color:var(--brass);background:linear-gradient(180deg,var(--ink-3),var(--ink-2));box-shadow:inset 0 0 0 1px var(--brass)}
+  .tierbtn .tname{font-family:var(--display);font-weight:600;font-size:16px;display:flex;align-items:center;gap:9px}
+  .tierbtn .tnum{font-size:11px;font-weight:700;color:var(--brass);background:rgba(217,164,65,.16);border-radius:6px;padding:2px 7px;font-family:var(--ui)}
+  .tierbtn .tsub{font-size:12.5px;color:var(--muted);margin-top:3px}
+  .tierbtn[aria-pressed="true"] .tsub{color:var(--brass-soft)}
+
+  .chips{max-width:1080px;margin:0 auto;padding:18px 20px 4px;display:flex;gap:9px;flex-wrap:wrap}
+  .chip{font-family:var(--ui);font-size:13.5px;font-weight:600;padding:8px 15px;border-radius:999px;cursor:pointer;background:var(--ink-2);border:1px solid var(--line);color:var(--muted);transition:.15s;display:inline-flex;align-items:center;gap:7px}
+  .chip:hover{color:var(--pearl);border-color:rgba(217,164,65,.4)}
+  .chip[aria-pressed="true"]{background:var(--brass);color:var(--ink);border-color:var(--brass)}
+  .chip.path[aria-pressed="true"]{background:#2f7d5b;color:#fff;border-color:#2f7d5b}
+  .chip:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
+  .chip .em{font-size:14px}
+
+  .method{max-width:1080px;margin:20px auto 0;padding:0 20px}
+  .method .mhead{font-family:var(--display);font-size:18px;font-weight:600;margin:0 0 3px}
+  .method .msub{color:var(--muted);font-size:13.5px;margin:0 0 14px;max-width:60ch}
+  .mgrid{display:grid;gap:11px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .mcard{background:var(--ink-2);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:12px;padding:13px 15px}
+  .mcard .mn{font-size:11px;font-weight:700;color:var(--brass);letter-spacing:.5px}
+  .mcard h4{margin:5px 0 5px;font-size:14.5px;font-weight:600}
+  .mcard p{margin:0;font-size:12.8px;color:#c4d0c8;line-height:1.5}
+  .mcard code{font-family:var(--ui);background:var(--ink-3);color:var(--brass-soft);padding:1px 6px;border-radius:5px;font-size:12px}
+
+  .scope{max-width:1080px;margin:16px auto -2px;padding:0 20px;color:var(--muted);font-size:12.5px}
+  .tip{max-width:1080px;margin:18px auto 0;padding:0 20px}
+  .tip .inner{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:12px;padding:14px 18px;display:flex;gap:12px;align-items:flex-start}
+  .tip.path .inner{border-left-color:#2f7d5b}
+  .tip .lbl{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--brass);margin-bottom:3px}
+  .tip.path .lbl{color:#5ec48f}
+  .tip p{margin:0;font-size:14px;color:#cdd8d1}
+  .tip .ic{font-size:18px;line-height:1.3}
+
+  .grid{max-width:1080px;margin:0 auto;padding:18px 20px 70px;display:grid;gap:13px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+  .card{background:var(--ink-2);border:1px solid var(--line);border-radius:var(--r);padding:16px 16px 14px;position:relative;transition:border-color .15s}
+  .card:hover{border-color:rgba(217,164,65,.35)}
+  .card .eng{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.2px;padding-right:30px}
+  .card .ro{font-size:25px;font-weight:600;color:var(--pearl);line-height:1.3;margin:7px 0 3px}
+  .card .te{font-family:var(--telugu);font-size:16px;font-weight:500;line-height:1.4;color:var(--brass-soft)}
+  .card .hi{margin-top:7px;font-size:13px;color:var(--muted)}
+  .card .hi b{color:#cdd8d1;font-weight:600}
+  .card .hi .tag{font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--brass);border:1px solid var(--line);border-radius:5px;padding:1px 5px;margin-right:7px;text-transform:uppercase}
+  .card .note{margin-top:11px;padding-top:9px;border-top:1px dashed var(--line-2);font-size:12px;color:var(--muted);line-height:1.5}
+  .card .note code{font-family:var(--ui);background:var(--ink-3);color:var(--brass-soft);padding:1px 5px;border-radius:4px}
+  .card .row{display:flex;align-items:center;gap:6px;margin-top:13px;flex-wrap:wrap}
+  .speak{font-family:var(--ui);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:7px;background:var(--ink-3);border:1px solid var(--line);color:var(--pearl);padding:7px 13px;border-radius:9px;cursor:pointer;transition:.15s}
+  .speak:hover{border-color:var(--brass);color:var(--brass-soft)}
+  .speak.on{background:var(--brass);border-color:var(--brass);color:var(--ink)}
+  .speak:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
+  .bdlink{font-family:var(--ui);font-size:12.5px;font-weight:600;background:var(--ink-3);border:1px solid var(--line);color:var(--muted);cursor:pointer;padding:7px 11px;display:inline-flex;align-items:center;gap:6px;transition:.15s;border-radius:9px}
+  .bdlink:hover{color:var(--brass-soft);border-color:var(--brass)}
+  .bdlink:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
+  .fav{position:absolute;top:13px;right:13px;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:transparent;border:0;cursor:pointer;color:var(--muted);transition:.15s;font-size:18px}
+  .fav:hover{color:var(--brass-soft)}
+  .fav[aria-pressed="true"]{color:var(--brass)}
+  .fav:focus-visible{outline:2px solid var(--brass-soft);outline-offset:1px}
+  .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:60px 20px;font-size:15px}
+  .empty b{color:var(--pearl);font-weight:600}
+
+  /* breakdown flyout */
+  .overlay{position:fixed;inset:0;background:rgba(6,18,17,.74);backdrop-filter:blur(4px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:.2s}
+  .overlay.show{opacity:1;pointer-events:auto}
+  .sheet{background:var(--ink-2);border:1px solid var(--line);border-radius:20px;max-width:470px;width:100%;padding:24px;position:relative;transform:translateY(12px);transition:.2s;max-height:88vh;overflow:auto}
+  .overlay.show .sheet{transform:none}
+  .sheet .x{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:var(--ink-3);color:var(--muted);cursor:pointer;font-size:20px;line-height:1;display:grid;place-items:center}
+  .sheet .x:hover{color:var(--pearl)}
+  .sh-eyebrow{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--brass)}
+  .sh-ro{font-size:28px;font-weight:600;margin:8px 0 2px;color:var(--pearl)}
+  .sh-te{font-family:var(--telugu);font-size:19px;font-weight:500;color:var(--brass-soft)}
+  .sh-eng{color:var(--muted);font-size:14px;margin-top:2px}
+  .parts{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:20px 0 16px}
+  .part{background:var(--ink-3);border:1px solid var(--line);border-radius:11px;padding:9px 13px;min-width:0}
+  .part .pp{font-weight:700;font-size:14px;color:var(--pearl)}
+  .part .pg{font-size:12px;color:var(--muted);margin-top:2px}
+  .plus{align-self:center;color:var(--brass);font-weight:700;font-size:15px}
+  .sh-lit{font-size:15px;color:var(--pearl);background:var(--ink-3);border-left:3px solid var(--brass);border-radius:10px;padding:11px 14px;margin-bottom:15px}
+  .sh-lit b{color:var(--brass-soft);font-style:italic}
+  .sh-casual{font-size:13px;color:#c4d0c8;background:var(--ink-3);border:1px dashed var(--line);border-radius:9px;padding:9px 13px;margin-bottom:15px}
+  .sh-casual b{color:var(--brass-soft)}
+  .sh-insight{font-size:13.5px;color:#c4d0c8;line-height:1.6}
+  .sh-insight .lbl{display:block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--brass);margin-bottom:6px}
+  .sh-insight code{font-family:var(--ui);background:var(--ink-3);color:var(--brass-soft);padding:1px 5px;border-radius:4px}
+
+  /* flashcards */
+  .fc{max-width:680px;margin:0 auto;padding:26px 20px 80px}
+  .fc-setup{display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+  .fc-setup .eyebrow{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--brass)}
+  .fc-setup h3{font-family:var(--display);font-size:24px;font-weight:600;margin:0}
+  .fc-setup p{margin:0;color:var(--muted);font-size:14.5px;max-width:44ch}
+  .deck-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:6px}
+  .deck{font-family:var(--ui);font-size:14px;font-weight:600;cursor:pointer;background:var(--ink-2);border:1px solid var(--line);color:var(--pearl);padding:11px 18px;border-radius:11px;transition:.15s;display:flex;align-items:center;gap:8px}
+  .deck:hover{border-color:var(--brass);color:var(--brass-soft)}
+  .deck small{color:var(--muted);font-weight:500}
+  .deck:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
+  .progress{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .progress .track{flex:1;height:6px;border-radius:99px;background:var(--ink-2);overflow:hidden}
+  .progress .fill{height:100%;background:var(--brass);border-radius:99px;transition:width .3s}
+  .progress .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;font-weight:600}
+  .progress .exit{margin-left:4px;background:transparent;border:0;color:var(--muted);cursor:pointer;font-size:13px;font-weight:600;padding:4px 6px}
+  .progress .exit:hover{color:var(--pearl)}
+  .flash{background:var(--ink-2);border:1px solid var(--line);border-radius:22px;padding:48px 28px;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;cursor:pointer;position:relative;transition:border-color .15s}
+  .flash:hover{border-color:rgba(217,164,65,.35)}
+  .flash .hint{position:absolute;top:16px;left:0;right:0;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+  .flash .q{font-size:26px;font-weight:600;font-family:var(--display)}
+  .flash .a-ro{font-size:34px;font-weight:600;line-height:1.25;color:var(--pearl)}
+  .flash .a-te{font-family:var(--telugu);font-size:22px;font-weight:500;color:var(--brass-soft)}
+  .flash .tap{font-size:13px;color:var(--muted)}
+  .flash .speak{margin-top:4px}
+  .fc-actions{display:flex;gap:12px;margin-top:18px}
+  .fc-actions button{flex:1;font-family:var(--ui);font-size:15px;font-weight:700;padding:14px;border-radius:13px;cursor:pointer;border:1px solid var(--line);transition:.15s}
+  .again{background:var(--ink-2);color:var(--pearl)}
+  .again:hover{border-color:var(--rose);color:var(--rose)}
+  .know{background:var(--brass);color:var(--ink);border-color:var(--brass)}
+  .know:hover{background:var(--brass-soft)}
+  .fc-actions button:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
+  .done{text-align:center;padding:30px 10px}
+  .done .te{font-family:var(--telugu);font-size:40px;color:var(--brass);margin:10px 0}
+  .done .big{font-family:var(--display);font-size:28px;font-weight:600;margin-bottom:6px}
+  .done p{color:var(--muted);font-size:15px;margin:0 0 22px}
+  .done button{font-family:var(--ui);font-weight:700;font-size:15px;padding:13px 26px;border-radius:12px;border:0;background:var(--brass);color:var(--ink);cursor:pointer}
+
+  #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink-3);border:1px solid var(--line);color:var(--pearl);padding:11px 18px;border-radius:11px;font-size:13.5px;font-weight:500;opacity:0;pointer-events:none;transition:.25s;z-index:100;box-shadow:0 14px 40px -16px rgba(0,0,0,.7)}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .credit{max-width:1080px;margin:0 auto;padding:0 20px 40px;color:var(--muted);font-size:12.5px;text-align:center}
+
+  /* sentence builder */
+  .brow{max-width:680px;margin:0 auto;display:flex;gap:12px;align-items:flex-start;padding:0 4px 14px}
+  .blabel{flex:0 0 50px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--brass);padding-top:9px}
+  .bpills{display:flex;flex-wrap:wrap;gap:8px}
+  .bpill{font-family:var(--ui);font-size:14px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;background:var(--ink-2);border:1px solid var(--line);color:var(--muted);transition:.15s}
+  .bpill:hover{color:var(--pearl);border-color:rgba(217,164,65,.4)}
+  .bpill.on{background:var(--brass);color:var(--ink);border-color:var(--brass)}
+  .bpill:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
+  .bkeep{max-width:680px;margin:0 auto 12px;font-size:12.5px;color:var(--brass-soft);background:var(--ink-3);border:1px solid var(--line);border-radius:10px;padding:10px 13px;line-height:1.5}
+  .bresult{max-width:680px;margin:6px auto 0;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-radius:20px;padding:26px 24px;text-align:center}
+  .bmean{font-size:14px;color:var(--muted);font-weight:600}
+  .bro{font-size:32px;font-weight:600;line-height:1.25;margin:8px 0 4px;color:var(--pearl)}
+  .bte{font-family:var(--telugu);font-size:20px;font-weight:500;color:var(--brass-soft)}
+  .bassemble{display:flex;align-items:center;justify-content:center;gap:10px;margin:18px 0 4px;flex-wrap:wrap}
+  .bchip{background:var(--ink-2);border:1px solid var(--line);border-radius:11px;padding:8px 13px;font-weight:700;font-size:14px;color:var(--pearl);display:flex;flex-direction:column;line-height:1.25}
+  .bchip small{font-weight:500;font-size:11px;color:var(--muted);font-style:normal;margin-top:1px}
+  .bplus{color:var(--brass);font-weight:700;font-size:18px}
+  .brow2{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+  .bdice{font-family:var(--ui);font-size:14px;font-weight:600;background:var(--ink-2);border:1px solid var(--line);color:var(--pearl);padding:9px 15px;border-radius:10px;cursor:pointer;transition:.15s}
+  .bdice:hover{border-color:var(--brass);color:var(--brass-soft)}
+  .bdice:focus-visible,.bresult .speak:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
+
+  /* lead + subnav + welcome + scenarios */
+  .lead{max-width:1080px;margin:0 auto;padding:34px 20px 2px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .lead-eye{font-family:var(--display);font-size:20px;font-weight:600;color:var(--pearl)}
+  .lead-sub{font-size:13.5px;color:var(--muted)}
+  .subnav{max-width:680px;margin:26px auto 0;padding:0 20px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .subnav button{font-family:var(--ui);font-size:13.5px;font-weight:600;padding:8px 16px;border-radius:999px;cursor:pointer;background:var(--ink-2);border:1px solid var(--line);color:var(--muted);transition:.15s}
+  .subnav button:hover{color:var(--pearl);border-color:rgba(217,164,65,.4)}
+  .subnav button[aria-pressed="true"]{background:var(--brass);color:var(--ink);border-color:var(--brass)}
+  .subnav button:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
+  .sheet.welcome{max-width:660px;text-align:left}
+  .w-glyph{font-family:var(--telugu);font-weight:700;font-size:26px;color:var(--ink);background:var(--brass);width:46px;height:46px;border-radius:13px;display:grid;place-items:center;margin-bottom:14px}
+  .w-title{font-family:var(--display);font-weight:600;font-size:clamp(24px,4.6vw,34px);line-height:1.08;letter-spacing:-.5px;margin:8px 0 10px}
+  .w-title em{font-style:normal;color:var(--brass)}
+  .w-sub{color:var(--muted);font-size:15px;margin:0 0 20px;max-width:56ch}
+  .w-mhead{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--brass);margin-bottom:12px}
+  .w-start{margin-top:20px;width:100%;font-family:var(--ui);font-weight:700;font-size:15px;padding:14px;border-radius:13px;border:0;background:var(--brass);color:var(--ink);cursor:pointer}
+  .w-start:hover{background:var(--brass-soft)}
+  .w-start:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
+  .scen-grid{max-width:680px;margin:0 auto;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .scen-card{text-align:left;font-family:var(--ui);background:var(--ink-2);border:1px solid var(--line);border-radius:16px;padding:18px;cursor:pointer;transition:.15s;display:flex;flex-direction:column;gap:5px;color:var(--pearl)}
+  .scen-card:hover{border-color:var(--brass);transform:translateY(-1px)}
+  .scen-card:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
+  .scen-card{position:relative}
+  .scbadge{position:absolute;top:14px;right:14px;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--brass);background:rgba(217,164,65,.14);border-radius:6px;padding:2px 7px}
+  .scen-card .se{font-size:26px}
+  .scen-card .st{font-family:var(--display);font-size:17px;font-weight:600}
+  .scen-card .ss{font-size:12.5px;color:var(--muted);line-height:1.45}
+  .scen-head{max-width:680px;margin:0 auto;display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .scen-head .exit{background:transparent;border:0;color:var(--muted);cursor:pointer;font-size:13px;font-weight:600;padding:4px 6px}
+  .scen-head .exit:hover{color:var(--pearl)}
+  .scen-head .scen-title{font-family:var(--display);font-weight:600;font-size:17px;margin-right:auto}
+  .scen-head .count{font-size:13px;color:var(--muted);font-weight:600;font-variant-numeric:tabular-nums}
+  .scen-setting{max-width:680px;margin:0 auto 18px;font-size:13.5px;color:#cdd8d1;background:var(--ink-3);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:10px;padding:11px 14px}
+  .scen-thread{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  .sbubble{max-width:84%;border:1px solid var(--line);border-radius:16px;padding:12px 15px;animation:rise .25s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .sbubble.them{align-self:flex-start;background:var(--ink-2);border-bottom-left-radius:5px}
+  .sbubble.you{align-self:flex-end;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border-bottom-right-radius:5px;border-color:rgba(217,164,65,.3)}
+  .sb-who{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--brass);margin-bottom:4px}
+  .sbubble.them .sb-who{color:var(--muted)}
+  .sb-en{font-size:13px;color:var(--muted);margin-bottom:3px}
+  .sb-ro{font-size:17px;font-weight:600;color:var(--pearl);margin-top:2px;display:flex;align-items:center;gap:8px}
+  .sb-te{font-family:var(--telugu);font-size:14px;font-weight:500;line-height:1.4;color:var(--brass-soft);margin-top:2px}
+  .sbhear{background:transparent;border:0;color:var(--muted);cursor:pointer;padding:2px;display:inline-flex}
+  .sbhear:hover{color:var(--brass-soft)}
+  .sbhear:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px;border-radius:5px}
+
+  @media (max-width:560px){.bar{gap:9px}.brand p{display:none}.hero{padding-top:30px}.card .te{font-size:27px}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="brand">
+      <div class="glyph">తె</div>
+      <div><h1>Twolingo</h1><p>Survival Telugu · two days to go</p></div>
+    </div>
+    <div class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="Search any word…" autocomplete="off" aria-label="Search phrases" />
+    </div>
+    <button id="howBtn" class="hipill" aria-label="How it works" title="How it works"><span class="dv">?</span></button>
+    <button id="hiToggle" class="hipill" aria-pressed="false" title="Show romanized Hindi hints (Base tier)"><span class="dv">हिं</span> Hindi</button>
+    <div class="modes" role="group" aria-label="Mode">
+      <button id="m-book" aria-pressed="true">Phrasebook</button>
+      <button id="m-practice" aria-pressed="false">Practice</button>
+    </div>
+  </div>
+</header>
+
+<div id="book">
+  <div class="lead"><span class="lead-eye">Survival Telugu</span><span class="lead-sub">Pick a tier — start with Base.</span></div>
+  <div class="tierbar" id="tierbar" role="group" aria-label="Difficulty tier"></div>
+  <nav class="chips" id="chips" aria-label="Categories"></nav>
+  <div class="scope" id="scope"></div>
+  <div class="tip" id="tip"></div>
+  <main class="grid" id="grid"></main>
+  <p class="credit">Pronunciation uses your device's Telugu voice and works best in the deployed app (some browsers block it in embedded previews) — the romanization is your reliable guide. Tap “how it's built” on combined phrases to see the pieces. Made for newcomers, by locals.</p>
+</div>
+
+<div id="practice" hidden>
+  <div class="subnav" id="subnav">
+    <button data-sub="cards" aria-pressed="true">Flashcards</button>
+    <button data-sub="build" aria-pressed="false">Sentence builder</button>
+    <button data-sub="scenarios" aria-pressed="false">Scenarios</button>
+  </div>
+  <div id="cards"></div>
+  <div id="build" hidden></div>
+  <div id="scen" hidden></div>
+</div>
+<div class="overlay" id="overlay"><div id="sheetWrap"></div></div>
+<div class="overlay" id="welcome"><div id="welcomeSheet"></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="audio-manifest.js"></script>
+
+<script>
+/* ---------------- tiers + categories ---------------- */
+const TIERS = [
+  {n:1, name:"Base",      sub:"Broken & talking"},
+  {n:2, name:"Everyday",  sub:"Getting around"},
+  {n:3, name:"Blend in",  sub:"Sound local"},
+];
+
+const CATS = [
+  {id:"verbs", tier:1, name:"Power Verbs", em:"🔑", tip:"The trader's trick: don't conjugate. Learn one usable form of each verb and let context do the rest. “kaavaali” (want), “ivvandi” (give), “undaa?” (do you have) carry half your day."},
+  {id:"frames",tier:1, name:"Question Frames", em:"🧩", tip:"These are slots. Put any English noun in front and you have a sentence: “water enta?”, “ATM ekkada?”. Six frames plus pointing equals a hundred questions."},
+  {id:"glue",  tier:1, name:"Glue Words", em:"✅", tip:"Tiny words that keep a conversation moving. Bonus hack: stick “andi” on almost anything to make it polite — “raa” becomes “randi”."},
+  {id:"first", tier:1, name:"First Words", em:"🙏", tip:"Five seconds of effort that buys instant goodwill. Two of these — “naaku telugu raadu” and “meeku inglish vacchaa?” — are your escape hatches when you're stuck."},
+  {id:"autobase", tier:1, name:"Auto Survival", em:"🛺", tip:"The words that get you home. Drivers often understand English “left/right” too, but saying it in Telugu quietly changes the fare conversation in your favour."},
+  {id:"auto",  tier:2, name:"Autos & Directions", em:"🧭", tip:"Open with “meeter veeyandi”. If refused: “enta?” then “chaalaa ekkuva”. Builds on the Auto Survival words from Base."},
+  {id:"shop",  tier:2, name:"Shopping & Bargaining", em:"🛍️", tip:"Bargaining is expected in markets, not malls. “idi enta?” → “tagginchandi” → “chivari reetu enta?”. A smile moves the price more than grammar."},
+  {id:"food",  tier:2, name:"Food & Chai", em:"☕", tip:"Hyderabadi food runs hot — “kaaram takkuva” is survival. Say veg/non-veg in English anywhere; the Telugu is here for when you want it."},
+  {id:"time",  tier:2, name:"Time", em:"🕒", tip:"Mix freely with English clock times: “reepu 5 ki” = tomorrow at 5. You almost never need Telugu numbers for the hour."},
+  {id:"talk",  tier:3, name:"Small Talk", em:"💬", tip:"“Meeru ekkadi nunchi?” is the universal icebreaker. This is the tier where you stop transacting and start connecting."},
+  {id:"casual",tier:3, name:"Casual Register", em:"😎", tip:"Base teaches the polite “-aaru” forms. With friends and juniors Telugu drops to “-aav” forms — “elaa unnaav?” not “elaa unnaaru?”. Picking the right one is what makes you sound local, not bookish."},
+  {id:"num",   tier:2, name:"Numbers", em:"🔢", tip:"Not in Base — English numbers are understood everywhere. But the moment you’re bargaining or counting change, the Telugu numbers earn their place."},
+];
+
+/* phrase tuples: [cat, english, telugu, roman, note?] */
+const P = [
+  ["verbs","(I) want / need","కావాలి","kaavaali","Frame: <code>noun + kaavaali</code> = I want ___.  Try: “water kaavaali”."],
+  ["verbs","(I) don't want","వద్దు","vaddu"],
+  ["verbs","Give (me)","ఇవ్వండి","ivvandi","“bill ivvandi”, “water ivvandi”. Point and name in English."],
+  ["verbs","Come","రండి","randi"],
+  ["verbs","Go","వెళ్ళండి","vellandi"],
+  ["verbs","Stop","ఆపండి","aapandi"],
+  ["verbs","Show / look","చూపించండి","choopinchandi"],
+  ["verbs","Tell / say","చెప్పండి","cheppandi"],
+  ["verbs","Is there? / Do you have?","ఉందా?","undaa?","Frame: <code>noun + undaa?</code>  Try: “change undaa?”."],
+  ["verbs","Yes, there is","ఉంది","undi"],
+  ["frames","How much?","ఎంత?","enta?","Frame: <code>noun + enta?</code>  “idi enta?” = how much is this."],
+  ["frames","Where?","ఎక్కడ?","ekkada?","Frame: <code>noun + ekkada?</code>  “ATM ekkada?”."],
+  ["frames","What?","ఏంటి?","eenti?"],
+  ["frames","This","ఇది","idi","Pair with a point: “idi enta?”, “idi kaavaali”."],
+  ["frames","That","అది","adi"],
+  ["frames","How?","ఎలా?","elaa?"],
+  ["glue","Yes","అవును","avunu"],
+  ["glue","No (not that)","కాదు","kaadu"],
+  ["glue","No / none / not there","లేదు","ledu"],
+  ["glue","OK / fine","సరే","saree"],
+  ["glue","Enough","చాలు","chaalu"],
+  ["glue","A little","కొంచెం","konchem"],
+  ["glue","…andi  (politeness suffix)","…అండి","…andi","The magic syllable. Add it to a request to make it respectful: raa → randi, cheppu → cheppandi."],
+  ["first","Hello / Greetings","నమస్కారం","namaskaaram"],
+  ["first","Thank you","ధన్యవాదాలు","dhanyavaadaalu"],
+  ["first","Sorry / excuse me","క్షమించండి","kshaminchandi"],
+  ["first","How are you?","ఎలా ఉన్నారు?","elaa unnaaru?"],
+  ["first","I'm fine","బాగున్నాను","baagunnaanu"],
+  ["first","I don't know Telugu","నాకు తెలుగు రాదు","naaku telugu raadu","Your honest escape hatch — say it and people switch to English or Hindi."],
+  ["first","Do you know English?","మీకు ఇంగ్లీష్ వచ్చా?","meeku inglish vacchaa?"],
+  ["first","Please","దయచేసి","dayacheesi"],
+  ["autobase","Straight","నేరుగా","neerugaa"],
+  ["autobase","Left","ఎడమ","edama"],
+  ["autobase","Right","కుడి","kudi"],
+  ["autobase","Here","ఇక్కడ","ikkada"],
+  ["autobase","Stop here","ఇక్కడ ఆపండి","ikkada aapandi"],
+  ["auto","Go by meter","మీటర్ వేయండి","meeter veeyandi"],
+  ["auto","That's too much","చాలా ఎక్కువ","chaalaa ekkuva"],
+  ["auto","Is it near?","దగ్గరా?","daggaraa?"],
+  ["auto","It's far","దూరం","dooram"],
+  ["auto","Wait a minute","ఒక నిమిషం ఆగండి","oka nimisham aagandi"],
+  ["auto","Let's go","వెళ్దాం","veldaam"],
+  ["auto","Slow down","నెమ్మదిగా","nemmadigaa"],
+  ["auto","I'll get down here","ఇక్కడ దిగుతాను","ikkada digutaanu"],
+  ["shop","Too expensive","చాలా ఖరీదు","chaalaa khareedu"],
+  ["shop","Reduce the price","రేటు తగ్గించండి","reetu tagginchandi"],
+  ["shop","What's the last price?","చివరి రేటు ఎంత?","chivari reetu enta?"],
+  ["shop","I want this","ఇది కావాలి","idi kaavaali"],
+  ["shop","Keep the change","చిల్లర ఉంచుకోండి","chillara unchukondi"],
+  ["shop","A bag, please","సంచి ఇవ్వండి","sanchi ivvandi"],
+  ["food","Water","నీళ్ళు","neellu"],
+  ["food","Bill, please","బిల్ ఇవ్వండి","bil ivvandi"],
+  ["food","Very spicy","చాలా కారం","chaalaa kaaram"],
+  ["food","Less spicy","కారం తక్కువ","kaaram takkuva"],
+  ["food","It's tasty","రుచిగా ఉంది","ruchigaa undi"],
+  ["food","Vegetarian","శాకాహారం","shaakaahaaram"],
+  ["food","Non-veg","మాంసాహారం","maamsaahaaram"],
+  ["food","One plate","ఒక ప్లేట్","oka pleet"],
+  ["food","Tea (chai)","చాయ్","chaay"],
+  ["time","Today","ఈరోజు","eeroju"],
+  ["time","Tomorrow","రేపు","reepu"],
+  ["time","Yesterday","నిన్న","ninna"],
+  ["time","Now","ఇప్పుడు","ippudu"],
+  ["time","Later","తరువాత","taruvaata"],
+  ["time","Morning","ఉదయం","udayam"],
+  ["time","Night","రాత్రి","raatri"],
+  ["talk","Where are you from?","మీరు ఎక్కడి నుంచి?","meeru ekkadi nunchi?"],
+  ["talk","I'm from…","నేను … నుంచి","neenu … nunchi"],
+  ["talk","Where do you stay?","మీరు ఎక్కడ ఉంటారు?","meeru ekkada untaaru?"],
+  ["talk","What do you do?","మీరు ఏం చేస్తారు?","meeru eem cheestaaru?"],
+  ["talk","Nice to meet you","కలవడం సంతోషం","kalavadam santosham"],
+  ["talk","See you again","మళ్ళీ కలుద్దాం","mallee kaluddaam"],
+  ["talk","No problem","పర్వాలేదు","parvaaleedu"],
+  ["talk","Very good","చాలా బాగుంది","chaalaa baagundi"],
+  ["casual","How are you? (casual)","ఎలా ఉన్నావ్?","elaa unnaav?","The “-aav” cousin of the polite “unnaaru”. Use with friends and juniors only."],
+  ["casual","You good?","బాగున్నావా?","baagunnaavaa?"],
+  ["casual","What're you doing?","ఏం చేస్తున్నావ్?","em chestunnaav?"],
+  ["casual","What happened?","ఏమైంది?","emaindi?"],
+  ["casual","Come (casual)","రా","raa"],
+  ["casual","Tell me (casual)","చెప్పు","cheppu"],
+  ["casual","Leave it / let it be","వదిలేయ్","vadiley"],
+  ["casual","Really? / is that so?","అవునా?","avunaa?"],
+  ["num","1","ఒకటి","okati"],
+  ["num","2","రెండు","rendu"],
+  ["num","3","మూడు","moodu"],
+  ["num","4","నాలుగు","naalugu"],
+  ["num","5","ఐదు","aidu"],
+  ["num","6","ఆరు","aaru"],
+  ["num","7","ఏడు","eedu"],
+  ["num","8","ఎనిమిది","enimidi"],
+  ["num","9","తొమ్మిది","tommidi"],
+  ["num","10","పది","padi"],
+  ["num","20","ఇరవై","iravai"],
+  ["num","50","యాభై","yaabhai"],
+  ["num","100","వంద","vanda"],
+  ["num","500","ఐదు వందలు","aidu vandalu"],
+  ["num","1000","వెయ్యి","veyyi"],
+].map((r,i)=>({id:i,cat:r[0],eng:r[1],te:r[2],ro:r[3],note:r[4]||null}));
+
+/* ---------------- guided path (day 1 / day 2), keyed by romanization ---------------- */
+const DAY = {
+  "namaskaaram":1,"dhanyavaadaalu":1,"enta?":1,"ekkada?":1,"idi":1,"kaavaali":1,"vaddu":1,"avunu":1,"ledu":1,"naaku telugu raadu":1,
+  "ivvandi":2,"undaa?":2,"saree":2,"chaalu":2,"konchem":2,"…andi":2,"meeku inglish vacchaa?":2,"elaa unnaaru?":2,"neerugaa":2,"edama":2,"kudi":2,"ikkada aapandi":2
+};
+const DAYTIP = {
+  day1:{em:"🌱",lbl:"Day 1 · ten words",txt:"With just these you can ask a price, ask where, say what you want, refuse, agree — and bail out to English when stuck. That is a functioning first day in the city."},
+  day2:{em:"🌿",lbl:"Day 2 · twelve more",txt:"Now you can give and receive, soften any request with “andi”, survive an auto, and open a conversation. Day 1 + Day 2 = a 22-word working kit."}
+};
+
+/* ---------------- optional romanized Hindi (Base tier), keyed by romanization ---------------- */
+const HI = {
+  "kaavaali":"chahiye","vaddu":"nahi chahiye","ivvandi":"do / dijiye","randi":"aao / aaiye","vellandi":"jao / jaiye","aapandi":"roko / rokiye",
+  "choopinchandi":"dikhao / dikhaiye","cheppandi":"batao / bataiye","undaa?":"hai kya?","undi":"hai",
+  "enta?":"kitna?","ekkada?":"kahaan?","eenti?":"kya?","idi":"yeh","adi":"woh","elaa?":"kaise?",
+  "avunu":"haan","kaadu":"nahi","ledu":"nahi hai","saree":"theek hai","chaalu":"bas","konchem":"thoda","…andi":"ji / aap (aadar)",
+  "namaskaaram":"namaste","dhanyavaadaalu":"dhanyavaad / shukriya","kshaminchandi":"maaf kijiye","elaa unnaaru?":"kaise hain?","baagunnaanu":"main theek hoon",
+  "naaku telugu raadu":"mujhe telugu nahi aati","meeku inglish vacchaa?":"aapko english aati hai?","dayacheesi":"kripya / please",
+  "neerugaa":"seedha","edama":"baayein / left","kudi":"daayein / right","ikkada":"yahaan","ikkada aapandi":"yahaan roko"
+};
+
+/* ---------------- word breakdowns, keyed by romanization ---------------- */
+const BD = {
+  "ivvandi":{lit:"Give + politely.",parts:[["ivvu","give"],["andi","respect marker"]],casual:"ivvu",insight:"The single most useful verb. Slot any noun in front and you're done: “water ivvandi”, “bil ivvandi”, “sanchi ivvandi”. The stem is <code>ivvu</code>; <code>+andi</code> only adds respect."},
+  "randi":{lit:"Come + politely.",parts:[["raa","come"],["andi","respect marker"]],casual:"raa",insight:"A touch irregular: <code>raa</code> + andi squeezes into <code>randi</code>, not “raa-andi”. With friends, just <code>raa</code>. Same word, two registers — the ending is the dial."},
+  "aapandi":{lit:"Stop + politely.",parts:[["aapu","stop"],["andi","respect marker"]],casual:"aapu",insight:"Watch the move: stem <code>aapu</code> → polite <code>aapandi</code>. Every verb here is built this way, so once you see it once you can build the rest yourself."},
+  "cheppandi":{lit:"Tell + politely.",parts:[["cheppu","tell"],["andi","respect marker"]],casual:"cheppu",insight:"<code>+andi</code> is the respect marker; drop it with friends and juniors. Same verb, two registers."},
+  "choopinchandi":{lit:"Show + politely.",parts:[["choopinchu","show"],["andi","respect marker"]],casual:"choopinchu",insight:"Stem <code>choopinchu</code> + <code>andi</code>. Pair it with “idi” and a point: “idi choopinchandi” = show me this."},
+  "undaa?":{lit:"It-is + ?",parts:[["undi","it is / there is"],["-aa","? (question tag)"]],insight:"The <code>-aa</code> tag is Telugu's simplest question-maker — stick it on a statement word and it becomes a yes/no question. <code>undi</code> (there is) → <code>undaa?</code> (is there?). Same trick: daggaraa?, avunaa?, baagundaa?."},
+  "naaku telugu raadu":{lit:"To-me Telugu doesn't-come.",parts:[["naaku","to me"],["telugu","Telugu"],["raadu","doesn't come"]],insight:"Dravidian languages say “I don't know X” as “to me, X doesn't come.” Knowing is treated as something that <i>comes</i> to you — the same engine powers “meeku inglish vacchaa?”."},
+  "meeku inglish vacchaa?":{lit:"To-you English comes?",parts:[["meeku","to you"],["inglish","English"],["vacchaa","does it come?"]],insight:"The exact mirror of “naaku telugu raadu.” <code>raadu</code> = doesn't come; <code>vacchaa</code> = comes? Flip the verb, flip the meaning."},
+  "ikkada aapandi":{lit:"Here stop.",parts:[["ikkada","here"],["aapandi","stop (polite)"]],casual:"ikkada aapu",insight:"Place before action — Telugu wants <i>where</i> before <i>what</i>, the same order most Northeast languages use. No word for “the”."},
+  "…andi":{lit:"(do it) + politely.",parts:[["verb","the command"],["andi","respect marker"]],insight:"Telugu glues respect on instead of adding a word. <code>raa</code>+andi → randi (please come), <code>po</code>+andi → pondi (please go), <code>aapu</code>+andi → aapandi (please stop). Drop the <code>andi</code> and you have the casual form."},
+  "idi kaavaali":{lit:"This is-wanted.",parts:[["idi","this"],["kaavaali","is wanted"]],insight:"<code>kaavaali</code> means “is needed,” so the <i>thing</i> is the subject — you never say “I”. “water kaavaali” = water-is-wanted."},
+  "kaaram takkuva":{lit:"Spice less.",parts:[["kaaram","spice / heat"],["takkuva","less"]],insight:"Swap <code>takkuva</code> → <code>ekkuva</code> for the opposite: “kaaram ekkuva” = more spicy. Two words flip the whole request."},
+  "chivari reetu enta?":{lit:"Final rate how-much?",parts:[["chivari","final"],["reetu","rate"],["enta","how much"]],insight:"Modifiers stack left to right, the question sits at the very end — the bargaining knockout phrase."},
+  "meeter veeyandi":{lit:"Meter put.",parts:[["meeter","meter"],["veeyandi","put (polite)"]],casual:"meeter veyyi",insight:"<code>veeyu</code> = to put; the +andi makes it a polite command. Object first, verb last — always."},
+  "meeru ekkadi nunchi?":{lit:"You which-place from?",parts:[["meeru","you"],["ekkadi","which place"],["nunchi","from"]],insight:"“from” comes <i>after</i> the place (a postposition), not before it. Most Northeast languages do exactly the same."},
+  "oka nimisham aagandi":{lit:"One minute wait.",parts:[["oka","one"],["nimisham","minute"],["aagandi","wait (polite)"]],casual:"oka nimisham aagu",insight:"Number + thing + action — an easy one, because the order matches English here too."},
+  "elaa unnaaru?":{lit:"How are-you?",parts:[["elaa","how"],["unnaaru","are-you (respectful)"]],insight:"<code>unnaaru</code> already <i>contains</i> “you, politely.” The casual <code>unnaav</code> swaps the tail for friends. The verb carries the person."},
+  "baagunnaanu":{lit:"Well I-am.",parts:[["baaga","well"],["unnaanu","I am"]],insight:"The <code>-aanu</code> tail means “I”. Telugu changes a verb's ending to show who acts — no separate word for “I” needed."},
+  "ikkada digutaanu":{lit:"Here I-get-down.",parts:[["ikkada","here"],["digutaanu","I'll get down"]],insight:"The <code>-taanu</code> tail = “I will”. Reuse it to say what <i>you'll</i> do: “nenu cheptaanu” = I'll tell."},
+  "daggaraa?":{lit:"Near + ?",parts:[["daggara","near"],["-aa","? (question tag)"]],insight:"This is the one tag worth memorising. Add <code>-aa</code> to almost any statement word and it becomes a yes/no question — zero new vocabulary. baagundi → <code>baagundaa?</code> (is it good?), undi → <code>undaa?</code> (is there?), avunu → <code>avunaa?</code> (really?)."},
+  "chaalaa ekkuva":{lit:"Very much.",parts:[["chaalaa","very"],["ekkuva","much / more"]],insight:"<code>chaalaa</code> is your all-purpose intensifier: chaalaa kaaram (very spicy), chaalaa baagundi (very good), chaalaa dooram (very far)."},
+  "bil ivvandi":{lit:"Bill give.",parts:[["bil","bill"],["ivvandi","give (polite)"]],casual:"bil ivvu",insight:"<code>ivvandi</code> is the polite “give” — slot any noun in front: “water ivvandi”, “sanchi ivvandi”."}
+};
+
+const METHOD = [
+  {n:"TRICK 01",h:"Learn frames, not phrases",p:"Memorise the slots — <code>__ enta?</code>, <code>__ ekkada?</code>, <code>__ kaavaali</code> — and drop any English noun in. One frame, endless sentences."},
+  {n:"TRICK 02",h:"Point and name in English",p:"You don't need the Telugu word for everything. Point at it and say “idi enta?”. Nouns can stay English; the wrapper is Telugu."},
+  {n:"TRICK 03",h:"Don't conjugate",p:"One usable form per verb is enough to be understood. “kaavaali / ivvandi / randi” get you through the day without a grammar book."},
+  {n:"TRICK 04",h:"Add “-andi” to be polite",p:"The single highest-leverage syllable in Telugu. Stick it on a request and you sound respectful: raa → <code>randi</code>."},
+];
+
+/* ---------------- state ---------------- */
+const store=(()=>{ let mem={}; let ok=false; try{ const k="__nt"; localStorage.setItem(k,"1"); localStorage.removeItem(k); ok=true; }catch(e){ ok=false; }
+  return { get(k){ try{ return ok?localStorage.getItem(k):(mem[k]??null); }catch(e){ return mem[k]??null; } },
+           set(k,v){ try{ ok?localStorage.setItem(k,v):(mem[k]=v); }catch(e){ mem[k]=v; } } }; })();
+let state = { mode:"book", tier:1, cat:"all", q:"", fav:new Set(), hi:false, sub:"cards" };
+function saveFav(){ store.set("nt_fav", JSON.stringify([...state.fav].map(id=>P[id].ro))); }
+function loadFav(){ try{ const ros=JSON.parse(store.get("nt_fav")||"[]"); const set=new Set(); P.forEach(p=>{ if(ros.includes(p.ro)) set.add(p.id); }); state.fav=set; }catch(e){} }
+const catObj  = id => CATS.find(c=>c.id===id);
+const catName = id => (catObj(id)||{}).name||"";
+const catTier = id => (catObj(id)||{}).tier;
+
+/* ---------------- speech ---------------- */
+let voices=[];
+function loadVoices(){ try{ voices = window.speechSynthesis ? (speechSynthesis.getVoices()||[]) : []; }catch(e){ voices=[]; } }
+if(window.speechSynthesis){ loadVoices(); try{ speechSynthesis.onvoiceschanged = loadVoices; }catch(e){} }
+let warnedTTS=false, warnedVoice=false;
+function ttsBlockedNote(){ if(warnedTTS) return; warnedTTS=true; toast("Audio is blocked in this preview \u2014 pronunciation works when you open the file directly or deploy it."); }
+function pickVoice(){
+  const te = voices.find(v=>v.lang==="te-IN") || voices.find(v=>v.lang && v.lang.toLowerCase().startsWith("te"));
+  if(te) return {voice:te, lang:"te-IN", script:true};
+  const en = voices.find(v=>v.lang==="en-IN") || voices.find(v=>v.lang && v.lang.toLowerCase().startsWith("en")) || voices[0] || null;
+  return {voice:en, lang:(en&&en.lang)||"en-IN", script:false};
+}
+function speak(te, ro, btn){
+  const done=()=>{ if(btn) btn.classList.remove("on"); };
+  const pre=(window.TWOLINGO_AUDIO||{})[te];
+  if(pre){
+    try{ if(btn) btn.classList.add("on"); const a=new Audio(pre); a.onended=done; a.onerror=done; a.play().catch(done); return; }
+    catch(e){ done(); }
+  }
+  if(!('speechSynthesis' in window)){ ttsBlockedNote(); return; }
+  const clear=()=>{ if(btn) btn.classList.remove("on"); };
+  try{
+    speechSynthesis.cancel();
+    if(!voices.length) loadVoices();
+    const pick=pickVoice();
+    const text = pick.script ? te : (ro||te||"").replace(/[…().?!/]/g," ").replace(/\s+/g," ").trim();
+    if(!text){ return; }
+    const u = new SpeechSynthesisUtterance(text); u.lang=pick.lang; u.rate=.82;
+    if(pick.voice) u.voice=pick.voice;
+    if(!pick.script && !warnedVoice){ warnedVoice=true; toast("No Telugu voice on this device \u2014 pronunciation may be approximate."); }
+    let started=false;
+    if(btn) btn.classList.add("on");
+    u.onstart=()=>{ started=true; };
+    u.onend=clear;
+    u.onerror=()=>{ clear(); ttsBlockedNote(); };
+    speechSynthesis.speak(u);
+    // sandboxed iframes block synthesis silently (no onstart/onend/onerror) — reset and notify
+    setTimeout(()=>{ let sp=false; try{ sp=speechSynthesis.speaking; }catch(e){} if(!started && !sp){ clear(); ttsBlockedNote(); } }, 1100);
+  }catch(e){ clear(); ttsBlockedNote(); }
+}
+
+/* ---------------- toast ---------------- */
+let toastT;
+function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("show"),2600); }
+
+/* ---------------- helpers ---------------- */
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function matchQ(p){const q=state.q.toLowerCase();return p.eng.toLowerCase().includes(q)||p.ro.toLowerCase().includes(q)||p.te.includes(state.q)||catName(p.cat).toLowerCase().includes(q);}
+
+/* ---------------- phrasebook render ---------------- */
+const tierbarEl=document.getElementById("tierbar");
+const chipsEl=document.getElementById("chips");
+const scopeEl=document.getElementById("scope");
+const tipEl=document.getElementById("tip");
+const grid=document.getElementById("grid");
+
+function renderTierbar(){
+  tierbarEl.innerHTML=TIERS.map(t=>`
+    <button class="tierbtn" data-tier="${t.n}" aria-pressed="${state.tier===t.n}">
+      <div class="tname"><span class="tnum">TIER ${t.n}</span>${t.name}</div>
+      <div class="tsub">${t.sub}</div>
+    </button>`).join("");
+}
+
+function renderChips(){
+  const cats=CATS.filter(c=>c.tier===state.tier);
+  const items=[{id:"all",name:"All",em:"✦"}];
+  if(state.fav.size) items.push({id:"fav",name:"Favourites",em:"★"});
+  if(state.tier===1) items.push({id:"day1",name:"Day 1",em:"🌱",path:true},{id:"day2",name:"Day 2",em:"🌿",path:true});
+  items.push(...cats);
+  chipsEl.innerHTML=items.map(c=>{
+    const on=state.cat===c.id;
+    const extra=c.id==="fav"&&state.fav.size?` (${state.fav.size})`:"";
+    const cls="chip"+(c.path?" path":"");
+    return `<button class="${cls}" data-cat="${c.id}" aria-pressed="${on}"><span class="em">${c.em}</span>${c.name}${extra}</button>`;
+  }).join("");
+}
+
+
+function renderScope(){
+  if(state.q){ const n=filtered().length; scopeEl.textContent=`${n} match${n===1?"":"es"} for “${state.q}” — searching across all tiers.`; scopeEl.style.display="block"; }
+  else { scopeEl.style.display="none"; scopeEl.textContent=""; }
+}
+
+function renderTip(){
+  if(!state.q && (state.cat==="day1"||state.cat==="day2")){
+    const d=DAYTIP[state.cat];
+    tipEl.className="tip path";
+    tipEl.innerHTML=`<div class="inner"><span class="ic">${d.em}</span><div><div class="lbl">${d.lbl}</div><p>${d.txt}</p></div></div>`;
+    tipEl.style.display="block"; return;
+  }
+  const c=catObj(state.cat);
+  if(c && !state.q){ tipEl.className="tip"; tipEl.innerHTML=`<div class="inner"><span class="ic">${c.em}</span><div><div class="lbl">${c.name} · local tip</div><p>${c.tip}</p></div></div>`; tipEl.style.display="block"; }
+  else { tipEl.style.display="none"; tipEl.innerHTML=""; }
+}
+
+function filtered(){
+  if(state.cat==="day1") return P.filter(p=>DAY[p.ro]===1).filter(p=>!state.q||matchQ(p));
+  if(state.cat==="day2") return P.filter(p=>DAY[p.ro]===2).filter(p=>!state.q||matchQ(p));
+  if(state.cat==="fav"){ let l=P.filter(p=>state.fav.has(p.id)); if(state.q) l=l.filter(matchQ); return l; }
+  if(state.q){ let l=P.filter(matchQ); if(state.cat!=="all") l=l.filter(p=>p.cat===state.cat); return l; }
+  let l=P.filter(p=>catTier(p.cat)===state.tier);
+  if(state.cat!=="all") l=l.filter(p=>p.cat===state.cat);
+  return l;
+}
+
+function renderGrid(){
+  const list=filtered();
+  if(!list.length){
+    grid.innerHTML=`<div class="empty">${state.cat==="fav"
+      ? "No favourites yet. Tap the <b>★</b> on any card to save it here."
+      : "Nothing matches <b>“"+escapeHtml(state.q)+"”</b>. Try another word."}</div>`;
+    return;
+  }
+  grid.innerHTML=list.map(p=>{
+    const f=state.fav.has(p.id);
+    const note=p.note?`<div class="note">${p.note}</div>`:"";
+    const hi=(state.hi&&HI[p.ro])?`<div class="hi"><span class="tag">हिं</span><b>${escapeHtml(HI[p.ro])}</b></div>`:"";
+    const bd=BD[p.ro]?`<button class="bdlink" data-bd="${p.id}" aria-label="Show how ${escapeHtml(p.eng)} is built"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>how it's built</button>`:"";
+    return `<article class="card">
+      <button class="fav" data-fav="${p.id}" aria-pressed="${f}" aria-label="${f?'Remove from':'Add to'} favourites" title="Save">${f?'★':'☆'}</button>
+      <div class="eng">${escapeHtml(p.eng)}</div>
+      <div class="ro">${escapeHtml(p.ro)}</div>
+      <div class="te">${p.te}</div>
+      ${hi}
+      <div class="row">
+        <button class="speak" data-say="${p.id}" aria-label="Hear ${escapeHtml(p.eng)}">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+          Hear
+        </button>
+        ${bd}
+      </div>
+      ${note}
+    </article>`;
+  }).join("");
+}
+
+function renderBook(){ renderTierbar(); renderChips(); renderScope(); renderTip(); renderGrid(); }
+
+/* ---------------- breakdown flyout ---------------- */
+const overlay=document.getElementById("overlay");
+const sheetWrap=document.getElementById("sheetWrap");
+function openBreakdown(id){
+  const p=P[id]; const b=BD[p.ro]; if(!b) return;
+  const parts=b.parts.map(pt=>`<div class="part"><div class="pp">${escapeHtml(pt[0])}</div><div class="pg">${escapeHtml(pt[1])}</div></div>`).join('<span class="plus">+</span>');
+  sheetWrap.innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="How the phrase is built">
+    <button class="x" data-close aria-label="Close">×</button>
+    <div class="sh-eyebrow">How it's built</div>
+    <div class="sh-ro">${escapeHtml(p.ro)}</div>
+    <div class="sh-te">${p.te}</div>
+    <div class="sh-eng">${escapeHtml(p.eng)}</div>
+    <div class="parts">${parts}</div>
+    <div class="sh-lit">Literally: <b>${escapeHtml(b.lit)}</b></div>
+    ${b.casual?`<div class="sh-casual">With friends, drop the <b>-andi</b>: <b>${escapeHtml(b.casual)}</b></div>`:""}
+    <div class="sh-insight"><span class="lbl">Why it works</span>${b.insight}</div>
+  </div>`;
+  overlay.classList.add("show");
+}
+function closeBreakdown(){ overlay.classList.remove("show"); }
+overlay.addEventListener("click",e=>{ if(e.target===overlay || e.target.closest("[data-close]")) closeBreakdown(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ closeBreakdown(); hideWelcome(); } });
+
+/* ---------------- flashcards ---------------- */
+const cardsRoot=document.getElementById("cards");
+let fc=null;
+
+function deckList(){
+  const cats=CATS.filter(c=>c.tier===state.tier);
+  const counts={}; P.forEach(p=>counts[p.cat]=(counts[p.cat]||0)+1);
+  const tierTotal=P.filter(p=>catTier(p.cat)===state.tier).length;
+  let decks=`<button class="deck" data-deck="tierall">✦ All of Tier ${state.tier} <small>${tierTotal}</small></button>`;
+  if(state.tier===1){
+    const d1=P.filter(p=>DAY[p.ro]===1).length, d2=P.filter(p=>DAY[p.ro]===2).length;
+    decks+=`<button class="deck" data-deck="day1">🌱 Day 1 <small>${d1}</small></button><button class="deck" data-deck="day2">🌿 Day 2 <small>${d2}</small></button>`;
+  }
+  if(state.fav.size) decks+=`<button class="deck" data-deck="fav">★ Favourites <small>${state.fav.size}</small></button>`;
+  decks+=cats.map(c=>`<button class="deck" data-deck="${c.id}"><span>${c.em}</span> ${c.name} <small>${counts[c.id]||0}</small></button>`).join("");
+  return decks;
+}
+
+function renderCards(){
+  if(!fc){
+    const t=TIERS.find(t=>t.n===state.tier);
+    cardsRoot.innerHTML=`<div class="fc"><div class="fc-setup">
+      <div class="eyebrow">Tier ${t.n} · ${t.name}</div>
+      <h3>Flashcards</h3>
+      <p>Pick a deck. See the English, guess it, then reveal the Telugu — missed cards stay in rotation until you get them.</p>
+      <div class="deck-grid">${deckList()}</div>
+    </div></div>`;
+    return;
+  }
+  if(fc.i>=fc.deck.length){
+    cardsRoot.innerHTML=`<div class="fc"><div class="done">
+      <div class="te">శభాష్!</div>
+      <div class="big">Shabaash — deck done.</div>
+      <p>${fc.known} of ${fc.total} on the first pass.${fc.known<fc.total?' The ones you missed came back around until they stuck.':' Clean sweep.'}</p>
+      <button data-done="again">Back to decks</button>
+    </div></div>`;
+    return;
+  }
+  const p=P[fc.deck[fc.i]];
+  const pct=Math.round((fc.i/fc.deck.length)*100);
+  cardsRoot.innerHTML=`<div class="fc">
+    <div class="progress">
+      <button class="exit" data-done="again" aria-label="Exit deck">‹ Decks</button>
+      <div class="track"><div class="fill" style="width:${pct}%"></div></div>
+      <span class="count">${fc.i+1}/${fc.deck.length}</span>
+    </div>
+    <div class="flash" id="flash" tabindex="0" role="button" aria-label="Reveal answer">
+      <div class="hint">${escapeHtml(catName(p.cat))}</div>
+      ${fc.flipped ? `
+        <div class="a-ro">${escapeHtml(p.ro)}</div>
+        <div class="a-te">${p.te}</div>
+        <div class="eng" style="color:var(--muted);font-size:14px">${escapeHtml(p.eng)}</div>
+        <button class="speak" data-sayflash="${p.id}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg> Hear</button>
+      ` : `
+        <div class="q">${escapeHtml(p.eng)}</div>
+        <div class="tap">Tap to reveal the Telugu</div>
+      `}
+    </div>
+    ${fc.flipped ? `<div class="fc-actions"><button class="again" data-grade="again">Again</button><button class="know" data-grade="know">Got it</button></div>`:""}
+  </div>`;
+}
+
+function startDeck(deckId){
+  let ids;
+  if(deckId==="tierall") ids=P.filter(p=>catTier(p.cat)===state.tier).map(p=>p.id);
+  else if(deckId==="day1") ids=P.filter(p=>DAY[p.ro]===1).map(p=>p.id);
+  else if(deckId==="day2") ids=P.filter(p=>DAY[p.ro]===2).map(p=>p.id);
+  else if(deckId==="fav") ids=P.filter(p=>state.fav.has(p.id)).map(p=>p.id);
+  else ids=P.filter(p=>p.cat===deckId).map(p=>p.id);
+  ids=shuffle(ids.slice());
+  fc={deck:ids,total:ids.length,i:0,flipped:false,known:0};
+  renderCards();
+}
+
+/* ---------------- sentence builder ---------------- */
+const BNOUNS=[
+  {eng:"water",te:"నీళ్ళు",ro:"neellu"},
+  {eng:"this",te:"ఇది",ro:"idi"},
+  {eng:"tea",te:"చాయ్",ro:"chaay"},
+  {eng:"the bill",te:"బిల్",ro:"bil"},
+  {eng:"change",te:"చిల్లర",ro:"chillara"},
+  {eng:"a bag",te:"సంచి",ro:"sanchi"},
+  {eng:"ATM",te:"ATM",ro:"ATM",keep:true},
+  {eng:"auto",te:"ఆటో",ro:"aato"},
+  {eng:"the room",te:"రూమ్",ro:"room",keep:true},
+  {eng:"a ticket",te:"టికెట్",ro:"ticket",keep:true},
+];
+const BFRAMES=[
+  {label:"how much?",te:"ఎంత?",ro:"enta?",mean:n=>`How much is ${n}?`},
+  {label:"where?",te:"ఎక్కడ?",ro:"ekkada?",mean:n=>`Where is ${n}?`},
+  {label:"I want",te:"కావాలి",ro:"kaavaali",mean:n=>`I want ${n}.`},
+  {label:"do you have?",te:"ఉందా?",ro:"undaa?",mean:n=>`Do you have ${n}?`},
+  {label:"give me",te:"ఇవ్వండి",ro:"ivvandi",mean:n=>`Give me ${n}.`},
+];
+const buildRoot=document.getElementById("build");
+let buildState={noun:0,frame:0};
+function renderBuild(){
+  const n=BNOUNS[buildState.noun], f=BFRAMES[buildState.frame];
+  const te=n.te+" "+f.te, ro=n.ro+" "+f.ro;
+  const nounPills=BNOUNS.map((x,i)=>`<button class="bpill${i===buildState.noun?' on':''}" data-noun="${i}">${escapeHtml(x.eng)}</button>`).join("");
+  const framePills=BFRAMES.map((x,i)=>`<button class="bpill${i===buildState.frame?' on':''}" data-frame="${i}">${escapeHtml(x.label)}</button>`).join("");
+  const keepNote=n.keep?`<div class="bkeep">No Telugu word needed for “${escapeHtml(n.eng)}” — say the English word right inside the Telugu frame. That code-switch is exactly what locals do every day.</div>`:"";
+  buildRoot.innerHTML=`<div class="fc">
+    <div class="fc-setup" style="margin-bottom:18px">
+      <div class="eyebrow">Sentence builder</div>
+      <h3>Pick a word. Pick a frame.</h3>
+      <p>This is the whole trick: the frame stays fixed, you swap the word — and Telugu's order never breaks. Build a few and feel the pattern.</p>
+    </div>
+    <div class="brow"><div class="blabel">Word</div><div class="bpills">${nounPills}</div></div>
+    <div class="brow"><div class="blabel">Frame</div><div class="bpills">${framePills}</div></div>
+    ${keepNote}
+    <div class="bresult">
+      <div class="bmean">${escapeHtml(f.mean(n.eng))}</div>
+      <div class="bro">${escapeHtml(ro)}</div>
+      <div class="bte">${te}</div>
+      <div class="bassemble">
+        <span class="bchip">${escapeHtml(n.ro)}<small>${escapeHtml(n.eng)}</small></span>
+        <span class="bplus">+</span>
+        <span class="bchip">${escapeHtml(f.ro)}<small>${escapeHtml(f.label)}</small></span>
+      </div>
+      <div class="brow2">
+        <button class="speak" id="bsay" aria-label="Hear the sentence"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg> Hear it</button>
+        <button class="bdice" id="bdice">🎲 Surprise me</button>
+      </div>
+    </div>
+  </div>`;
+}
+buildRoot.addEventListener("click",e=>{
+  const nb=e.target.closest("[data-noun]"); if(nb){ buildState.noun=+nb.dataset.noun; renderBuild(); return; }
+  const fb=e.target.closest("[data-frame]"); if(fb){ buildState.frame=+fb.dataset.frame; renderBuild(); return; }
+  const say=e.target.closest("#bsay"); if(say){ const n=BNOUNS[buildState.noun],f=BFRAMES[buildState.frame]; speak(n.te+" "+f.te, n.ro+" "+f.ro, say); return; }
+  if(e.target.closest("#bdice")){ buildState.noun=Math.floor(Math.random()*BNOUNS.length); buildState.frame=Math.floor(Math.random()*BFRAMES.length); renderBuild(); }
+});
+
+/* ---------------- scenarios ---------------- */
+const SCEN=[
+  {tier:1,emoji:"🛺",title:"Catching an auto",setting:"Flag down an auto, give directions, settle the fare. Just get home.",turns:[
+    {who:"them",label:"Driver",en:"Where to?",te:"ఎక్కడికి?",ro:"ekkadiki?"},
+    {who:"you",label:"You",en:"Gachibowli. (just say the place)"},
+    {who:"you",label:"You",en:"Straight.",te:"నేరుగా.",ro:"neerugaa."},
+    {who:"you",label:"You",en:"Left here.",te:"ఇక్కడ ఎడమ.",ro:"ikkada edama."},
+    {who:"you",label:"You",en:"Stop here. How much?",te:"ఇక్కడ ఆపండి. ఎంత?",ro:"ikkada aapandi. enta?"},
+    {who:"them",label:"Driver",en:"Eighty."},
+    {who:"you",label:"You",en:"OK. Thank you.",te:"సరే. ధన్యవాదాలు.",ro:"saree. dhanyavaadaalu."},
+  ]},
+  {tier:1,emoji:"🏠",title:"Meeting a neighbour",setting:"First week in the building. You meet a neighbour in the lift.",turns:[
+    {who:"you",label:"You",en:"Hello!",te:"నమస్కారం!",ro:"namaskaaram!"},
+    {who:"them",label:"Neighbour",en:"Hello. Where are you from?",te:"నమస్కారం. మీరు ఎక్కడి నుంచి?",ro:"namaskaaram. meeru ekkadi nunchi?"},
+    {who:"you",label:"You",en:"Shillong. (just say the place)"},
+    {who:"you",label:"You",en:"I don't know Telugu.",te:"నాకు తెలుగు రాదు.",ro:"naaku telugu raadu."},
+    {who:"you",label:"You",en:"Do you know English?",te:"మీకు ఇంగ్లీష్ వచ్చా?",ro:"meeku inglish vacchaa?"},
+    {who:"them",label:"Neighbour",en:"A little. No problem!",te:"కొంచెం. పర్వాలేదు!",ro:"konchem. parvaaleedu!"},
+    {who:"you",label:"You",en:"Thank you.",te:"ధన్యవాదాలు.",ro:"dhanyavaadaalu."},
+  ]},
+  {tier:2,emoji:"🛍️",title:"Haggling at the market",setting:"A vendor's selling mangoes. Talk the price down to something fair.",turns:[
+    {who:"you",label:"You",en:"How much is this?",te:"ఇది ఎంత?",ro:"idi enta?"},
+    {who:"them",label:"Vendor",en:"Two hundred a kilo."},
+    {who:"you",label:"You",en:"That's too much.",te:"చాలా ఎక్కువ.",ro:"chaalaa ekkuva."},
+    {who:"you",label:"You",en:"Reduce the price.",te:"రేటు తగ్గించండి.",ro:"reetu tagginchandi."},
+    {who:"them",label:"Vendor",en:"Fine — one fifty."},
+    {who:"you",label:"You",en:"What's the last price?",te:"చివరి రేటు ఎంత?",ro:"chivari reetu enta?"},
+    {who:"them",label:"Vendor",en:"One twenty. Final."},
+    {who:"you",label:"You",en:"OK. Give me one.",te:"సరే. ఒకటి ఇవ్వండి.",ro:"saree. okati ivvandi."},
+  ]},
+  {tier:2,emoji:"☕",title:"The tiffin stop",setting:"Busy tiffin centre at 8am. Idli, not too spicy, and a chai.",turns:[
+    {who:"you",label:"You",en:"One plate idli.",te:"ఒక ప్లేట్ ఇడ్లీ.",ro:"oka pleet idli."},
+    {who:"you",label:"You",en:"Less spicy.",te:"కారం తక్కువ.",ro:"kaaram takkuva."},
+    {who:"them",label:"Server",en:"Anything to drink?"},
+    {who:"you",label:"You",en:"A tea, and water.",te:"చాయ్, నీళ్ళు.",ro:"chaay, neellu."},
+    {who:"you",label:"You",en:"It's tasty!",te:"రుచిగా ఉంది!",ro:"ruchigaa undi!"},
+    {who:"you",label:"You",en:"Bill, please.",te:"బిల్ ఇవ్వండి.",ro:"bil ivvandi."},
+  ]},
+  {tier:3,emoji:"💬",title:"Getting to know a neighbour",setting:"You've settled in. Time for an actual conversation, not just a nod.",turns:[
+    {who:"you",label:"You",en:"Hello! How are you?",te:"నమస్కారం! ఎలా ఉన్నారు?",ro:"namaskaaram! elaa unnaaru?"},
+    {who:"them",label:"Neighbour",en:"I'm fine. And you?",te:"బాగున్నాను. మీరు?",ro:"baagunnaanu. meeru?"},
+    {who:"you",label:"You",en:"I'm fine. Where are you from?",te:"బాగున్నాను. మీరు ఎక్కడి నుంచి?",ro:"baagunnaanu. meeru ekkadi nunchi?"},
+    {who:"them",label:"Neighbour",en:"From Hyderabad. And you?",te:"హైదరాబాద్ నుంచి. మీరు?",ro:"Hyderabad nunchi. meeru?"},
+    {who:"you",label:"You",en:"From Shillong.",te:"షిల్లాంగ్ నుంచి.",ro:"Shillong nunchi."},
+    {who:"you",label:"You",en:"Nice to meet you.",te:"కలవడం సంతోషం.",ro:"kalavadam santosham."},
+    {who:"them",label:"Neighbour",en:"See you again!",te:"మళ్ళీ కలుద్దాం!",ro:"mallee kaluddaam!"},
+  ]},
+];
+const scenRoot=document.getElementById("scen");
+let scenState={active:null,step:0};
+const HEAR_SVG='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>';
+function renderScen(){
+  if(scenState.active===null){
+    const avail=SCEN.map((s,i)=>({s,i})).filter(o=>o.s.tier<=state.tier);
+    const cards=avail.map(({s,i})=>`<button class="scen-card" data-scen="${i}"><span class="scbadge">Tier ${s.tier}</span><span class="se">${s.emoji}</span><span class="st">${escapeHtml(s.title)}</span><span class="ss">${escapeHtml(s.setting)}</span></button>`).join("");
+    scenRoot.innerHTML=`<div class="fc"><div class="fc-setup" style="margin-bottom:14px">
+      <div class="eyebrow">Scenarios · Tier ${state.tier} and below</div><h3>Walk through a real moment</h3>
+      <p>Each scene only uses the Telugu you've reached — numbers stay in English, just like a real beginner. Raise your level in Phrasebook to unlock more.</p>
+    </div><div class="scen-grid">${cards}</div></div>`;
+    return;
+  }
+  const sc=SCEN[scenState.active];
+  const atEnd=scenState.step>=sc.turns.length-1;
+  const bubbles=sc.turns.slice(0,scenState.step+1).map((t,idx)=>{
+    const hear=t.te?`<button class="sbhear" data-shear="${idx}" aria-label="Hear">${HEAR_SVG}</button>`:"";
+    return `<div class="sbubble ${t.who}"><div class="sb-who">${escapeHtml(t.label)}</div><div class="sb-en">${escapeHtml(t.en)}</div>${t.ro?`<div class="sb-ro">${escapeHtml(t.ro)} ${hear}</div>`:""}${t.te?`<div class="sb-te">${t.te}</div>`:""}</div>`;
+  }).join("");
+  scenRoot.innerHTML=`<div class="fc">
+    <div class="scen-head"><button class="exit" data-scendone aria-label="Back to scenarios">‹ Scenes</button><div class="scen-title">${sc.emoji} ${escapeHtml(sc.title)}</div><span class="count">${scenState.step+1}/${sc.turns.length}</span></div>
+    <div class="scen-setting">${escapeHtml(sc.setting)}</div>
+    <div class="scen-thread">${bubbles}</div>
+    <div class="brow2">${atEnd?`<button class="know" data-scenrestart>Replay</button><button class="bdice" data-scendone>Another scene</button>`:`<button class="know" data-scennext>Next ›</button>`}</div>
+  </div>`;
+}
+scenRoot.addEventListener("click",e=>{
+  const o=e.target.closest("[data-scen]"); if(o){ scenState={active:+o.dataset.scen,step:0}; renderScen(); return; }
+  if(e.target.closest("[data-scennext]")){ scenState.step++; renderScen(); return; }
+  if(e.target.closest("[data-scenrestart]")){ scenState.step=0; renderScen(); return; }
+  if(e.target.closest("[data-scendone]")){ scenState={active:null,step:0}; renderScen(); return; }
+  const h=e.target.closest("[data-shear]"); if(h){ const t=SCEN[scenState.active].turns[+h.dataset.shear]; speak(t.te, t.ro, h); }
+});
+
+/* ---------------- welcome modal ---------------- */
+function showWelcome(){
+  document.getElementById("welcomeSheet").innerHTML=`<div class="sheet welcome" role="dialog" aria-modal="true" aria-label="Welcome">
+    <button class="x" data-wclose aria-label="Close">×</button>
+    <div class="w-glyph">తె</div>
+    <div class="sh-eyebrow">Survival Telugu · Hyderabad</div>
+    <h2 class="w-title">Land in Hyderabad. Start <em>speaking Telugu</em> by the weekend.</h2>
+    <p class="w-sub">Built the way migrant traders actually pick up a city's language — learn the skeleton that makes broken sentences first, then add depth.</p>
+    <div class="w-mhead">The four tricks</div>
+    <div class="mgrid">${METHOD.map(m=>`<div class="mcard"><div class="mn">${m.n}</div><h4>${m.h}</h4><p>${m.p}</p></div>`).join("")}</div>
+    <button class="w-start" data-wclose>Start learning &rarr;</button>
+  </div>`;
+  document.getElementById("welcome").classList.add("show");
+}
+function hideWelcome(){ const w=document.getElementById("welcome"); if(w.classList.contains("show")){ w.classList.remove("show"); store.set("nt_welcomed","1"); } }
+document.getElementById("welcome").addEventListener("click",e=>{ if(e.target.id==="welcome"||e.target.closest("[data-wclose]")) hideWelcome(); });
+document.getElementById("howBtn").addEventListener("click",showWelcome);
+
+/* ---------------- events ---------------- */
+document.getElementById("q").addEventListener("input",e=>{ state.q=e.target.value.trim(); renderBook(); });
+document.getElementById("hiToggle").addEventListener("click",function(){ state.hi=!state.hi; this.setAttribute("aria-pressed",state.hi); if(!state.hi&&state.mode==="book"){} renderBook(); if(state.hi) toast("Hindi hints on — shown on Base-tier words"); });
+
+tierbarEl.addEventListener("click",e=>{ const b=e.target.closest("[data-tier]"); if(!b)return; state.tier=+b.dataset.tier; state.cat="all"; renderBook(); });
+chipsEl.addEventListener("click",e=>{ const b=e.target.closest("[data-cat]"); if(!b)return; state.cat=b.dataset.cat; renderBook(); });
+
+grid.addEventListener("click",e=>{
+  const fav=e.target.closest("[data-fav]");
+  if(fav){ const id=+fav.dataset.fav; state.fav.has(id)?state.fav.delete(id):state.fav.add(id); saveFav(); renderBook(); return; }
+  const bd=e.target.closest("[data-bd]");
+  if(bd){ openBreakdown(+bd.dataset.bd); return; }
+  const say=e.target.closest("[data-say]");
+  if(say){ const p=P[+say.dataset.say]; speak(p.te,p.ro,say); }
+});
+
+cardsRoot.addEventListener("click",e=>{
+  const deck=e.target.closest("[data-deck]"); if(deck){ startDeck(deck.dataset.deck); return; }
+  const done=e.target.closest("[data-done]"); if(done){ fc=null; renderCards(); return; }
+  const sayf=e.target.closest("[data-sayflash]"); if(sayf){ e.stopPropagation(); const p=P[+sayf.dataset.sayflash]; speak(p.te,p.ro,sayf); return; }
+  const grade=e.target.closest("[data-grade]");
+  if(grade){ if(grade.dataset.grade==="know") fc.known++; else fc.deck.push(fc.deck[fc.i]); fc.i++; fc.flipped=false; renderCards(); return; }
+  const flash=e.target.closest("#flash"); if(flash && fc && !fc.flipped){ fc.flipped=true; renderCards(); }
+});
+cardsRoot.addEventListener("keydown",e=>{ if(e.target.id==="flash"&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); if(!fc.flipped){fc.flipped=true;renderCards();} } });
+
+function setMode(m){
+  state.mode=m;
+  document.getElementById("book").hidden=m!=="book";
+  document.getElementById("practice").hidden=m!=="practice";
+  document.getElementById("m-book").setAttribute("aria-pressed",m==="book");
+  document.getElementById("m-practice").setAttribute("aria-pressed",m==="practice");
+  if(m==="book") renderBook(); else setSub(state.sub||"cards");
+}
+function setSub(sub){
+  state.sub=sub;
+  document.getElementById("cards").hidden=sub!=="cards";
+  document.getElementById("build").hidden=sub!=="build";
+  document.getElementById("scen").hidden=sub!=="scenarios";
+  document.querySelectorAll("#subnav button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.sub===sub));
+  if(sub==="cards"){ fc=null; renderCards(); }
+  else if(sub==="build") renderBuild();
+  else renderScen();
+}
+document.getElementById("subnav").addEventListener("click",e=>{ const b=e.target.closest("[data-sub]"); if(b) setSub(b.dataset.sub); });
+document.getElementById("m-book").onclick=()=>setMode("book");
+document.getElementById("m-practice").onclick=()=>setMode("practice");
+
+/* ---------------- init ---------------- */
+loadFav();
+renderBook();
+if(!store.get("nt_welcomed")) showWelcome();
+</script>
+</body>
+</html>
