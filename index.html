@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Speak broken Telugu in Hyderabad in two days: 27 words, the frames that make sentences, and the phrases that make locals teach you the rest." />
+<meta property="og:title" content="TeluguEasy — Survival Telugu for Hyderabad, speaking in two days" />
+<meta property="og:description" content="Speak broken Telugu in Hyderabad in two days: 27 words, the frames that make sentences, and the phrases that make locals teach you the rest." />
 <title>TeluguEasy — Survival Telugu for Hyderabad, speaking in two days</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,6 +100,8 @@
   .tip.path .lbl{color:#5ec48f}
   .tip p{margin:0;font-size:14px;color:#cdd8d1}
   .tip .ic{font-size:18px;line-height:1.3}
+  .tipshare{margin-top:10px;font-family:var(--ui);font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:8px;cursor:pointer;background:var(--ink-3);border:1px solid var(--line);color:var(--pearl)}
+  .tipshare:hover{border-color:rgba(217,164,65,.45)}
 
   .grid{max-width:1080px;margin:0 auto;padding:18px 20px 70px;display:grid;gap:13px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
   .card{background:var(--ink-2);border:1px solid var(--line);border-radius:var(--r);padding:16px 16px 14px;position:relative;transition:border-color .15s}
@@ -288,6 +293,26 @@
 </style>
 </head>
 <body>
+<noscript>
+  <h1>Survival Telugu for Hyderabad</h1>
+  <p>Speak broken Telugu in Hyderabad in two days: 27 words, the frames that make sentences, and the phrases that make locals teach you the rest. Day 1:</p>
+  <ul>
+    <li>Anna — any man roughly your age or older (driver, shopkeeper, waiter) — anna — అన్నా</li>
+    <li>Akka — any woman roughly your age or older (vendor, maid, receptionist) — akka — అక్కా</li>
+    <li>This — idi — ఇది</li>
+    <li>How much? — enta? — ఎంత?</li>
+    <li>Where? — ekkada? — ఎక్కడ?</li>
+    <li>(I) want / need — kaavaali — కావాలి</li>
+    <li>(I) don&#x27;t want — vaddu — వద్దు</li>
+    <li>Is there? / Do you have? — undaa? — ఉందా?</li>
+    <li>No / none / not there — ledu — లేదు</li>
+    <li>OK / fine — sare — సరే</li>
+    <li>Give (me) — ivvandi — ఇవ్వండి</li>
+    <li>What do you call this in Telugu? — idi telugu lo em antaaru? — ఇది తెలుగులో ఏం అంటారు?</li>
+    <li>I don&#x27;t know Telugu — naaku telugu raadu — నాకు తెలుగు రాదు</li>
+  </ul>
+  <p>Turn on JavaScript for audio, flashcards, the sentence builder and scenarios.</p>
+</noscript>
 <header>
   <div class="bar">
     <div class="brand">
@@ -670,7 +695,7 @@ function renderTip(){
   if(!state.q && (state.cat==="day1"||state.cat==="day2")){
     const d=DAYTIP[state.cat];
     tipEl.className="tip path";
-    tipEl.innerHTML=`<div class="inner"><span class="ic">${d.em}</span><div><div class="lbl">${d.lbl}</div><p>${d.txt}</p></div></div>`;
+    tipEl.innerHTML=`<div class="inner"><span class="ic">${d.em}</span><div><div class="lbl">${d.lbl}</div><p>${d.txt}</p><button class="tipshare" data-share="${state.cat}">Share this list</button></div></div>`;
     tipEl.style.display="block"; return;
   }
   const c=catObj(state.cat);
@@ -734,7 +759,7 @@ function renderGrid(){
   }).join("");
 }
 
-function renderBook(){ renderTierbar(); renderToday(); renderChips(); renderScope(); renderTip(); renderGrid(); }
+function renderBook(){ renderTierbar(); renderToday(); renderChips(); renderScope(); renderTip(); renderGrid(); syncHash(); }
 
 /* ---------------- today's line ----------------
    Same phrase for everyone on a given local date: day index since 2026-01-01,
@@ -1096,10 +1121,10 @@ function renderScen(){
   </div>`;
 }
 scenRoot.addEventListener("click",e=>{
-  const o=e.target.closest("[data-scen]"); if(o){ scenState={active:+o.dataset.scen,step:0}; renderScen(); return; }
+  const o=e.target.closest("[data-scen]"); if(o){ scenState={active:+o.dataset.scen,step:0}; renderScen(); syncHash(); return; }
   if(e.target.closest("[data-scennext]")){ scenState.step++; renderScen(); return; }
   if(e.target.closest("[data-scenrestart]")){ scenState.step=0; renderScen(); return; }
-  if(e.target.closest("[data-scendone]")){ scenState={active:null,step:0}; renderScen(); return; }
+  if(e.target.closest("[data-scendone]")){ scenState={active:null,step:0}; renderScen(); syncHash(); return; }
   const h=e.target.closest("[data-shear]"); if(h){ const t=SCEN[scenState.active].turns[+h.dataset.shear]; speak(t.te, t.ro, h); }
 });
 
@@ -1171,15 +1196,87 @@ function setSub(sub){
   if(sub==="cards"){ fc=null; renderCards(); }
   else if(sub==="build") renderBuild();
   else renderScen();
+  syncHash();
 }
 document.getElementById("subnav").addEventListener("click",e=>{ const b=e.target.closest("[data-sub]"); if(b) setSub(b.dataset.sub); });
 document.getElementById("m-book").onclick=()=>setMode("book");
 document.getElementById("m-practice").onclick=()=>setMode("practice");
 
+/* ---------------- hash routing ----------------
+   #base #everyday #blendin            tier (All)
+   #base/day1  #everyday/num …         tier + chip (CATS ids; day1/day2 only under base)
+   #practice/cards|build|scenes        practice sub-mode
+   #scene/N                            open SCEN[N]
+   Anything else falls back to #base. Updates use replaceState, so no history entries. */
+const TIER_SLUG={1:"base",2:"everyday",3:"blendin"}, SLUG_TIER={base:1,everyday:2,blendin:3};
+const SUB_SLUG={cards:"cards",build:"build",scenarios:"scenes"}, SLUG_SUB={cards:"cards",build:"build",scenes:"scenarios"};
+let routing=false;
+function currentHash(){
+  if(state.mode==="practice"){
+    if(state.sub==="scenarios" && scenState.active!==null) return "#scene/"+scenState.active;
+    return "#practice/"+(SUB_SLUG[state.sub]||"cards");
+  }
+  const c=state.cat;
+  const chipOk = (c==="day1"||c==="day2") ? state.tier===1 : (!!catObj(c) && catTier(c)===state.tier);
+  return "#"+TIER_SLUG[state.tier]+(chipOk?"/"+c:"");
+}
+function syncHash(){
+  if(routing) return;
+  const h=currentHash();
+  if(location.hash!==h){ try{ history.replaceState(history.state,"",h); }catch(e){} }
+}
+function parseHash(raw){
+  const parts=String(raw||"").replace(/^#\/?/,"").split("/").filter(Boolean).map(x=>decodeURIComponent(x));
+  if(!parts.length) return null;
+  const [a,b]=parts;
+  if(SLUG_TIER[a] && parts.length<=2){
+    const tier=SLUG_TIER[a];
+    if(!b) return {mode:"book",tier,cat:"all"};
+    if((b==="day1"||b==="day2") && tier===1) return {mode:"book",tier,cat:b};
+    if(catObj(b) && catTier(b)===tier) return {mode:"book",tier,cat:b};
+    return null;
+  }
+  if(a==="practice" && parts.length<=2){ const sub=SLUG_SUB[b||"cards"]; return sub?{mode:"practice",sub}:null; }
+  if(a==="scene" && parts.length===2 && /^\d+$/.test(b) && +b<SCEN.length) return {mode:"practice",sub:"scenarios",scene:+b};
+  return null;
+}
+function applyRoute(){
+  const r=parseHash(location.hash)||{mode:"book",tier:1,cat:"all"};
+  routing=true;
+  try{
+    state.q=""; const qEl=document.getElementById("q"); if(qEl) qEl.value="";
+    if(r.mode==="book"){ state.tier=r.tier; state.cat=r.cat; setMode("book"); }
+    else {
+      if(r.scene!==undefined){ scenState={active:r.scene,step:0}; state.tier=Math.max(state.tier,SCEN[r.scene].tier); }
+      else if(r.sub==="scenarios") scenState={active:null,step:0};
+      state.sub=r.sub; setMode("practice");
+    }
+  } finally { routing=false; }
+  syncHash();   // normalises invalid / empty hashes to #base
+}
+window.addEventListener("hashchange",applyRoute);
+
+/* ---------------- share ---------------- */
+async function copyText(t){
+  try{ if(navigator.clipboard && window.isSecureContext){ await navigator.clipboard.writeText(t); return true; } }catch(e){}
+  try{
+    const ta=document.createElement("textarea"); ta.value=t; ta.setAttribute("readonly",""); ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select(); const ok=document.execCommand("copy"); ta.remove(); return ok;
+  }catch(e){ return false; }
+}
+tipEl.addEventListener("click",async e=>{
+  const b=e.target.closest("[data-share]"); if(!b) return;
+  const url="https://telugueasy.com/#base/"+b.dataset.share;
+  toast((await copyText(url)) ? "Link copied — send it to the next newcomer." : "Copy this link: "+url);
+});
+
 /* ---------------- init ---------------- */
 loadFav();
-renderBook();
-if(!store.get("nt_welcomed")) showWelcome();
+const arrivalHash=location.hash;
+applyRoute();
+// first visit: welcome, unless they arrived on a deep link (anything but bare # or #base)
+const deepLink=!!parseHash(arrivalHash) && !/^#?(base\/?)?$/.test(arrivalHash);
+if(!store.get("nt_welcomed") && !deepLink) showWelcome();
 </script>
 </body>
 </html>
