@@ -43,7 +43,7 @@ const crypto = require('crypto');
 // const fetch = (...args) => import('node-fetch').then(({ default: f }) => f(...args));
 
 // ---- config -------------------------------------------------------------------
-const HTML_FILE   = 'survival-telugu.html';
+const HTML_FILE   = 'index.html';
 const AUDIO_DIR   = 'audio';
 const MANIFEST_JS = 'audio-manifest.js';
 const API_URL     = 'https://api.sarvam.ai/text-to-speech';

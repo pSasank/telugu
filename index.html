@@ -306,6 +306,8 @@ const TIERS = [
 ];
 
 const CATS = [
+  {id:"learn", tier:1, name:"Make them teach you", em:"🪜", tip:"The single biggest shortcut: every Telugu speaker around you is a free teacher if you ask. These eight phrases turn any auto ride or chai break into a lesson — and saying you're learning earns instant goodwill."},
+  {id:"address", tier:1, name:"Who to call what", em:"🙋", tip:"Hyderabad runs on <b>anna</b> and <b>akka</b>. Nobody opens with “namaskaaram” at an auto stand — they say “anna, Gachibowli?”. Pick the right word and you sound like you belong before you've said a single sentence. Sir/madam is fine for offices and anyone clearly senior."},
   {id:"verbs", tier:1, name:"Power Verbs", em:"🔑", tip:"The trader's trick: don't conjugate. Learn one usable form of each verb and let context do the rest. “kaavaali” (want), “ivvandi” (give), “undaa?” (do you have) carry half your day."},
   {id:"frames",tier:1, name:"Question Frames", em:"🧩", tip:"These are slots. Put any English noun in front and you have a sentence: “water enta?”, “ATM ekkada?”. Six frames plus pointing equals a hundred questions."},
   {id:"glue",  tier:1, name:"Glue Words", em:"✅", tip:"Tiny words that keep a conversation moving. Bonus hack: stick “andi” on almost anything to make it polite — “raa” becomes “randi”."},
@@ -322,6 +324,18 @@ const CATS = [
 
 /* phrase tuples: [cat, english, telugu, roman, note?] */
 const P = [
+  ["learn","What do you call this in Telugu?","ఇది తెలుగులో ఏం అంటారు?","idi telugu lo em antaaru?","Point at anything and ask. The answer is your next word — repeat it back and it sticks."],
+  ["learn","Say it again","మళ్ళీ చెప్పండి","malli cheppandi"],
+  ["learn","Say it slowly","నెమ్మదిగా చెప్పండి","nemmadigaa cheppandi"],
+  ["learn","I didn't understand","అర్థం కాలేదు","artham kaaledu"],
+  ["learn","Got it / understood","అర్థం అయింది","artham ayindi"],
+  ["learn","I'm learning Telugu","నేను తెలుగు నేర్చుకుంటున్నాను","nenu telugu nerchukuntunnaanu","Say this early. People slow down, correct you kindly, and start teaching."],
+  ["learn","I know a little Telugu","నాకు తెలుగు కొంచెం వస్తుంది","naaku telugu konchem vastundi","The upgrade from “naaku telugu raadu” — use it from week two."],
+  ["learn","Is this right?","ఇది కరెక్టా?","idi correct aa?","English word + the -aa question tag. Locals say exactly this."],
+  ["address","Anna — any man roughly your age or older (driver, shopkeeper, waiter)","అన్నా","anna","Literally “elder brother”. The default. “anna, idi enta?”"],
+  ["address","Akka — any woman roughly your age or older (vendor, maid, receptionist)","అక్కా","akka","Literally “elder sister”. “akka, change undaa?”"],
+  ["address","Bhaiyya — also fine for any man in Hyderabad","భయ్యా","bhaiyya","Hyderabad's Hindi-Urdu side. Interchangeable with anna; autos hear both all day."],
+  ["address","Uncle / Aunty — anyone clearly older","అంకుల్ / ఆంటీ","uncle / aunty","Just say the English. That IS the Telugu."],
   ["verbs","(I) want / need","కావాలి","kaavaali","Frame: <code>noun + kaavaali</code> = I want ___.  Try: “water kaavaali”."],
   ["verbs","(I) don't want","వద్దు","vaddu"],
   ["verbs","Give (me)","ఇవ్వండి","ivvandi","“bill ivvandi”, “water ivvandi”. Point and name in English."],
@@ -439,7 +453,11 @@ const HI = {
   "avunu":"haan","kaadu":"nahi","ledu":"nahi hai","saree":"theek hai","chaalu":"bas","konchem":"thoda","…andi":"ji / aap (aadar)",
   "namaskaaram":"namaste","dhanyavaadaalu":"dhanyavaad / shukriya","kshaminchandi":"maaf kijiye","elaa unnaaru?":"kaise hain?","baagunnaanu":"main theek hoon",
   "naaku telugu raadu":"mujhe telugu nahi aati","meeku inglish vacchaa?":"aapko english aati hai?","dayacheesi":"kripya / please",
-  "neerugaa":"seedha","edama":"baayein / left","kudi":"daayein / right","ikkada":"yahaan","ikkada aapandi":"yahaan roko"
+  "neerugaa":"seedha","edama":"baayein / left","kudi":"daayein / right","ikkada":"yahaan","ikkada aapandi":"yahaan roko",
+  "idi telugu lo em antaaru?":"isko telugu mein kya kehte hain?","malli cheppandi":"phir se boliye","nemmadigaa cheppandi":"dheere boliye",
+  "artham kaaledu":"samajh nahi aaya","artham ayindi":"samajh gaya","nenu telugu nerchukuntunnaanu":"main telugu seekh raha hoon",
+  "naaku telugu konchem vastundi":"mujhe thodi telugu aati hai","idi correct aa?":"yeh sahi hai?",
+  "anna":"bhai / bhaiyya","akka":"didi","bhaiyya":"bhaiyya","uncle / aunty":"uncle / aunty"
 };
 
 /* ---------------- word breakdowns, keyed by romanization ---------------- */
@@ -465,7 +483,11 @@ const BD = {
   "ikkada digutaanu":{lit:"Here I-get-down.",parts:[["ikkada","here"],["digutaanu","I'll get down"]],insight:"The <code>-taanu</code> tail = “I will”. Reuse it to say what <i>you'll</i> do: “nenu cheptaanu” = I'll tell."},
   "daggaraa?":{lit:"Near + ?",parts:[["daggara","near"],["-aa","? (question tag)"]],insight:"This is the one tag worth memorising. Add <code>-aa</code> to almost any statement word and it becomes a yes/no question — zero new vocabulary. baagundi → <code>baagundaa?</code> (is it good?), undi → <code>undaa?</code> (is there?), avunu → <code>avunaa?</code> (really?)."},
   "chaalaa ekkuva":{lit:"Very much.",parts:[["chaalaa","very"],["ekkuva","much / more"]],insight:"<code>chaalaa</code> is your all-purpose intensifier: chaalaa kaaram (very spicy), chaalaa baagundi (very good), chaalaa dooram (very far)."},
-  "bil ivvandi":{lit:"Bill give.",parts:[["bil","bill"],["ivvandi","give (polite)"]],casual:"bil ivvu",insight:"<code>ivvandi</code> is the polite “give” — slot any noun in front: “water ivvandi”, “sanchi ivvandi”."}
+  "bil ivvandi":{lit:"Bill give.",parts:[["bil","bill"],["ivvandi","give (polite)"]],casual:"bil ivvu",insight:"<code>ivvandi</code> is the polite “give” — slot any noun in front: “water ivvandi”, “sanchi ivvandi”."},
+  "idi telugu lo em antaaru?":{parts:[["idi","this"],["telugu lo","in Telugu"],["em antaaru","what do-they-call"]],lit:"This in-Telugu what call-they?",insight:"<code>lo</code> = “in” and it comes AFTER the noun, like <code>nunchi</code>. <code>antaaru</code> = “they say/call” — the polite plural doubles as “people in general”. This one sentence is worth more than the rest of the app: it makes every local your teacher."},
+  "artham kaaledu":{parts:[["artham","meaning"],["kaaledu","didn't become"]],lit:"Meaning didn't-happen.",insight:"Telugu says understanding “becomes” to you. <code>kaaledu</code> = didn't happen; swap for <code>ayindi</code> = happened, and you have “got it”. Same engine as <code>raadu</code>/<code>vacchaa</code>."},
+  "nenu telugu nerchukuntunnaanu":{parts:[["nenu","I"],["telugu","Telugu"],["nerchukuntunnaanu","am-learning (I)"]],lit:"I Telugu am-learning.",insight:"The <code>-tunnaanu</code> tail = “I am …-ing”. You met <code>-taanu</code> (I will) in “ikkada digutaanu”; this is its present-continuous cousin. Long word, but say it once and watch faces change."},
+  "idi correct aa?":{parts:[["idi","this"],["correct","correct (English)"],["-aa","? (question tag)"]],lit:"This correct-?",insight:"Proof that the <code>-aa</code> tag works on English words too. “ready aa?”, “free aa?”, “ok aa?” — all real Hyderabad Telugu."}
 };
 
 const METHOD = [
