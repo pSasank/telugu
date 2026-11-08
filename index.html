@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TeluguEasy — Survival Telugu for Hyderabad</title>
+<title>TeluguEasy — Survival Telugu for Hyderabad, speaking in two days</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Hanken+Grotesque:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -80,6 +80,17 @@
 
   .scope{max-width:1080px;margin:16px auto -2px;padding:0 20px;color:var(--muted);font-size:12.5px}
   .tip{max-width:1080px;margin:18px auto 0;padding:0 20px}
+  .today{max-width:1080px;margin:16px auto 0;padding:0 20px}
+  .today[hidden]{display:none}
+  .card.today-card{border-color:rgba(217,164,65,.45);background:linear-gradient(180deg,rgba(217,164,65,.07),rgba(217,164,65,0) 60%),var(--ink-2)}
+  .card.today-card:hover{border-color:rgba(217,164,65,.6)}
+  .today-lbl{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--brass);padding-right:34px}
+  .today-eng{font-size:15px;color:#cdd8d1;margin-top:4px}
+  .today-x{position:absolute;top:10px;right:11px;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:transparent;border:0;cursor:pointer;color:var(--muted);font-size:20px;line-height:1}
+  .today-x:hover{color:var(--pearl);background:var(--ink-3)}
+  .today-said{font-family:var(--ui);font-size:13px;font-weight:700;padding:8px 15px;border-radius:9px;border:1px solid var(--brass);background:var(--brass);color:var(--ink);cursor:pointer}
+  .today-said:disabled{background:var(--ink-3);border-color:var(--line);color:var(--muted);cursor:default}
+  .today-count{margin-top:10px;font-size:12.5px;color:var(--muted)}
   .tip .inner{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:12px;padding:14px 18px;display:flex;gap:12px;align-items:flex-start}
   .tip.path .inner{border-left-color:#2f7d5b}
   .tip .lbl{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--brass);margin-bottom:3px}
@@ -91,8 +102,9 @@
   .card{background:var(--ink-2);border:1px solid var(--line);border-radius:var(--r);padding:16px 16px 14px;position:relative;transition:border-color .15s}
   .card:hover{border-color:rgba(217,164,65,.35)}
   .card .eng{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.2px;padding-right:30px}
-  .card .ro{font-size:25px;font-weight:600;color:var(--pearl);line-height:1.3;margin:7px 0 3px}
-  .card .te{font-family:var(--telugu);font-size:16px;font-weight:500;line-height:1.4;color:var(--brass-soft)}
+  .card{--ro-size:25px}
+  .card .ro{font-size:var(--ro-size);font-weight:600;color:var(--pearl);line-height:1.3;margin:7px 0 3px}
+  .card .te{font-family:var(--telugu);font-size:calc(var(--ro-size) * .85);font-weight:500;line-height:1.45;color:var(--brass-soft)}
   .card .hi{margin-top:7px;font-size:13px;color:var(--muted)}
   .card .hi b{color:#cdd8d1;font-weight:600}
   .card .hi .tag{font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--brass);border:1px solid var(--line);border-radius:5px;padding:1px 5px;margin-right:7px;text-transform:uppercase}
@@ -109,7 +121,8 @@
   .hb-lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:4px}
   .hbrow{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:baseline;column-gap:9px;padding:2px 0;line-height:1.35}
   .hb-ro{font-size:13px;font-weight:700;color:var(--pearl)}
-  .hb-te{font-family:var(--telugu);font-size:16px;font-weight:500;color:var(--brass-soft)}
+  .hb-te{font-family:var(--telugu);font-size:16px;font-weight:500;color:var(--brass-soft);line-height:1.45}
+  .card .hb-te{font-size:calc(var(--ro-size) * .85)}
   .hb-eng{font-size:12px;color:var(--muted);flex:1 1 auto;min-width:0}
   .hb-say{align-self:center}
   .flash .hb{width:100%;max-width:420px;text-align:left}
@@ -205,8 +218,8 @@
   .bpill{font-family:var(--ui);font-size:14px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;background:var(--ink-2);border:1px solid var(--line);color:var(--muted);transition:.15s}
   .bpill:hover{color:var(--pearl);border-color:rgba(217,164,65,.4)}
   .bpill.on{background:var(--brass);color:var(--ink);border-color:var(--brass)}
-  .bpill:disabled{opacity:.35;cursor:not-allowed}
-  .bpill:disabled:hover{color:var(--muted);border-color:var(--line)}
+  .bpill.misfit{opacity:.35}
+  .bpill.misfit:hover{opacity:.65}
   .bpill:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
   .bkeep{max-width:680px;margin:0 auto 12px;font-size:12.5px;color:var(--brass-soft);background:var(--ink-3);border:1px solid var(--line);border-radius:10px;padding:10px 13px;line-height:1.5}
   .bresult{max-width:680px;margin:6px auto 0;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-radius:20px;padding:26px 24px;text-align:center}
@@ -263,13 +276,14 @@
   .sb-who{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--brass);margin-bottom:4px}
   .sbubble.them .sb-who{color:var(--muted)}
   .sb-en{font-size:13px;color:var(--muted);margin-bottom:3px}
-  .sb-ro{font-size:17px;font-weight:600;color:var(--pearl);margin-top:2px;display:flex;align-items:center;gap:8px}
-  .sb-te{font-family:var(--telugu);font-size:14px;font-weight:500;line-height:1.4;color:var(--brass-soft);margin-top:2px}
+  .sbubble{--sb-ro-size:17px}
+  .sb-ro{font-size:var(--sb-ro-size);font-weight:600;color:var(--pearl);margin-top:2px;display:flex;align-items:center;gap:8px}
+  .sb-te{font-family:var(--telugu);font-size:calc(var(--sb-ro-size) * .85);font-weight:500;line-height:1.45;color:var(--brass-soft);margin-top:2px}
   .sbhear{background:transparent;border:0;color:var(--muted);cursor:pointer;padding:2px;display:inline-flex}
   .sbhear:hover{color:var(--brass-soft)}
   .sbhear:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px;border-radius:5px}
 
-  @media (max-width:560px){.bar{gap:9px}.brand p{display:none}.hero{padding-top:30px}.card .te{font-size:27px}.card .hb-te{font-size:27px}.card .hbrow{display:flex;flex-wrap:wrap;gap:2px 9px}}
+  @media (max-width:560px){.today-row>button{flex:1 1 100%;justify-content:center}.bar{gap:9px}.brand p{display:none}.hero{padding-top:30px}.card .hbrow{display:flex;flex-wrap:wrap;gap:2px 9px}}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -278,7 +292,7 @@
   <div class="bar">
     <div class="brand">
       <div class="glyph">తె</div>
-      <div><h1>Telugu Easy</h1><p>Survival Telugu · two days to go</p></div>
+      <div><h1>Telugu Easy</h1><p>Survival Telugu · speaking in two days</p></div>
     </div>
     <div class="search">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
@@ -296,11 +310,12 @@
 <div id="book">
   <div class="lead"><span class="lead-eye">Survival Telugu</span><span class="lead-sub">Pick a tier — start with Base.</span></div>
   <div class="tierbar" id="tierbar" role="group" aria-label="Difficulty tier"></div>
+  <section class="today" id="today" aria-label="Today's line"></section>
   <nav class="chips" id="chips" aria-label="Categories"></nav>
   <div class="scope" id="scope"></div>
   <div class="tip" id="tip"></div>
   <main class="grid" id="grid"></main>
-  <p class="credit">Pronunciation uses your device's Telugu voice and works best in the deployed app (some browsers block it in embedded previews) — the romanization is your reliable guide. Tap “how it's built” on combined phrases to see the pieces. Made for newcomers, by locals.</p>
+  <p class="credit">Tap Hear for a real Telugu voice; the romanization is your backup. Tap “how it's built” to see the pieces. Made for newcomers, by locals.</p>
 </div>
 
 <div id="practice" hidden>
@@ -711,7 +726,57 @@ function renderGrid(){
   }).join("");
 }
 
-function renderBook(){ renderTierbar(); renderChips(); renderScope(); renderTip(); renderGrid(); }
+function renderBook(){ renderTierbar(); renderToday(); renderChips(); renderScope(); renderTip(); renderGrid(); }
+
+/* ---------------- today's line ----------------
+   Same phrase for everyone on a given local date: day index since 2026-01-01,
+   mod the Day 1 list followed by the Day 2 list (DAY order as written). */
+const todayEl=document.getElementById("today");
+const TODAY_EPOCH=new Date(2026,0,1);
+const isoDate=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+function todayPhrase(){
+  const now=new Date(), mid=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const idx=Math.round((mid-TODAY_EPOCH)/86400000);          // round: DST days are 23/25h
+  const keys=[...Object.keys(DAY).filter(k=>DAY[k]===1),...Object.keys(DAY).filter(k=>DAY[k]===2)];
+  if(!keys.length) return null;
+  const ro=keys[((idx%keys.length)+keys.length)%keys.length];
+  return P.find(p=>p.ro===ro)||null;
+}
+function saidDates(){ try{ const a=JSON.parse(store.get("nt_said")||"[]"); return Array.isArray(a)?[...new Set(a.filter(x=>typeof x==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(x)))]:[]; }catch(e){ return []; } }
+function renderToday(){
+  const today=isoDate(new Date());
+  const p=todayPhrase();
+  if(!p || store.get("nt_todayhide")===today){ todayEl.hidden=true; todayEl.innerHTML=""; return; }
+  todayEl.hidden=false;
+  const said=saidDates(), n=said.length, done=said.includes(today);
+  const hi=(state.hi&&HI[p.ro])?`<div class="hi"><span class="tag">हिं</span><b>${escapeHtml(HI[p.ro])}</b></div>`:"";
+  todayEl.innerHTML=`<article class="card today-card" data-pid="${p.id}">
+    <button class="today-x" data-todayhide aria-label="Hide today's line until tomorrow" title="Hide for today">×</button>
+    <div class="today-lbl">Today's line · say it to one person</div>
+    <div class="ro">${escapeHtml(p.ro)}</div>
+    <div class="te">${p.te}</div>
+    <div class="today-eng">${escapeHtml(p.eng)}</div>
+    ${hi}
+    ${dialectHtml(p)}
+    <div class="row today-row">
+      <button class="speak" data-todaysay aria-label="Hear ${escapeHtml(p.eng)}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg> Hear</button>
+      <button class="today-said" data-said${done?" disabled":""}>${done?"Said today ✓":"I said it ✓"}</button>
+    </div>
+    <div class="today-count">${n?`${n} day${n===1?"":"s"} spoken`:"Start your first day"}</div>
+  </article>`;
+}
+todayEl.addEventListener("click",e=>{
+  const p=P[+(todayEl.querySelector("[data-pid]")||{dataset:{pid:-1}}).dataset.pid]; if(!p) return;
+  const ds=e.target.closest("[data-dsay]"); if(ds){ sayDialect(ds); return; }
+  const say=e.target.closest("[data-todaysay]"); if(say){ speak(p.te,p.ro,say); return; }
+  if(e.target.closest("[data-said]")){
+    const today=isoDate(new Date()), said=saidDates();
+    if(!said.includes(today)){ said.push(today); store.set("nt_said",JSON.stringify(said)); }
+    toast("శభాష్! That's the whole method — one real sentence a day.");
+    renderToday(); return;
+  }
+  if(e.target.closest("[data-todayhide]")){ store.set("nt_todayhide",isoDate(new Date())); renderToday(); }
+});
 
 /* ---------------- breakdown flyout ---------------- */
 const overlay=document.getElementById("overlay");
@@ -877,19 +942,21 @@ const buildForm = (n,f) => { const fr=(n.pl&&f.pl)?f.pl:f; return {te:n.te+" "+f
 const VALID_PAIRS = BNOUNS.flatMap((n,i)=>BFRAMES.map((f,j)=>[i,j])).filter(([i,j])=>fits(BNOUNS[i],BFRAMES[j]));
 const buildRoot=document.getElementById("build");
 let buildState={noun:0,frame:0};
-/* keep the selection a sensible pair: fix the side the user did NOT just pick */
+/* keep the selection a sensible pair: fix the side the user did NOT just pick.
+   kept="noun"  -> first frame (BFRAMES order) whose FIT list has the noun
+   kept="frame" -> first noun in that frame's FIT list */
 function normalizeBuild(kept){
   const n=BNOUNS[buildState.noun], f=BFRAMES[buildState.frame];
   if(fits(n,f)) return;
   if(kept==="noun"){ const j=BFRAMES.findIndex(x=>fits(n,x)); if(j>=0) buildState.frame=j; }
-  else { const i=BNOUNS.findIndex(x=>fits(x,f)); if(i>=0) buildState.noun=i; }
+  else { const first=(FIT[f.label]||[])[0]; const i=BNOUNS.findIndex(x=>x.eng===first); if(i>=0) buildState.noun=i; }
 }
 function renderBuild(){
   normalizeBuild("frame");
   const n=BNOUNS[buildState.noun], f=BFRAMES[buildState.frame];
   const form=buildForm(n,f), te=form.te, ro=form.ro;
-  const nounPills=BNOUNS.map((x,i)=>{ const ok=fits(x,f); return `<button class="bpill${i===buildState.noun?' on':''}" data-noun="${i}"${ok?'':' disabled aria-disabled="true" title="Doesn\'t fit this frame"'}>${escapeHtml(x.eng)}</button>`; }).join("");
-  const framePills=BFRAMES.map((x,i)=>{ const ok=fits(n,x); return `<button class="bpill${i===buildState.frame?' on':''}" data-frame="${i}"${ok?'':' disabled aria-disabled="true" title="Doesn\'t fit this word"'}>${escapeHtml(x.label)}</button>`; }).join("");
+  const nounPills=BNOUNS.map((x,i)=>{ const ok=fits(x,f); return `<button class="bpill${i===buildState.noun?' on':''}${ok?'':' misfit'}" data-noun="${i}"${ok?'':` title="Doesn't fit “${escapeHtml(f.label)}” — tap to switch frame"`}>${escapeHtml(x.eng)}</button>`; }).join("");
+  const framePills=BFRAMES.map((x,i)=>{ const ok=fits(n,x); return `<button class="bpill${i===buildState.frame?' on':''}${ok?'':' misfit'}" data-frame="${i}"${ok?'':` title="Doesn't fit “${escapeHtml(n.eng)}” — tap to switch word"`}>${escapeHtml(x.label)}</button>`; }).join("");
   const keepNote=n.keep?`<div class="bkeep">No Telugu word needed for “${escapeHtml(n.eng)}” — say the English word right inside the Telugu frame. That code-switch is exactly what locals do every day.</div>`:"";
   buildRoot.innerHTML=`<div class="fc">
     <div class="fc-setup" style="margin-bottom:18px">
@@ -917,8 +984,8 @@ function renderBuild(){
   </div>`;
 }
 buildRoot.addEventListener("click",e=>{
-  const nb=e.target.closest("[data-noun]"); if(nb){ if(nb.disabled) return; buildState.noun=+nb.dataset.noun; normalizeBuild("noun"); renderBuild(); return; }
-  const fb=e.target.closest("[data-frame]"); if(fb){ if(fb.disabled) return; buildState.frame=+fb.dataset.frame; normalizeBuild("frame"); renderBuild(); return; }
+  const nb=e.target.closest("[data-noun]"); if(nb){ buildState.noun=+nb.dataset.noun; normalizeBuild("noun"); renderBuild(); return; }
+  const fb=e.target.closest("[data-frame]"); if(fb){ buildState.frame=+fb.dataset.frame; normalizeBuild("frame"); renderBuild(); return; }
   const say=e.target.closest("#bsay"); if(say){ const form=buildForm(BNOUNS[buildState.noun],BFRAMES[buildState.frame]); speak(form.te, form.ro, say); return; }
   if(e.target.closest("#bdice")){ const [i,j]=VALID_PAIRS[Math.floor(Math.random()*VALID_PAIRS.length)]; buildState.noun=i; buildState.frame=j; renderBuild(); }
 });
@@ -1017,7 +1084,7 @@ function showWelcome(){
     <p class="w-sub">Built the way migrant traders pick up a city's language: speak broken on day one, keep the nouns English, and let every Telugu speaker around you teach you the rest.</p>
     <div class="w-mhead">The four tricks</div>
     <div class="mgrid">${METHOD.map(m=>`<div class="mcard"><div class="mn">${m.n}</div><h4>${m.h}</h4><p>${m.p}</p></div>`).join("")}</div>
-    <button class="w-start" data-wclose>Start learning &rarr;</button>
+    <button class="w-start" data-wclose>Start speaking &rarr;</button>
   </div>`;
   document.getElementById("welcome").classList.add("show");
 }
@@ -1053,7 +1120,7 @@ cardsRoot.addEventListener("click",e=>{
   const hbs=e.target.closest("[data-hbsay]"); if(hbs){ e.stopPropagation(); sayHb(hbs); return; }
   const ds=e.target.closest("[data-dsay]"); if(ds){ e.stopPropagation(); sayDialect(ds); return; }
   const grade=e.target.closest("[data-grade]");
-  if(grade){ if(grade.dataset.grade==="know") fc.known++; else fc.deck.push(fc.deck[fc.i]); fc.i++; fc.flipped=false; renderCards(); return; }
+  if(grade){ if(grade.dataset.grade==="know"){ if(fc.i<fc.total) fc.known++; /* first showing only: re-queued cards sit past fc.total */ } else fc.deck.push(fc.deck[fc.i]); fc.i++; fc.flipped=false; renderCards(); return; }
   const flash=e.target.closest("#flash"); if(flash && fc && !fc.flipped){ fc.flipped=true; renderCards(); }
 });
 cardsRoot.addEventListener("keydown",e=>{ if(e.target.id==="flash"&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); if(!fc.flipped){fc.flipped=true;renderCards();} } });
