@@ -357,7 +357,7 @@ const CATS = [
   {id:"time",  tier:2, name:"Time", em:"🕒", tip:"Mix freely with English clock times: “reepu 5 ki” = tomorrow at 5. You almost never need Telugu numbers for the hour."},
   {id:"talk",  tier:3, name:"Small Talk", em:"💬", tip:"“Meeru ekkadi nunchi?” is the universal icebreaker. This is the tier where you stop transacting and start connecting."},
   {id:"casual",tier:3, name:"Casual Register", em:"😎", tip:"Base teaches the polite “-aaru” forms. With friends and juniors Telugu drops to “-aav” forms — “elaa unnaav?” not “elaa unnaaru?”. Picking the right one, plus the HYD forms marked on cards, is what makes you sound local, not bookish."},
-  {id:"num",   tier:2, name:"Numbers", em:"🔢", tip:"Not in Base — English numbers are understood everywhere. But the moment you’re bargaining or counting change, the Telugu numbers earn their place."},
+  {id:"num",   tier:2, name:"Numbers (ears first)", em:"🔢", tip:"You never need to SAY a Telugu number — English numbers work at every counter. You DO need to CATCH them: vendors and drivers quote prices in Telugu. Learn these by ear, then confirm in English: “vanda? — hundred?”"},
 ];
 
 /* phrase tuples: [cat, english, telugu, roman, note?, hb?]
@@ -475,6 +475,12 @@ const P = [
   ["autobase","Anna, how much to Gachibowli?","అన్నా, గచ్చిబౌలి ఎంత?","anna, Gachibowli enta?","The whole auto negotiation in four words. Swap in any place name, in English."],
   ["ears","Wait a bit (you'll hear this at every counter)","కొంచెం ఆగండి","konchem aagandi"],
   ["ears","Not available / finished","అయిపోయింది","aipoyindi","Shops say this constantly. It just means “that one's done”. Point at the next thing."],
+  ["num","One fifty","నూట యాభై","noota yaabhai","noota = hundred-and. The most common auto fare you'll hear."],
+  ["num","Two hundred","రెండు వందలు","rendu vandalu"],
+  ["num","Three hundred","మూడు వందలు","moodu vandalu"],
+  ["num","Half a kilo","అర కిలో","ara kilo"],
+  ["num","One and a half","ఒకటిన్నర","okatinnara","-nnara = and a half. Also time: “aidunnara” = half past five."],
+  ["num","How much is it per kilo?","కిలో ఎంత?","kilo enta?","The vegetable-market question. Reply will be a Telugu number — catch it, confirm in English.",[{te:"కిలో యాభై",ro:"kilo yaabhai",eng:"fifty a kilo"},{te:"కిలో ఎనభై",ro:"kilo enabhai",eng:"eighty a kilo"},{te:"కిలో నూట ఇరవై",ro:"kilo noota iravai",eng:"one-twenty a kilo"}]],
 ].map((r,i)=>({id:i,cat:r[0],eng:r[1],te:r[2],ro:r[3],note:r[4]||null,hb:r[5]||null}));
 
 /* ---------------- guided path (day 1 / day 2), keyed by romanization ---------------- */
@@ -1013,14 +1019,14 @@ const SCEN=[
     {who:"you",label:"You",en:"Thank you.",te:"ధన్యవాదాలు.",ro:"dhanyavaadaalu."},
   ]},
   {tier:2,emoji:"🛍️",title:"Haggling at the market",setting:"A vendor's selling mangoes. Talk the price down to something fair.",turns:[
-    {who:"you",label:"You",en:"How much is this?",te:"ఇది ఎంత?",ro:"idi enta?"},
-    {who:"them",label:"Vendor",en:"Two hundred a kilo."},
+    {who:"you",label:"You",en:"How much per kilo?",te:"కిలో ఎంత?",ro:"kilo enta?"},
+    {who:"them",label:"Vendor",en:"Two hundred a kilo.",te:"కిలో రెండు వందలు",ro:"kilo rendu vandalu"},
     {who:"you",label:"You",en:"That's too much.",te:"చాలా ఎక్కువ.",ro:"chaalaa ekkuva."},
     {who:"you",label:"You",en:"Reduce the price.",te:"రేటు తగ్గించండి.",ro:"reetu tagginchandi."},
-    {who:"them",label:"Vendor",en:"Fine — one fifty."},
+    {who:"them",label:"Vendor",en:"Fine — one fifty.",te:"సరే, నూట యాభై",ro:"saree, noota yaabhai"},
     {who:"you",label:"You",en:"What's the last price?",te:"చివరి రేటు ఎంత?",ro:"chivari reetu enta?"},
-    {who:"them",label:"Vendor",en:"One twenty. Final."},
-    {who:"you",label:"You",en:"OK. Give me one.",te:"సరే. ఒకటి ఇవ్వండి.",ro:"saree. okati ivvandi."},
+    {who:"them",label:"Vendor",en:"One twenty. Final.",te:"నూట ఇరవై. చివరి.",ro:"noota iravai. chivari."},
+    {who:"you",label:"You",en:"OK. Give me one kilo.",te:"సరే. ఒక కిలో ఇవ్వండి.",ro:"saree. oka kilo ivvandi."},
   ]},
   {tier:2,emoji:"☕",title:"The tiffin stop",setting:"Busy tiffin centre at 8am. Idli, not too spicy, and a chai.",turns:[
     {who:"you",label:"You",en:"One plate idli.",te:"ఒక ప్లేట్ ఇడ్లీ.",ro:"oka pleet idli."},
@@ -1038,6 +1044,27 @@ const SCEN=[
     {who:"you",label:"You",en:"From Shillong.",te:"షిల్లాంగ్ నుంచి.",ro:"Shillong nunchi."},
     {who:"you",label:"You",en:"Nice to meet you.",te:"కలవడం సంతోషం.",ro:"kalavadam santosham."},
     {who:"them",label:"Neighbour",en:"See you again!",te:"మళ్ళీ కలుద్దాం!",ro:"mallee kaluddaam!"},
+  ]},
+  {tier:1,emoji:"🧹",title:"Talking to the maid / cook",setting:"She comes every morning. Ten words cover a month of instructions — point at things and keep the nouns English.",turns:[
+    {who:"them",label:"Akka",en:"Morning. Anything today?",te:"ఏమైనా ఉందా?",ro:"emainaa undaa?"},
+    {who:"you",label:"You",en:"Akka, this — a little less salt.",te:"అక్కా, ఇది — ఉప్పు కొంచెం తక్కువ.",ro:"akka, idi — uppu konchem takkuva."},
+    {who:"them",label:"Akka",en:"OK. Tomorrow?",te:"సరే. రేపు?",ro:"saree. repu?"},
+    {who:"you",label:"You",en:"Tomorrow don't come. (just say “tomorrow” + vaddu)",te:"రేపు వద్దు.",ro:"repu vaddu."},
+    {who:"you",label:"You",en:"What do you call this in Telugu?",te:"ఇది తెలుగులో ఏం అంటారు?",ro:"idi telugu lo em antaaru?"},
+    {who:"them",label:"Akka",en:"Chintapandu. (tamarind)",te:"చింతపండు.",ro:"chintapandu."},
+    {who:"you",label:"You",en:"Say it again, slowly.",te:"మళ్ళీ, నెమ్మదిగా చెప్పండి.",ro:"malli, nemmadigaa cheppandi."},
+    {who:"you",label:"You",en:"Got it. Thanks, akka.",te:"అర్థం అయింది. థాంక్స్ అక్కా.",ro:"artham ayindi. thanks akka."},
+  ]},
+  {tier:2,emoji:"🍛",title:"Lunch with a colleague",setting:"Office canteen. He's Telugu, you're not. This is the conversation that turns a colleague into a teacher.",turns:[
+    {who:"them",label:"Colleague",en:"Eaten?",te:"తిన్నారా?",ro:"tinnaaraa?"},
+    {who:"you",label:"You",en:"Not yet. (English is fine) I'm learning Telugu.",te:"నేను తెలుగు నేర్చుకుంటున్నాను.",ro:"nenu telugu nerchukuntunnaanu."},
+    {who:"them",label:"Colleague",en:"Really? Very good!",te:"అవునా? చాలా బాగుంది!",ro:"avunaa? chaalaa baagundi!"},
+    {who:"you",label:"You",en:"How do you say “spicy” in Telugu?",te:"“spicy” తెలుగులో ఏం అంటారు?",ro:"“spicy” telugu lo em antaaru?"},
+    {who:"them",label:"Colleague",en:"Kaaram.",te:"కారం.",ro:"kaaram."},
+    {who:"you",label:"You",en:"This is very spicy!",te:"ఇది చాలా కారం!",ro:"idi chaalaa kaaram!"},
+    {who:"them",label:"Colleague",en:"Ha! Drink water.",te:"నీళ్ళు తాగండి.",ro:"neellu taagandi."},
+    {who:"you",label:"You",en:"Is this right — “idi masth undi”?",te:"ఇది కరెక్టా — “ఇది మస్త్ ఉంది”?",ro:"idi correct aa — “idi masth undi”?"},
+    {who:"them",label:"Colleague",en:"Perfect. You're already Hyderabadi.",te:"పర్ఫెక్ట్. మీరు ఇప్పటికే హైదరాబాదీ.",ro:"perfect. meeru ippatike hyderabadi."},
   ]},
 ];
 const scenRoot=document.getElementById("scen");
