@@ -98,6 +98,13 @@
   .card .hi .tag{font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--brass);border:1px solid var(--line);border-radius:5px;padding:1px 5px;margin-right:7px;text-transform:uppercase}
   .card .note{margin-top:11px;padding-top:9px;border-top:1px dashed var(--line-2);font-size:12px;color:var(--muted);line-height:1.5}
   .card .note code{font-family:var(--ui);background:var(--ink-3);color:var(--brass-soft);padding:1px 5px;border-radius:4px}
+  .hyd{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px;margin-top:6px;font-size:13px;color:var(--muted);line-height:1.4}
+  .hyd .tag{font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--brass);border:1px solid var(--line);border-radius:5px;padding:1px 5px;margin-right:1px;text-transform:uppercase;align-self:center}
+  .hyd-ro{color:#cdd8d1;font-weight:700}
+  .hyd-te{font-family:var(--telugu);color:var(--brass-soft);font-size:14px}
+  .hyd-say{align-self:center}
+  .hyd-txt{font-size:12px}
+  .flash .hyd{justify-content:center;max-width:440px;margin-top:-4px}
   .hb{margin-top:11px;padding-top:9px;border-top:1px dashed var(--line-2)}
   .hb-lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:4px}
   .hbrow{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:baseline;column-gap:9px;padding:2px 0;line-height:1.35}
@@ -310,7 +317,7 @@
 const TIERS = [
   {n:1, name:"Base",      sub:"Broken & talking"},
   {n:2, name:"Everyday",  sub:"Getting around"},
-  {n:3, name:"Blend in",  sub:"Sound local"},
+  {n:3, name:"Blend in",  sub:"Sound Hyderabadi"},
 ];
 
 const CATS = [
@@ -320,7 +327,7 @@ const CATS = [
   {id:"frames",tier:1, name:"Question Frames", em:"🧩", tip:"These are slots. Put any English noun in front and you have a sentence: “water enta?”, “ATM ekkada?”. Six frames plus pointing equals a hundred questions."},
   {id:"glue",  tier:1, name:"Glue Words", em:"✅", tip:"Tiny words that keep a conversation moving. Bonus hack: stick “andi” on almost anything to make it polite — “raa” becomes “randi”."},
   {id:"first", tier:1, name:"First Words", em:"🙏", tip:"Five seconds of effort that buys instant goodwill. Two of these — “naaku telugu raadu” and “meeku inglish vacchaa?” — are your escape hatches when you're stuck."},
-  {id:"autobase", tier:1, name:"Auto Survival", em:"🛺", tip:"The words that get you home. Say the place name in English, say <b>anna</b>, and these five do the rest. Left/right/straight are in Ears only — drivers understand the English."},
+  {id:"autobase", tier:1, name:"Auto Survival", em:"🛺", tip:"The words that get you home. Say the place name in English, say <b>anna</b>, and these six do the rest. Left/right/straight are in Ears only — drivers understand the English."},
   {id:"ears", tier:1, name:"Ears only", em:"🎧", tip:"You don't need to SAY these — English works — but you'll HEAR them constantly. Learn to recognise them; don't spend speaking effort on them."},
   {id:"auto",  tier:2, name:"Autos & Directions", em:"🧭", tip:"Open with “meeter veeyandi”. If refused: “enta?” then “chaalaa ekkuva”. Builds on the Auto Survival words from Base."},
   {id:"shop",  tier:2, name:"Shopping & Bargaining", em:"🛍️", tip:"Bargaining is expected in markets, not malls. “idi enta?” → “tagginchandi” → “chivari reetu enta?”. A smile moves the price more than grammar."},
@@ -328,7 +335,7 @@ const CATS = [
   {id:"food",  tier:2, name:"Food & Chai", em:"☕", tip:"Hyderabadi food runs hot — “kaaram takkuva” is survival. Say veg/non-veg in English anywhere; the Telugu is here for when you want it."},
   {id:"time",  tier:2, name:"Time", em:"🕒", tip:"Mix freely with English clock times: “reepu 5 ki” = tomorrow at 5. You almost never need Telugu numbers for the hour."},
   {id:"talk",  tier:3, name:"Small Talk", em:"💬", tip:"“Meeru ekkadi nunchi?” is the universal icebreaker. This is the tier where you stop transacting and start connecting."},
-  {id:"casual",tier:3, name:"Casual Register", em:"😎", tip:"Base teaches the polite “-aaru” forms. With friends and juniors Telugu drops to “-aav” forms — “elaa unnaav?” not “elaa unnaaru?”. Picking the right one is what makes you sound local, not bookish."},
+  {id:"casual",tier:3, name:"Casual Register", em:"😎", tip:"Base teaches the polite “-aaru” forms. With friends and juniors Telugu drops to “-aav” forms — “elaa unnaav?” not “elaa unnaaru?”. Picking the right one, plus the HYD forms marked on cards, is what makes you sound local, not bookish."},
   {id:"num",   tier:2, name:"Numbers", em:"🔢", tip:"Not in Base — English numbers are understood everywhere. But the moment you’re bargaining or counting change, the Telugu numbers earn their place."},
 ];
 
@@ -475,6 +482,26 @@ const HI = {
   "meeter veeyandi":"meter se chalo","chaalaa ekkuva":"bahut zyada","ikkada digutaanu":"main yahaan utarta hoon",
   "anna, Gachibowli enta?":"bhaiyya, Gachibowli kitna?","konchem aagandi":"thoda rukiye","aipoyindi":"khatam ho gaya"
 };
+
+/* ---------------- Hyderabad / Telangana street forms, keyed by romanization ----------------
+   {te, ro, txt}. Keep `const DIALECT={` and the closing `};` on their own lines: sarvam_tts.js reads te:"..." between them. */
+const DIALECT={
+"vellandi":{te:"పోండి",ro:"pondi",txt:"Telangana says pondi. vellandi is correct but sounds coastal here."},
+"veldaam":{te:"పోదాం",ro:"podaam",txt:"Same swap: vel- → po-."},
+"neerugaa":{te:"సీధా",ro:"seedha",txt:"The Deccani word. Every driver says it."},
+"chaalaa ekkuva":{te:"బగ్గ ఎక్కువ",ro:"bagga ekkuva",txt:"bagga = very (Telangana). chaalaa works too."},
+"chaalaa baagundi":{te:"మస్త్ ఉంది",ro:"masth undi",txt:"masth = great. The most Hyderabadi word there is."},
+"taruvaata":{te:"తర్వాత",ro:"tarvaata",txt:"Same word, swallowed middle vowel."},
+"konchem":{te:"కొద్దిగా",ro:"koddiga",txt:"You'll hear both; koddiga is the street form."},
+"nemmadigaa":{te:"మెల్లగా",ro:"mellaga",txt:"nemmadigaa is understood; mellaga is what locals say."},
+"udayam":{te:"పొద్దున",ro:"poddun",txt:"Nobody says udayam in a kitchen."},
+"ivvandi":{te:"ఇయ్యండి",ro:"iyyandi",txt:"Telangana softens vv → yy. Both are fine."},
+"parvaaleedu":{te:"పర్లేదు",ro:"parledu",txt:"The two-syllable version is the one you'll hear."},
+"dhanyavaadaalu":{te:"థాంక్స్ అన్నా",ro:"thanks anna",txt:"Honestly, this is what people say. Keep dhanyavaadaalu for elders."},
+"namaskaaram":{te:"హలో అన్నా",ro:"hello anna",txt:"At a shop or auto. namaskaaram is for homes and elders."},
+"eenti?":{te:"ఏం?",ro:"em?",txt:"“em anna?” = what's up / what do you want."}
+};
+
 
 /* ---------------- word breakdowns, keyed by romanization ---------------- */
 const BD = {
@@ -633,6 +660,11 @@ function filtered(){
   return l;
 }
 
+function dialectHtml(p){
+  const d=DIALECT[p.ro]; if(!d) return "";
+  return `<div class="hyd"><span class="tag">HYD</span><b class="hyd-ro">${escapeHtml(d.ro)}</b><span class="hyd-dot">·</span><span class="hyd-te">${d.te}</span><button class="sbhear hyd-say" data-dsay="${p.id}" aria-label="Hear the Hyderabad form ${escapeHtml(d.ro)}">${HEAR_SVG}</button><span class="hyd-txt">${escapeHtml(d.txt)}</span></div>`;
+}
+function sayDialect(btn){ const p=P[+btn.dataset.dsay]; const d=p&&DIALECT[p.ro]; if(d) speak(d.te,d.ro,btn); }
 function hbHtml(p){
   if(!p.hb||!p.hb.length) return "";
   const rows=p.hb.map((h,i)=>`<div class="hbrow"><b class="hb-ro">${escapeHtml(h.ro)}</b><span class="hb-te">${h.te}</span><span class="hb-eng">${escapeHtml(h.eng)}</span><button class="sbhear hb-say" data-hbsay="${p.id}:${i}" aria-label="Hear ${escapeHtml(h.eng)}">${HEAR_SVG}</button></div>`).join("");
@@ -658,6 +690,7 @@ function renderGrid(){
       <div class="eng">${escapeHtml(p.eng)}</div>
       <div class="ro">${escapeHtml(p.ro)}</div>
       <div class="te">${p.te}</div>
+      ${dialectHtml(p)}
       ${hi}
       <div class="row">
         <button class="speak" data-say="${p.id}" aria-label="Hear ${escapeHtml(p.eng)}">
@@ -748,6 +781,7 @@ function renderCards(){
       ${fc.flipped ? `
         <div class="a-ro">${escapeHtml(p.ro)}</div>
         <div class="a-te">${p.te}</div>
+        ${dialectHtml(p)}
         <div class="eng" style="color:var(--muted);font-size:14px">${escapeHtml(p.eng)}</div>
         <button class="speak" data-sayflash="${p.id}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg> Hear</button>
         ${hbHtml(p)}
@@ -834,14 +868,16 @@ buildRoot.addEventListener("click",e=>{
 
 /* ---------------- scenarios ---------------- */
 const SCEN=[
-  {tier:1,emoji:"🛺",title:"Catching an auto",setting:"Flag down an auto, give directions, settle the fare. Just get home.",turns:[
+  {tier:1,emoji:"🛺",title:"Catching an auto",setting:"Flag an auto, refuse the first price, get home. You never need to say left or right in Telugu.",turns:[
     {who:"them",label:"Driver",en:"Where to?",te:"ఎక్కడికి?",ro:"ekkadiki?"},
-    {who:"you",label:"You",en:"Gachibowli. (just say the place)"},
-    {who:"you",label:"You",en:"Straight.",te:"నేరుగా.",ro:"neerugaa."},
-    {who:"you",label:"You",en:"Left here.",te:"ఇక్కడ ఎడమ.",ro:"ikkada edama."},
-    {who:"you",label:"You",en:"Stop here. How much?",te:"ఇక్కడ ఆపండి. ఎంత?",ro:"ikkada aapandi. enta?"},
-    {who:"them",label:"Driver",en:"Eighty."},
-    {who:"you",label:"You",en:"OK. Thank you.",te:"సరే. ధన్యవాదాలు.",ro:"saree. dhanyavaadaalu."},
+    {who:"you",label:"You",en:"Anna, how much to Gachibowli?",te:"అన్నా, గచ్చిబౌలి ఎంత?",ro:"anna, Gachibowli enta?"},
+    {who:"them",label:"Driver",en:"Two hundred.",te:"రెండు వందలు",ro:"rendu vandalu"},
+    {who:"you",label:"You",en:"Too much. Go by meter.",te:"చాలా ఎక్కువ. మీటర్ వేయండి.",ro:"chaalaa ekkuva. meeter veeyandi."},
+    {who:"them",label:"Driver",en:"No meter. One fifty, final.",te:"మీటర్ లేదు.",ro:"meeter ledu."},
+    {who:"you",label:"You",en:"OK.",te:"సరే.",ro:"saree."},
+    {who:"you",label:"You",en:"Left here. (just say “left” — he understands)"},
+    {who:"you",label:"You",en:"Stop here.",te:"ఇక్కడ ఆపండి.",ro:"ikkada aapandi."},
+    {who:"you",label:"You",en:"Thanks, anna!",te:"థాంక్స్ అన్నా!",ro:"thanks anna!"},
   ]},
   {tier:1,emoji:"🏠",title:"Meeting a neighbour",setting:"First week in the building. You meet a neighbour in the lift.",turns:[
     {who:"you",label:"You",en:"Hello!",te:"నమస్కారం!",ro:"namaskaaram!"},
@@ -946,6 +982,8 @@ grid.addEventListener("click",e=>{
   if(bd){ openBreakdown(+bd.dataset.bd); return; }
   const hbs=e.target.closest("[data-hbsay]");
   if(hbs){ sayHb(hbs); return; }
+  const ds=e.target.closest("[data-dsay]");
+  if(ds){ sayDialect(ds); return; }
   const say=e.target.closest("[data-say]");
   if(say){ const p=P[+say.dataset.say]; speak(p.te,p.ro,say); }
 });
@@ -955,6 +993,7 @@ cardsRoot.addEventListener("click",e=>{
   const done=e.target.closest("[data-done]"); if(done){ fc=null; renderCards(); return; }
   const sayf=e.target.closest("[data-sayflash]"); if(sayf){ e.stopPropagation(); const p=P[+sayf.dataset.sayflash]; speak(p.te,p.ro,sayf); return; }
   const hbs=e.target.closest("[data-hbsay]"); if(hbs){ e.stopPropagation(); sayHb(hbs); return; }
+  const ds=e.target.closest("[data-dsay]"); if(ds){ e.stopPropagation(); sayDialect(ds); return; }
   const grade=e.target.closest("[data-grade]");
   if(grade){ if(grade.dataset.grade==="know") fc.known++; else fc.deck.push(fc.deck[fc.i]); fc.i++; fc.flipped=false; renderCards(); return; }
   const flash=e.target.closest("#flash"); if(flash && fc && !fc.flipped){ fc.flipped=true; renderCards(); }

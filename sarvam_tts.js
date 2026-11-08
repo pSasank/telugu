@@ -102,6 +102,10 @@ function collectStrings(html) {
   // 1b) "hear back" replies: every te:"..." inside the P block (the optional 6th element)
   out = out.concat(matchAll(/te:"([^"]*)"/g, pblock));
 
+  // 1c) Hyderabad dialect forms: te:"..." inside DIALECT
+  const dia = slice(html, 'const DIALECT={', '\n};');
+  out = out.concat(matchAll(/te:"([^"]*)"/g, dia));
+
   // 2) scenario lines: te:"..." inside SCEN
   const scen = slice(html, 'const SCEN=[', 'const scenRoot');
   out = out.concat(matchAll(/te:"([^"]*)"/g, scen));
