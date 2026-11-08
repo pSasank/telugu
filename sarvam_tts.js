@@ -9,7 +9,7 @@
  *   * No CORS, no per-tap latency.
  *
  * WHAT IT DOES:
- *   1. Parses survival-telugu.html and collects every Telugu string the app speaks
+ *   1. Parses index.html and collects every Telugu string the app speaks
  *      (phrase cards, scenario lines, and the sentence-builder combinations).
  *   2. Calls Sarvam TTS once per unique string, saving WAV clips into ./audio/.
  *   3. Writes audio-manifest.js  ->  window.TWOLINGO_AUDIO = { "<telugu>": "<src>", ... }.
@@ -25,7 +25,7 @@
  *                                                 #   self-contained + works over file://)
  *
  * DEPLOY:
- *   Ship survival-telugu.html, audio-manifest.js, and (unless --inline) the ./audio/ folder
+ *   Ship index.html, audio-manifest.js, and (unless --inline) the ./audio/ folder
  *   together. Re-run this script whenever you add or change phrases; it skips clips that
  *   already exist, so it's cheap to re-run.
  *
@@ -99,6 +99,8 @@ function collectStrings(html) {
   // 1) phrase cards: 3rd field of each ["cat","eng","<TE>","<ro>", ...] tuple
   const pblock = slice(html, 'const P = [', '].map((r,i)');
   out = out.concat(matchAll(/\["[^"]*","[^"]*","([^"]*)","[^"]*"/g, pblock));
+  // 1b) "hear back" replies: every te:"..." inside the P block (the optional 6th element)
+  out = out.concat(matchAll(/te:"([^"]*)"/g, pblock));
 
   // 2) scenario lines: te:"..." inside SCEN
   const scen = slice(html, 'const SCEN=[', 'const scenRoot');
@@ -215,7 +217,7 @@ async function main() {
 
   console.log(`\nDone. made=${made} skipped=${skipped} failed=${failed}`);
   console.log(`Wrote ${MANIFEST_JS}` + (INLINE ? '' : ` + ${AUDIO_DIR}/*.wav`));
-  console.log('Open survival-telugu.html — the Hear buttons now use Sarvam Telugu.');
+  console.log('Open index.html — the Hear buttons now use Sarvam Telugu.');
 }
 
 main().catch((err) => {

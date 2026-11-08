@@ -98,6 +98,14 @@
   .card .hi .tag{font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--brass);border:1px solid var(--line);border-radius:5px;padding:1px 5px;margin-right:7px;text-transform:uppercase}
   .card .note{margin-top:11px;padding-top:9px;border-top:1px dashed var(--line-2);font-size:12px;color:var(--muted);line-height:1.5}
   .card .note code{font-family:var(--ui);background:var(--ink-3);color:var(--brass-soft);padding:1px 5px;border-radius:4px}
+  .hb{margin-top:11px;padding-top:9px;border-top:1px dashed var(--line-2)}
+  .hb-lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:4px}
+  .hbrow{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:baseline;column-gap:9px;padding:2px 0;line-height:1.35}
+  .hb-ro{font-size:13px;font-weight:700;color:var(--pearl)}
+  .hb-te{font-family:var(--telugu);font-size:16px;font-weight:500;color:var(--brass-soft)}
+  .hb-eng{font-size:12px;color:var(--muted);flex:1 1 auto;min-width:0}
+  .hb-say{align-self:center}
+  .flash .hb{width:100%;max-width:420px;text-align:left}
   .card .row{display:flex;align-items:center;gap:6px;margin-top:13px;flex-wrap:wrap}
   .speak{font-family:var(--ui);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:7px;background:var(--ink-3);border:1px solid var(--line);color:var(--pearl);padding:7px 13px;border-radius:9px;cursor:pointer;transition:.15s}
   .speak:hover{border-color:var(--brass);color:var(--brass-soft)}
@@ -248,7 +256,7 @@
   .sbhear:hover{color:var(--brass-soft)}
   .sbhear:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px;border-radius:5px}
 
-  @media (max-width:560px){.bar{gap:9px}.brand p{display:none}.hero{padding-top:30px}.card .te{font-size:27px}}
+  @media (max-width:560px){.bar{gap:9px}.brand p{display:none}.hero{padding-top:30px}.card .te{font-size:27px}.card .hb-te{font-size:27px}.card .hbrow{display:flex;flex-wrap:wrap;gap:2px 9px}}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -322,9 +330,10 @@ const CATS = [
   {id:"num",   tier:2, name:"Numbers", em:"🔢", tip:"Not in Base — English numbers are understood everywhere. But the moment you’re bargaining or counting change, the Telugu numbers earn their place."},
 ];
 
-/* phrase tuples: [cat, english, telugu, roman, note?] */
+/* phrase tuples: [cat, english, telugu, roman, note?, hb?]
+   hb = "what you'll hear back": [{te,ro,eng},…]. Use null for note when a phrase has hb but no note. */
 const P = [
-  ["learn","What do you call this in Telugu?","ఇది తెలుగులో ఏం అంటారు?","idi telugu lo em antaaru?","Point at anything and ask. The answer is your next word — repeat it back and it sticks."],
+  ["learn","What do you call this in Telugu?","ఇది తెలుగులో ఏం అంటారు?","idi telugu lo em antaaru?","Point at anything and ask. The answer is your next word — repeat it back and it sticks.",[{te:"… అంటారు",ro:"… antaaru",eng:"it's called … (then say: malli cheppandi)"}]],
   ["learn","Say it again","మళ్ళీ చెప్పండి","malli cheppandi"],
   ["learn","Say it slowly","నెమ్మదిగా చెప్పండి","nemmadigaa cheppandi"],
   ["learn","I didn't understand","అర్థం కాలేదు","artham kaaledu"],
@@ -336,7 +345,7 @@ const P = [
   ["address","Akka — any woman roughly your age or older (vendor, maid, receptionist)","అక్కా","akka","Literally “elder sister”. “akka, change undaa?”"],
   ["address","Bhaiyya — also fine for any man in Hyderabad","భయ్యా","bhaiyya","Hyderabad's Hindi-Urdu side. Interchangeable with anna; autos hear both all day."],
   ["address","Uncle / Aunty — anyone clearly older","అంకుల్ / ఆంటీ","uncle / aunty","Just say the English. That IS the Telugu."],
-  ["verbs","(I) want / need","కావాలి","kaavaali","Frame: <code>noun + kaavaali</code> = I want ___.  Try: “water kaavaali”."],
+  ["verbs","(I) want / need","కావాలి","kaavaali","Frame: <code>noun + kaavaali</code> = I want ___.  Try: “water kaavaali”.",[{te:"ఏది?",ro:"edi?",eng:"which one?"},{te:"ఎన్ని?",ro:"enni?",eng:"how many?"},{te:"ఇదా?",ro:"idaa?",eng:"this one?"}]],
   ["verbs","(I) don't want","వద్దు","vaddu"],
   ["verbs","Give (me)","ఇవ్వండి","ivvandi","“bill ivvandi”, “water ivvandi”. Point and name in English."],
   ["verbs","Come","రండి","randi"],
@@ -344,10 +353,10 @@ const P = [
   ["verbs","Stop","ఆపండి","aapandi"],
   ["verbs","Show / look","చూపించండి","choopinchandi"],
   ["verbs","Tell / say","చెప్పండి","cheppandi"],
-  ["verbs","Is there? / Do you have?","ఉందా?","undaa?","Frame: <code>noun + undaa?</code>  Try: “change undaa?”."],
+  ["verbs","Is there? / Do you have?","ఉందా?","undaa?","Frame: <code>noun + undaa?</code>  Try: “change undaa?”.",[{te:"ఉంది",ro:"undi",eng:"yes, there is"},{te:"లేదు",ro:"ledu",eng:"no, none"},{te:"అయిపోయింది",ro:"aipoyindi",eng:"finished / sold out"},{te:"రేపు రండి",ro:"repu randi",eng:"come tomorrow"}]],
   ["verbs","Yes, there is","ఉంది","undi"],
-  ["frames","How much?","ఎంత?","enta?","Frame: <code>noun + enta?</code>  “idi enta?” = how much is this."],
-  ["frames","Where?","ఎక్కడ?","ekkada?","Frame: <code>noun + ekkada?</code>  “ATM ekkada?”."],
+  ["frames","How much?","ఎంత?","enta?","Frame: <code>noun + enta?</code>  “idi enta?” = how much is this.",[{te:"వంద",ro:"vanda",eng:"a hundred"},{te:"యాభై",ro:"yaabhai",eng:"fifty"},{te:"రెండు వందలు",ro:"rendu vandalu",eng:"two hundred"},{te:"కిలో వంద",ro:"kilo vanda",eng:"a hundred a kilo"},{te:"ఎంత ఇస్తారు?",ro:"enta istaaru?",eng:"how much will you give? (the haggle begins)"}]],
+  ["frames","Where?","ఎక్కడ?","ekkada?","Frame: <code>noun + ekkada?</code>  “ATM ekkada?”.",[{te:"అక్కడ",ro:"akkada",eng:"there (with a point)"},{te:"ఇక్కడే",ro:"ikkade",eng:"right here"},{te:"పక్కన",ro:"pakkana",eng:"next to it"},{te:"ముందు / వెనక",ro:"mundu / venaka",eng:"in front / behind"},{te:"తెలియదు",ro:"teliyadu",eng:"don't know"}]],
   ["frames","What?","ఏంటి?","eenti?"],
   ["frames","This","ఇది","idi","Pair with a point: “idi enta?”, “idi kaavaali”."],
   ["frames","That","అది","adi"],
@@ -362,7 +371,7 @@ const P = [
   ["first","Hello / Greetings","నమస్కారం","namaskaaram"],
   ["first","Thank you","ధన్యవాదాలు","dhanyavaadaalu"],
   ["first","Sorry / excuse me","క్షమించండి","kshaminchandi"],
-  ["first","How are you?","ఎలా ఉన్నారు?","elaa unnaaru?"],
+  ["first","How are you?","ఎలా ఉన్నారు?","elaa unnaaru?",null,[{te:"బాగున్నాను, మీరు?",ro:"baagunnaanu, meeru?",eng:"fine, and you?"},{te:"ఏం లేదు",ro:"em ledu",eng:"nothing much"}]],
   ["first","I'm fine","బాగున్నాను","baagunnaanu"],
   ["first","I don't know Telugu","నాకు తెలుగు రాదు","naaku telugu raadu","Your honest escape hatch — say it and people switch to English or Hindi."],
   ["first","Do you know English?","మీకు ఇంగ్లీష్ వచ్చా?","meeku inglish vacchaa?"],
@@ -372,7 +381,7 @@ const P = [
   ["autobase","Right","కుడి","kudi"],
   ["autobase","Here","ఇక్కడ","ikkada"],
   ["autobase","Stop here","ఇక్కడ ఆపండి","ikkada aapandi"],
-  ["auto","Go by meter","మీటర్ వేయండి","meeter veeyandi"],
+  ["auto","Go by meter","మీటర్ వేయండి","meeter veeyandi",null,[{te:"ఎక్కడికి?",ro:"ekkadiki?",eng:"where to?"},{te:"రాను",ro:"raanu",eng:"I won't come (not going that way)"},{te:"మీటర్ లేదు",ro:"meeter ledu",eng:"no meter"},{te:"ఎక్కువ ఇవ్వండి",ro:"ekkuva ivvandi",eng:"give a bit extra"},{te:"షేరింగ్ ఆ?",ro:"sharing aa?",eng:"shared ride?"}]],
   ["auto","That's too much","చాలా ఎక్కువ","chaalaa ekkuva"],
   ["auto","Is it near?","దగ్గరా?","daggaraa?"],
   ["auto","It's far","దూరం","dooram"],
@@ -433,7 +442,7 @@ const P = [
   ["num","100","వంద","vanda"],
   ["num","500","ఐదు వందలు","aidu vandalu"],
   ["num","1000","వెయ్యి","veyyi"],
-].map((r,i)=>({id:i,cat:r[0],eng:r[1],te:r[2],ro:r[3],note:r[4]||null}));
+].map((r,i)=>({id:i,cat:r[0],eng:r[1],te:r[2],ro:r[3],note:r[4]||null,hb:r[5]||null}));
 
 /* ---------------- guided path (day 1 / day 2), keyed by romanization ---------------- */
 const DAY = {
@@ -556,7 +565,8 @@ function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg
 /* ---------------- helpers ---------------- */
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function matchQ(p){const q=state.q.toLowerCase();return p.eng.toLowerCase().includes(q)||p.ro.toLowerCase().includes(q)||p.te.includes(state.q)||catName(p.cat).toLowerCase().includes(q);}
+const stripHtml = s => String(s||"").replace(/<[^>]*>/g,"");
+function matchQ(p){const q=state.q.toLowerCase();return p.eng.toLowerCase().includes(q)||p.ro.toLowerCase().includes(q)||p.te.includes(state.q)||catName(p.cat).toLowerCase().includes(q)||stripHtml(p.note).toLowerCase().includes(q);}
 
 /* ---------------- phrasebook render ---------------- */
 const tierbarEl=document.getElementById("tierbar");
@@ -589,7 +599,7 @@ function renderChips(){
 
 
 function renderScope(){
-  if(state.q){ const n=filtered().length; scopeEl.textContent=`${n} match${n===1?"":"es"} for “${state.q}” — searching across all tiers.`; scopeEl.style.display="block"; }
+  if(state.q){ const n=filtered().length; scopeEl.textContent=`${n} match${n===1?"":"es"} for “${state.q}” — ${state.cat==="fav"?"searching your favourites.":"searching across all tiers."}`; scopeEl.style.display="block"; }
   else { scopeEl.style.display="none"; scopeEl.textContent=""; }
 }
 
@@ -606,14 +616,22 @@ function renderTip(){
 }
 
 function filtered(){
-  if(state.cat==="day1") return P.filter(p=>DAY[p.ro]===1).filter(p=>!state.q||matchQ(p));
-  if(state.cat==="day2") return P.filter(p=>DAY[p.ro]===2).filter(p=>!state.q||matchQ(p));
   if(state.cat==="fav"){ let l=P.filter(p=>state.fav.has(p.id)); if(state.q) l=l.filter(matchQ); return l; }
-  if(state.q){ let l=P.filter(matchQ); if(state.cat!=="all") l=l.filter(p=>p.cat===state.cat); return l; }
+  // a non-empty query searches every phrase in every tier; state.cat is kept, so clearing the query restores the chip
+  if(state.q) return P.filter(matchQ);
+  if(state.cat==="day1") return P.filter(p=>DAY[p.ro]===1);
+  if(state.cat==="day2") return P.filter(p=>DAY[p.ro]===2);
   let l=P.filter(p=>catTier(p.cat)===state.tier);
   if(state.cat!=="all") l=l.filter(p=>p.cat===state.cat);
   return l;
 }
+
+function hbHtml(p){
+  if(!p.hb||!p.hb.length) return "";
+  const rows=p.hb.map((h,i)=>`<div class="hbrow"><b class="hb-ro">${escapeHtml(h.ro)}</b><span class="hb-te">${h.te}</span><span class="hb-eng">${escapeHtml(h.eng)}</span><button class="sbhear hb-say" data-hbsay="${p.id}:${i}" aria-label="Hear ${escapeHtml(h.eng)}">${HEAR_SVG}</button></div>`).join("");
+  return `<div class="hb"><div class="hb-lbl">What you'll hear back</div>${rows}</div>`;
+}
+function sayHb(btn){ const [pid,i]=btn.dataset.hbsay.split(":").map(Number); const h=(P[pid].hb||[])[i]; if(h) speak(h.te,h.ro,btn); }
 
 function renderGrid(){
   const list=filtered();
@@ -642,6 +660,7 @@ function renderGrid(){
         ${bd}
       </div>
       ${note}
+      ${hbHtml(p)}
     </article>`;
   }).join("");
 }
@@ -724,6 +743,7 @@ function renderCards(){
         <div class="a-te">${p.te}</div>
         <div class="eng" style="color:var(--muted);font-size:14px">${escapeHtml(p.eng)}</div>
         <button class="speak" data-sayflash="${p.id}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg> Hear</button>
+        ${hbHtml(p)}
       ` : `
         <div class="q">${escapeHtml(p.eng)}</div>
         <div class="tap">Tap to reveal the Telugu</div>
@@ -917,6 +937,8 @@ grid.addEventListener("click",e=>{
   if(fav){ const id=+fav.dataset.fav; state.fav.has(id)?state.fav.delete(id):state.fav.add(id); saveFav(); renderBook(); return; }
   const bd=e.target.closest("[data-bd]");
   if(bd){ openBreakdown(+bd.dataset.bd); return; }
+  const hbs=e.target.closest("[data-hbsay]");
+  if(hbs){ sayHb(hbs); return; }
   const say=e.target.closest("[data-say]");
   if(say){ const p=P[+say.dataset.say]; speak(p.te,p.ro,say); }
 });
@@ -925,6 +947,7 @@ cardsRoot.addEventListener("click",e=>{
   const deck=e.target.closest("[data-deck]"); if(deck){ startDeck(deck.dataset.deck); return; }
   const done=e.target.closest("[data-done]"); if(done){ fc=null; renderCards(); return; }
   const sayf=e.target.closest("[data-sayflash]"); if(sayf){ e.stopPropagation(); const p=P[+sayf.dataset.sayflash]; speak(p.te,p.ro,sayf); return; }
+  const hbs=e.target.closest("[data-hbsay]"); if(hbs){ e.stopPropagation(); sayHb(hbs); return; }
   const grade=e.target.closest("[data-grade]");
   if(grade){ if(grade.dataset.grade==="know") fc.known++; else fc.deck.push(fc.deck[fc.i]); fc.i++; fc.flipped=false; renderCards(); return; }
   const flash=e.target.closest("#flash"); if(flash && fc && !fc.flipped){ fc.flipped=true; renderCards(); }
