@@ -177,6 +177,10 @@
   .flash .a-te{font-family:var(--telugu);font-size:22px;font-weight:500;color:var(--brass-soft)}
   .flash .tap{font-size:13px;color:var(--muted)}
   .flash .speak{margin-top:4px}
+  .flash .a-eng{font-family:var(--display);font-size:26px;font-weight:600;color:var(--pearl);line-height:1.25}
+  .flash .catch-hear{font-size:17px;padding:15px 28px;border-radius:14px;margin-top:0}
+  .flash .catch-hear svg{width:22px;height:22px}
+  .fmode{margin-top:2px}
   .fc-actions{display:flex;gap:12px;margin-top:18px}
   .fc-actions button{flex:1;font-family:var(--ui);font-size:15px;font-weight:700;padding:14px;border-radius:13px;cursor:pointer;border:1px solid var(--line);transition:.15s}
   .again{background:var(--ink-2);color:var(--pearl)}
@@ -201,6 +205,8 @@
   .bpill{font-family:var(--ui);font-size:14px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;background:var(--ink-2);border:1px solid var(--line);color:var(--muted);transition:.15s}
   .bpill:hover{color:var(--pearl);border-color:rgba(217,164,65,.4)}
   .bpill.on{background:var(--brass);color:var(--ink);border-color:var(--brass)}
+  .bpill:disabled{opacity:.35;cursor:not-allowed}
+  .bpill:disabled:hover{color:var(--muted);border-color:var(--line)}
   .bpill:focus-visible{outline:2px solid var(--brass-soft);outline-offset:2px}
   .bkeep{max-width:680px;margin:0 auto 12px;font-size:12.5px;color:var(--brass-soft);background:var(--ink-3);border:1px solid var(--line);border-radius:10px;padding:10px 13px;line-height:1.5}
   .bresult{max-width:680px;margin:6px auto 0;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-radius:20px;padding:26px 24px;text-align:center}
@@ -733,6 +739,13 @@ document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ closeBreakdown();
 /* ---------------- flashcards ---------------- */
 const cardsRoot=document.getElementById("cards");
 let fc=null;
+/* flashcard direction: "say" = English → Telugu (default), "catch" = hear Telugu → English */
+let flashMode = store.get("nt_flashmode")==="catch" ? "catch" : "say";
+const FLASH_SUB = {
+  say:"Pick a deck. See the English, guess it, then reveal the Telugu — missed cards stay in rotation until you get them.",
+  catch:"Hear the Telugu, guess the English, then reveal — this is what the street sounds like."
+};
+const FLASH_HEAR_SVG='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>';
 
 function deckList(){
   const cats=CATS.filter(c=>c.tier===state.tier);
@@ -754,7 +767,11 @@ function renderCards(){
     cardsRoot.innerHTML=`<div class="fc"><div class="fc-setup">
       <div class="eyebrow">Tier ${t.n} · ${t.name}</div>
       <h3>Flashcards</h3>
-      <p>Pick a deck. See the English, guess it, then reveal the Telugu — missed cards stay in rotation until you get them.</p>
+      <p>${FLASH_SUB[flashMode]}</p>
+      <div class="modes fmode" role="group" aria-label="Flashcard direction">
+        <button data-fmode="say" aria-pressed="${flashMode==="say"}">Say it</button>
+        <button data-fmode="catch" aria-pressed="${flashMode==="catch"}">Catch it</button>
+      </div>
       <div class="deck-grid">${deckList()}</div>
     </div></div>`;
     return;
@@ -762,7 +779,7 @@ function renderCards(){
   if(fc.i>=fc.deck.length){
     cardsRoot.innerHTML=`<div class="fc"><div class="done">
       <div class="te">శభాష్!</div>
-      <div class="big">Shabaash — deck done.</div>
+      <div class="big">${flashMode==="catch"?"You can now catch these on the street.":"Shabaash — deck done."}</div>
       <p>${fc.known} of ${fc.total} on the first pass.${fc.known<fc.total?' The ones you missed came back around until they stuck.':' Clean sweep.'}</p>
       <button data-done="again">Back to decks</button>
     </div></div>`;
@@ -770,28 +787,44 @@ function renderCards(){
   }
   const p=P[fc.deck[fc.i]];
   const pct=Math.round((fc.i/fc.deck.length)*100);
+  const catchMode=flashMode==="catch";
+  let face;
+  if(!fc.flipped){
+    face = catchMode ? `
+        <button class="speak catch-hear" data-sayflash="${p.id}" aria-label="Play again">${FLASH_HEAR_SVG} Hear</button>
+        <div class="a-te">${p.te}</div>
+        <div class="tap">What did they just say?</div>
+      ` : `
+        <div class="hint">${escapeHtml(catName(p.cat))}</div>
+        <div class="q">${escapeHtml(p.eng)}</div>
+        <div class="tap">Tap to reveal the Telugu</div>
+      `;
+  } else {
+    face = `
+        <div class="hint">${escapeHtml(catName(p.cat))}</div>
+        ${catchMode?`<div class="a-eng">${escapeHtml(p.eng)}</div>`:""}
+        <div class="a-ro">${escapeHtml(p.ro)}</div>
+        <div class="a-te">${p.te}</div>
+        ${dialectHtml(p)}
+        ${catchMode?"":`<div class="eng" style="color:var(--muted);font-size:14px">${escapeHtml(p.eng)}</div>`}
+        <button class="speak" data-sayflash="${p.id}">${FLASH_HEAR_SVG} Hear</button>
+        ${hbHtml(p)}
+      `;
+  }
   cardsRoot.innerHTML=`<div class="fc">
     <div class="progress">
       <button class="exit" data-done="again" aria-label="Exit deck">‹ Decks</button>
       <div class="track"><div class="fill" style="width:${pct}%"></div></div>
       <span class="count">${fc.i+1}/${fc.deck.length}</span>
     </div>
-    <div class="flash" id="flash" tabindex="0" role="button" aria-label="Reveal answer">
-      <div class="hint">${escapeHtml(catName(p.cat))}</div>
-      ${fc.flipped ? `
-        <div class="a-ro">${escapeHtml(p.ro)}</div>
-        <div class="a-te">${p.te}</div>
-        ${dialectHtml(p)}
-        <div class="eng" style="color:var(--muted);font-size:14px">${escapeHtml(p.eng)}</div>
-        <button class="speak" data-sayflash="${p.id}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg> Hear</button>
-        ${hbHtml(p)}
-      ` : `
-        <div class="q">${escapeHtml(p.eng)}</div>
-        <div class="tap">Tap to reveal the Telugu</div>
-      `}
-    </div>
+    <div class="flash${catchMode&&!fc.flipped?" catch":""}" id="flash" tabindex="0" role="button" aria-label="Reveal answer">${face}</div>
     ${fc.flipped ? `<div class="fc-actions"><button class="again" data-grade="again">Again</button><button class="know" data-grade="know">Got it</button></div>`:""}
   </div>`;
+  // Catch it: play the phrase once when each card first appears (tapping Hear replays)
+  if(catchMode && !fc.flipped && fc.autoPlayed!==fc.i){
+    fc.autoPlayed=fc.i;
+    speak(p.te, p.ro, cardsRoot.querySelector(".catch-hear"));
+  }
 }
 
 function startDeck(deckId){
@@ -808,7 +841,7 @@ function startDeck(deckId){
 
 /* ---------------- sentence builder ---------------- */
 const BNOUNS=[
-  {eng:"water",te:"నీళ్ళు",ro:"neellu"},
+  {eng:"water",te:"నీళ్ళు",ro:"neellu",pl:true},
   {eng:"this",te:"ఇది",ro:"idi"},
   {eng:"tea",te:"చాయ్",ro:"chaay"},
   {eng:"the bill",te:"బిల్",ro:"bil"},
@@ -820,19 +853,43 @@ const BNOUNS=[
   {eng:"a ticket",te:"టికెట్",ro:"ticket",keep:true},
 ];
 const BFRAMES=[
-  {label:"how much?",te:"ఎంత?",ro:"enta?",mean:n=>`How much is ${n}?`},
-  {label:"where?",te:"ఎక్కడ?",ro:"ekkada?",mean:n=>`Where is ${n}?`},
-  {label:"I want",te:"కావాలి",ro:"kaavaali",mean:n=>`I want ${n}.`},
-  {label:"do you have?",te:"ఉందా?",ro:"undaa?",mean:n=>`Do you have ${n}?`},
-  {label:"give me",te:"ఇవ్వండి",ro:"ivvandi",mean:n=>`Give me ${n}.`},
+  {label:"how much?",te:"ఎంత?",ro:"enta?",mean:n=>`How much is ${theN(n)}?`},
+  {label:"where?",te:"ఎక్కడ?",ro:"ekkada?",mean:n=>`Where is ${theN(n)}?`},
+  {label:"I want",te:"కావాలి",ro:"kaavaali",mean:n=>`I want ${aN(n)}.`},
+  {label:"do you have?",te:"ఉందా?",ro:"undaa?",pl:{te:"ఉన్నాయా?",ro:"unnaayaa?"},mean:n=>`Do you have ${aN(n)}?`},
+  {label:"give me",te:"ఇవ్వండి",ro:"ivvandi",mean:n=>`Give me ${aN(n)}.`},
 ];
+/* which nouns make sense with each frame (keyed by frame label → noun eng) */
+const FIT={
+  "how much?":["water","this","tea","the bill","auto","the room","a ticket"],
+  "where?":["ATM","auto","the room","a ticket","water","tea"],
+  "I want":["water","this","tea","the bill","change","a bag","auto","the room","a ticket"],
+  "do you have?":["water","this","tea","change","a bag","the room","a ticket"],
+  "give me":["water","this","tea","the bill","change","a bag","a ticket"],
+};
+/* English for the result line: chip labels stay short, articles are added here */
+const bareN = n => n.eng.replace(/^(the|a|an) /,"");
+const ART = {water:"",tea:"",change:"",this:"",bill:"the ",ATM:"the ",room:"a ",ticket:"a ",bag:"a ",auto:"an "};
+const theN = n => n.eng==="this" ? "this" : "the "+bareN(n);
+const aN = n => (ART[bareN(n)] ?? "")+bareN(n);
+const fits = (n,f) => (FIT[f.label]||[]).includes(n.eng);
+const buildForm = (n,f) => { const fr=(n.pl&&f.pl)?f.pl:f; return {te:n.te+" "+fr.te, ro:n.ro+" "+fr.ro, fro:fr.ro, flabel:f.label+(fr!==f?" (plural)":"")}; };
+const VALID_PAIRS = BNOUNS.flatMap((n,i)=>BFRAMES.map((f,j)=>[i,j])).filter(([i,j])=>fits(BNOUNS[i],BFRAMES[j]));
 const buildRoot=document.getElementById("build");
 let buildState={noun:0,frame:0};
-function renderBuild(){
+/* keep the selection a sensible pair: fix the side the user did NOT just pick */
+function normalizeBuild(kept){
   const n=BNOUNS[buildState.noun], f=BFRAMES[buildState.frame];
-  const te=n.te+" "+f.te, ro=n.ro+" "+f.ro;
-  const nounPills=BNOUNS.map((x,i)=>`<button class="bpill${i===buildState.noun?' on':''}" data-noun="${i}">${escapeHtml(x.eng)}</button>`).join("");
-  const framePills=BFRAMES.map((x,i)=>`<button class="bpill${i===buildState.frame?' on':''}" data-frame="${i}">${escapeHtml(x.label)}</button>`).join("");
+  if(fits(n,f)) return;
+  if(kept==="noun"){ const j=BFRAMES.findIndex(x=>fits(n,x)); if(j>=0) buildState.frame=j; }
+  else { const i=BNOUNS.findIndex(x=>fits(x,f)); if(i>=0) buildState.noun=i; }
+}
+function renderBuild(){
+  normalizeBuild("frame");
+  const n=BNOUNS[buildState.noun], f=BFRAMES[buildState.frame];
+  const form=buildForm(n,f), te=form.te, ro=form.ro;
+  const nounPills=BNOUNS.map((x,i)=>{ const ok=fits(x,f); return `<button class="bpill${i===buildState.noun?' on':''}" data-noun="${i}"${ok?'':' disabled aria-disabled="true" title="Doesn\'t fit this frame"'}>${escapeHtml(x.eng)}</button>`; }).join("");
+  const framePills=BFRAMES.map((x,i)=>{ const ok=fits(n,x); return `<button class="bpill${i===buildState.frame?' on':''}" data-frame="${i}"${ok?'':' disabled aria-disabled="true" title="Doesn\'t fit this word"'}>${escapeHtml(x.label)}</button>`; }).join("");
   const keepNote=n.keep?`<div class="bkeep">No Telugu word needed for “${escapeHtml(n.eng)}” — say the English word right inside the Telugu frame. That code-switch is exactly what locals do every day.</div>`:"";
   buildRoot.innerHTML=`<div class="fc">
     <div class="fc-setup" style="margin-bottom:18px">
@@ -844,13 +901,13 @@ function renderBuild(){
     <div class="brow"><div class="blabel">Frame</div><div class="bpills">${framePills}</div></div>
     ${keepNote}
     <div class="bresult">
-      <div class="bmean">${escapeHtml(f.mean(n.eng))}</div>
+      <div class="bmean">${escapeHtml(f.mean(n))}</div>
       <div class="bro">${escapeHtml(ro)}</div>
       <div class="bte">${te}</div>
       <div class="bassemble">
         <span class="bchip">${escapeHtml(n.ro)}<small>${escapeHtml(n.eng)}</small></span>
         <span class="bplus">+</span>
-        <span class="bchip">${escapeHtml(f.ro)}<small>${escapeHtml(f.label)}</small></span>
+        <span class="bchip">${escapeHtml(form.fro)}<small>${escapeHtml(form.flabel)}</small></span>
       </div>
       <div class="brow2">
         <button class="speak" id="bsay" aria-label="Hear the sentence"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg> Hear it</button>
@@ -860,10 +917,10 @@ function renderBuild(){
   </div>`;
 }
 buildRoot.addEventListener("click",e=>{
-  const nb=e.target.closest("[data-noun]"); if(nb){ buildState.noun=+nb.dataset.noun; renderBuild(); return; }
-  const fb=e.target.closest("[data-frame]"); if(fb){ buildState.frame=+fb.dataset.frame; renderBuild(); return; }
-  const say=e.target.closest("#bsay"); if(say){ const n=BNOUNS[buildState.noun],f=BFRAMES[buildState.frame]; speak(n.te+" "+f.te, n.ro+" "+f.ro, say); return; }
-  if(e.target.closest("#bdice")){ buildState.noun=Math.floor(Math.random()*BNOUNS.length); buildState.frame=Math.floor(Math.random()*BFRAMES.length); renderBuild(); }
+  const nb=e.target.closest("[data-noun]"); if(nb){ if(nb.disabled) return; buildState.noun=+nb.dataset.noun; normalizeBuild("noun"); renderBuild(); return; }
+  const fb=e.target.closest("[data-frame]"); if(fb){ if(fb.disabled) return; buildState.frame=+fb.dataset.frame; normalizeBuild("frame"); renderBuild(); return; }
+  const say=e.target.closest("#bsay"); if(say){ const form=buildForm(BNOUNS[buildState.noun],BFRAMES[buildState.frame]); speak(form.te, form.ro, say); return; }
+  if(e.target.closest("#bdice")){ const [i,j]=VALID_PAIRS[Math.floor(Math.random()*VALID_PAIRS.length)]; buildState.noun=i; buildState.frame=j; renderBuild(); }
 });
 
 /* ---------------- scenarios ---------------- */
@@ -989,6 +1046,7 @@ grid.addEventListener("click",e=>{
 });
 
 cardsRoot.addEventListener("click",e=>{
+  const fm=e.target.closest("[data-fmode]"); if(fm){ flashMode=fm.dataset.fmode==="catch"?"catch":"say"; store.set("nt_flashmode",flashMode); renderCards(); return; }
   const deck=e.target.closest("[data-deck]"); if(deck){ startDeck(deck.dataset.deck); return; }
   const done=e.target.closest("[data-done]"); if(done){ fc=null; renderCards(); return; }
   const sayf=e.target.closest("[data-sayflash]"); if(sayf){ e.stopPropagation(); const p=P[+sayf.dataset.sayflash]; speak(p.te,p.ro,sayf); return; }

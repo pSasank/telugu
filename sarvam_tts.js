@@ -110,12 +110,21 @@ function collectStrings(html) {
   const scen = slice(html, 'const SCEN=[', 'const scenRoot');
   out = out.concat(matchAll(/te:"([^"]*)"/g, scen));
 
-  // 3) sentence-builder combos: every noun.te + " " + frame.te
+  // 3) sentence-builder combos: every noun.te + " " + frame.te, plus the plural
+  //    frame form (frame `pl:{te:"..."}`) for nouns marked `pl:true`.
+  //    Read line by line, so keep one BNOUNS / BFRAMES entry per line.
   const bn = slice(html, 'const BNOUNS=[', 'const BFRAMES=');
   const bf = slice(html, 'const BFRAMES=[', 'const buildRoot');
-  const nouns  = matchAll(/te:"([^"]*)"/g, bn);
-  const frames = matchAll(/te:"([^"]*)"/g, bf);
-  for (const n of nouns) for (const f of frames) out.push(`${n} ${f}`);
+  const nouns = bn.split('\n')
+    .map((l) => ({ te: (l.match(/te:"([^"]*)"/) || [])[1], pl: /\bpl:true\b/.test(l) }))
+    .filter((x) => x.te !== undefined);
+  const frames = bf.split('\n')
+    .map((l) => ({ te: (l.match(/te:"([^"]*)"/) || [])[1], plte: (l.match(/pl:\{te:"([^"]*)"/) || [])[1] }))
+    .filter((x) => x.te !== undefined);
+  for (const n of nouns) for (const f of frames) {
+    out.push(`${n.te} ${f.te}`);
+    if (n.pl && f.plte) out.push(`${n.te} ${f.plte}`);
+  }
 
   // dedupe, keep only strings that contain Telugu (skip pure-English like "ATM" alone —
   // though combos like "ATM ఎంత?" DO contain Telugu and are kept, which is what we want)
