@@ -350,11 +350,11 @@ const CATS = [
   {id:"first", tier:1, name:"First Words", em:"🙏", tip:"Five seconds of effort that buys instant goodwill. Two of these — “naaku telugu raadu” and “meeku inglish vacchaa?” — are your escape hatches when you're stuck."},
   {id:"autobase", tier:1, name:"Auto Survival", em:"🛺", tip:"The words that get you home. Say the place name in English, say <b>anna</b>, and these six do the rest. Left/right/straight are in Ears only — drivers understand the English."},
   {id:"ears", tier:1, name:"Ears only", em:"🎧", tip:"You don't need to SAY these — English works — but you'll HEAR them constantly. Learn to recognise them; don't spend speaking effort on them."},
-  {id:"auto",  tier:2, name:"Autos & Directions", em:"🧭", tip:"Open with “meeter veeyandi”. If refused: “enta?” then “chaalaa ekkuva”. Builds on the Auto Survival words from Base."},
+  {id:"auto",  tier:2, name:"Autos & Directions", em:"🧭", tip:"Open with “meeter veyandi”. If refused: “enta?” then “chaalaa ekkuva”. Builds on the Auto Survival words from Base."},
   {id:"shop",  tier:2, name:"Shopping & Bargaining", em:"🛍️", tip:"Bargaining is expected in markets, not malls. “idi enta?” → “tagginchandi” → “chivari reetu enta?”. A smile moves the price more than grammar."},
   {id:"polite", tier:2, name:"Formal & polite", em:"🎩", tip:"Correct, but rarely needed on the street. “sorry” and “please” are understood everywhere, and <b>-andi</b> already makes any request polite. Keep these for offices, elders and forms."},
   {id:"food",  tier:2, name:"Food & Chai", em:"☕", tip:"Hyderabadi food runs hot — “kaaram takkuva” is survival. Say veg/non-veg in English anywhere; the Telugu is here for when you want it."},
-  {id:"time",  tier:2, name:"Time", em:"🕒", tip:"Mix freely with English clock times: “reepu 5 ki” = tomorrow at 5. You almost never need Telugu numbers for the hour."},
+  {id:"time",  tier:2, name:"Time", em:"🕒", tip:"Mix freely with English clock times: “repu 5 ki” = tomorrow at 5. You almost never need Telugu numbers for the hour."},
   {id:"talk",  tier:3, name:"Small Talk", em:"💬", tip:"“Meeru ekkadi nunchi?” is the universal icebreaker. This is the tier where you stop transacting and start connecting."},
   {id:"casual",tier:3, name:"Casual Register", em:"😎", tip:"Base teaches the polite “-aaru” forms. With friends and juniors Telugu drops to “-aav” forms — “elaa unnaav?” not “elaa unnaaru?”. Picking the right one, plus the HYD forms marked on cards, is what makes you sound local, not bookish."},
   {id:"num",   tier:2, name:"Numbers (ears first)", em:"🔢", tip:"You never need to SAY a Telugu number — English numbers work at every counter. You DO need to CATCH them: vendors and drivers quote prices in Telugu. Learn these by ear, then confirm in English: “vanda? — hundred?”"},
@@ -363,8 +363,8 @@ const CATS = [
 /* phrase tuples: [cat, english, telugu, roman, note?, hb?]
    hb = "what you'll hear back": [{te,ro,eng},…]. Use null for note when a phrase has hb but no note. */
 const P = [
-  ["learn","What do you call this in Telugu?","ఇది తెలుగులో ఏం అంటారు?","idi telugu lo em antaaru?","Point at anything and ask. The answer is your next word — repeat it back and it sticks.",[{te:"… అంటారు",ro:"… antaaru",eng:"it's called … (then say: malli cheppandi)"}]],
-  ["learn","Say it again","మళ్ళీ చెప్పండి","malli cheppandi"],
+  ["learn","What do you call this in Telugu?","ఇది తెలుగులో ఏం అంటారు?","idi telugu lo em antaaru?","Point at anything and ask. The answer is your next word — repeat it back and it sticks.",[{te:"… అంటారు",ro:"… antaaru",eng:"it's called … (then say: mallee cheppandi)"}]],
+  ["learn","Say it again","మళ్ళీ చెప్పండి","mallee cheppandi"],
   ["learn","Say it slowly","నెమ్మదిగా చెప్పండి","nemmadigaa cheppandi"],
   ["learn","I didn't understand","అర్థం కాలేదు","artham kaaledu"],
   ["learn","Got it / understood","అర్థం అయింది","artham ayindi"],
@@ -387,14 +387,14 @@ const P = [
   ["verbs","Yes, there is","ఉంది","undi"],
   ["frames","How much?","ఎంత?","enta?","Frame: <code>noun + enta?</code>  “idi enta?” = how much is this.",[{te:"వంద",ro:"vanda",eng:"a hundred"},{te:"యాభై",ro:"yaabhai",eng:"fifty"},{te:"రెండు వందలు",ro:"rendu vandalu",eng:"two hundred"},{te:"కిలో వంద",ro:"kilo vanda",eng:"a hundred a kilo"},{te:"ఎంత ఇస్తారు?",ro:"enta istaaru?",eng:"how much will you give? (the haggle begins)"}]],
   ["frames","Where?","ఎక్కడ?","ekkada?","Frame: <code>noun + ekkada?</code>  “ATM ekkada?”.",[{te:"అక్కడ",ro:"akkada",eng:"there (with a point)"},{te:"ఇక్కడే",ro:"ikkade",eng:"right here"},{te:"పక్కన",ro:"pakkana",eng:"next to it"},{te:"ముందు / వెనక",ro:"mundu / venaka",eng:"in front / behind"},{te:"తెలియదు",ro:"teliyadu",eng:"don't know"}]],
-  ["frames","What?","ఏంటి?","eenti?"],
+  ["frames","What?","ఏంటి?","enti?"],
   ["frames","This","ఇది","idi","Pair with a point: “idi enta?”, “idi kaavaali”."],
   ["frames","That","అది","adi"],
   ["frames","How?","ఎలా?","elaa?"],
   ["glue","Yes","అవును","avunu"],
   ["glue","No (not that)","కాదు","kaadu"],
   ["glue","No / none / not there","లేదు","ledu"],
-  ["glue","OK / fine","సరే","saree"],
+  ["glue","OK / fine","సరే","sare"],
   ["glue","Enough","చాలు","chaalu"],
   ["glue","A little","కొంచెం","konchem"],
   ["glue","…andi  (politeness suffix)","…అండి","…andi","The magic syllable. Add it to a request to make it respectful: raa → randi, cheppu → cheppandi."],
@@ -405,13 +405,13 @@ const P = [
   ["first","I'm fine","బాగున్నాను","baagunnaanu"],
   ["first","I don't know Telugu","నాకు తెలుగు రాదు","naaku telugu raadu","Your honest escape hatch — say it and people switch to English or Hindi."],
   ["first","Do you know English?","మీకు ఇంగ్లీష్ వచ్చా?","meeku inglish vacchaa?"],
-  ["polite","Please","దయచేసి","dayacheesi"],
-  ["ears","Straight","నేరుగా","neerugaa"],
+  ["polite","Please","దయచేసి","dayachesi"],
+  ["ears","Straight","నేరుగా","nerugaa"],
   ["ears","Left","ఎడమ","edama"],
   ["ears","Right","కుడి","kudi"],
   ["autobase","Here","ఇక్కడ","ikkada"],
   ["autobase","Stop here","ఇక్కడ ఆపండి","ikkada aapandi"],
-  ["autobase","Go by meter","మీటర్ వేయండి","meeter veeyandi",null,[{te:"ఎక్కడికి?",ro:"ekkadiki?",eng:"where to?"},{te:"రాను",ro:"raanu",eng:"I won't come (not going that way)"},{te:"మీటర్ లేదు",ro:"meeter ledu",eng:"no meter"},{te:"ఎక్కువ ఇవ్వండి",ro:"ekkuva ivvandi",eng:"give a bit extra"},{te:"షేరింగ్ ఆ?",ro:"sharing aa?",eng:"shared ride?"}]],
+  ["autobase","Go by meter","మీటర్ వేయండి","meeter veyandi",null,[{te:"ఎక్కడికి?",ro:"ekkadiki?",eng:"where to?"},{te:"రాను",ro:"raanu",eng:"I won't come (not going that way)"},{te:"మీటర్ లేదు",ro:"meeter ledu",eng:"no meter"},{te:"ఎక్కువ ఇవ్వండి",ro:"ekkuva ivvandi",eng:"give a bit extra"},{te:"షేరింగ్ ఆ?",ro:"sharing aa?",eng:"shared ride?"}]],
   ["autobase","That's too much","చాలా ఎక్కువ","chaalaa ekkuva"],
   ["auto","Is it near?","దగ్గరా?","daggaraa?"],
   ["auto","It's far","దూరం","dooram"],
@@ -435,19 +435,19 @@ const P = [
   ["food","One plate","ఒక ప్లేట్","oka pleet"],
   ["food","Tea (chai)","చాయ్","chaay"],
   ["time","Today","ఈరోజు","eeroju"],
-  ["time","Tomorrow","రేపు","reepu"],
+  ["time","Tomorrow","రేపు","repu"],
   ["time","Yesterday","నిన్న","ninna"],
   ["time","Now","ఇప్పుడు","ippudu"],
   ["time","Later","తరువాత","taruvaata"],
   ["time","Morning","ఉదయం","udayam"],
   ["time","Night","రాత్రి","raatri"],
   ["talk","Where are you from?","మీరు ఎక్కడి నుంచి?","meeru ekkadi nunchi?"],
-  ["talk","I'm from…","నేను … నుంచి","neenu … nunchi"],
+  ["talk","I'm from…","నేను … నుంచి","nenu … nunchi"],
   ["talk","Where do you stay?","మీరు ఎక్కడ ఉంటారు?","meeru ekkada untaaru?"],
-  ["talk","What do you do?","మీరు ఏం చేస్తారు?","meeru eem cheestaaru?"],
+  ["talk","What do you do?","మీరు ఏం చేస్తారు?","meeru em chestaaru?"],
   ["talk","Nice to meet you","కలవడం సంతోషం","kalavadam santosham"],
   ["talk","See you again","మళ్ళీ కలుద్దాం","mallee kaluddaam"],
-  ["talk","No problem","పర్వాలేదు","parvaaleedu"],
+  ["talk","No problem","పర్వాలేదు","parvaaledu"],
   ["talk","Very good","చాలా బాగుంది","chaalaa baagundi"],
   ["casual","How are you? (casual)","ఎలా ఉన్నావ్?","elaa unnaav?","The “-aav” cousin of the polite “unnaaru”. Use with friends and juniors only."],
   ["casual","You good?","బాగున్నావా?","baagunnaavaa?"],
@@ -463,7 +463,7 @@ const P = [
   ["num","4","నాలుగు","naalugu"],
   ["num","5","ఐదు","aidu"],
   ["num","6","ఆరు","aaru"],
-  ["num","7","ఏడు","eedu"],
+  ["num","7","ఏడు","edu"],
   ["num","8","ఎనిమిది","enimidi"],
   ["num","9","తొమ్మిది","tommidi"],
   ["num","10","పది","padi"],
@@ -485,8 +485,8 @@ const P = [
 
 /* ---------------- guided path (day 1 / day 2), keyed by romanization ---------------- */
 const DAY = {
-  "anna":1,"akka":1,"idi":1,"enta?":1,"ekkada?":1,"kaavaali":1,"vaddu":1,"undaa?":1,"ledu":1,"saree":1,"ivvandi":1,"idi telugu lo em antaaru?":1,"naaku telugu raadu":1,
-  "…andi":2,"undi":2,"avunu":2,"kaadu":2,"chaalu":2,"konchem":2,"elaa unnaaru?":2,"baagunnaanu":2,"meeku inglish vacchaa?":2,"nenu telugu nerchukuntunnaanu":2,"malli cheppandi":2,"artham kaaledu":2,"ikkada aapandi":2,"meeter veeyandi":2
+  "anna":1,"akka":1,"idi":1,"enta?":1,"ekkada?":1,"kaavaali":1,"vaddu":1,"undaa?":1,"ledu":1,"sare":1,"ivvandi":1,"idi telugu lo em antaaru?":1,"naaku telugu raadu":1,
+  "…andi":2,"undi":2,"avunu":2,"kaadu":2,"chaalu":2,"konchem":2,"elaa unnaaru?":2,"baagunnaanu":2,"meeku inglish vacchaa?":2,"nenu telugu nerchukuntunnaanu":2,"mallee cheppandi":2,"artham kaaledu":2,"ikkada aapandi":2,"meeter veyandi":2
 };
 const DAYTIP = {
   day1:{em:"🌱",lbl:"Day 1 · the kit",txt:"Address someone, point, ask price, ask where, want, refuse, check, close — and recruit a teacher. English nouns everywhere. Say three of these to a real person today."},
@@ -497,16 +497,16 @@ const DAYTIP = {
 const HI = {
   "kaavaali":"chahiye","vaddu":"nahi chahiye","ivvandi":"do / dijiye","randi":"aao / aaiye","vellandi":"jao / jaiye","aapandi":"roko / rokiye",
   "cheppandi":"batao / bataiye","undaa?":"hai kya?","undi":"hai",
-  "enta?":"kitna?","ekkada?":"kahaan?","eenti?":"kya?","idi":"yeh","adi":"woh","elaa?":"kaise?",
-  "avunu":"haan","kaadu":"nahi","ledu":"nahi hai","saree":"theek hai","chaalu":"bas","konchem":"thoda","…andi":"ji / aap (aadar)",
+  "enta?":"kitna?","ekkada?":"kahaan?","enti?":"kya?","idi":"yeh","adi":"woh","elaa?":"kaise?",
+  "avunu":"haan","kaadu":"nahi","ledu":"nahi hai","sare":"theek hai","chaalu":"bas","konchem":"thoda","…andi":"ji / aap (aadar)",
   "namaskaaram":"namaste","dhanyavaadaalu":"dhanyavaad / shukriya","elaa unnaaru?":"kaise hain?","baagunnaanu":"main theek hoon",
   "naaku telugu raadu":"mujhe telugu nahi aati","meeku inglish vacchaa?":"aapko english aati hai?",
-  "neerugaa":"seedha","edama":"baayein / left","kudi":"daayein / right","ikkada":"yahaan","ikkada aapandi":"yahaan roko",
-  "idi telugu lo em antaaru?":"isko telugu mein kya kehte hain?","malli cheppandi":"phir se boliye","nemmadigaa cheppandi":"dheere boliye",
+  "nerugaa":"seedha","edama":"baayein / left","kudi":"daayein / right","ikkada":"yahaan","ikkada aapandi":"yahaan roko",
+  "idi telugu lo em antaaru?":"isko telugu mein kya kehte hain?","mallee cheppandi":"phir se boliye","nemmadigaa cheppandi":"dheere boliye",
   "artham kaaledu":"samajh nahi aaya","artham ayindi":"samajh gaya","nenu telugu nerchukuntunnaanu":"main telugu seekh raha hoon",
   "naaku telugu konchem vastundi":"mujhe thodi telugu aati hai","idi correct aa?":"yeh sahi hai?",
   "anna":"bhai / bhaiyya","akka":"didi","bhaiyya":"bhaiyya","uncle / aunty":"uncle / aunty",
-  "meeter veeyandi":"meter se chalo","chaalaa ekkuva":"bahut zyada","ikkada digutaanu":"main yahaan utarta hoon",
+  "meeter veyandi":"meter se chalo","chaalaa ekkuva":"bahut zyada","ikkada digutaanu":"main yahaan utarta hoon",
   "anna, Gachibowli enta?":"bhaiyya, Gachibowli kitna?","konchem aagandi":"thoda rukiye","aipoyindi":"khatam ho gaya"
 };
 
@@ -515,18 +515,18 @@ const HI = {
 const DIALECT={
 "vellandi":{te:"పోండి",ro:"pondi",txt:"Telangana says pondi. vellandi is correct but sounds coastal here."},
 "veldaam":{te:"పోదాం",ro:"podaam",txt:"Same swap: vel- → po-."},
-"neerugaa":{te:"సీధా",ro:"seedha",txt:"The Deccani word. Every driver says it."},
+"nerugaa":{te:"సీధా",ro:"seedhaa",txt:"The Deccani word. Every driver says it."},
 "chaalaa ekkuva":{te:"బగ్గ ఎక్కువ",ro:"bagga ekkuva",txt:"bagga = very (Telangana). chaalaa works too."},
 "chaalaa baagundi":{te:"మస్త్ ఉంది",ro:"masth undi",txt:"masth = great. The most Hyderabadi word there is."},
 "taruvaata":{te:"తర్వాత",ro:"tarvaata",txt:"Same word, swallowed middle vowel."},
-"konchem":{te:"కొద్దిగా",ro:"koddiga",txt:"You'll hear both; koddiga is the street form."},
-"nemmadigaa":{te:"మెల్లగా",ro:"mellaga",txt:"nemmadigaa is understood; mellaga is what locals say."},
+"konchem":{te:"కొద్దిగా",ro:"koddigaa",txt:"You'll hear both; koddigaa is the street form."},
+"nemmadigaa":{te:"మెల్లగా",ro:"mellagaa",txt:"nemmadigaa is understood; mellagaa is what locals say."},
 "udayam":{te:"పొద్దున",ro:"poddun",txt:"Nobody says udayam in a kitchen."},
 "ivvandi":{te:"ఇయ్యండి",ro:"iyyandi",txt:"Telangana softens vv → yy. Both are fine."},
-"parvaaleedu":{te:"పర్లేదు",ro:"parledu",txt:"The two-syllable version is the one you'll hear."},
+"parvaaledu":{te:"పర్లేదు",ro:"parledu",txt:"The two-syllable version is the one you'll hear."},
 "dhanyavaadaalu":{te:"థాంక్స్ అన్నా",ro:"thanks anna",txt:"Honestly, this is what people say. Keep dhanyavaadaalu for elders."},
 "namaskaaram":{te:"హలో అన్నా",ro:"hello anna",txt:"At a shop or auto. namaskaaram is for homes and elders."},
-"eenti?":{te:"ఏం?",ro:"em?",txt:"“em anna?” = what's up / what do you want."}
+"enti?":{te:"ఏం?",ro:"em?",txt:"“em anna?” = what's up / what do you want."}
 };
 
 
@@ -540,13 +540,13 @@ const BD = {
   "undaa?":{lit:"It-is + ?",parts:[["undi","it is / there is"],["-aa","? (question tag)"]],insight:"The <code>-aa</code> tag is Telugu's simplest question-maker — stick it on a statement word and it becomes a yes/no question. <code>undi</code> (there is) → <code>undaa?</code> (is there?). Same trick: daggaraa?, avunaa?, baagundaa?."},
   "naaku telugu raadu":{lit:"To-me Telugu doesn't-come.",parts:[["naaku","to me"],["telugu","Telugu"],["raadu","doesn't come"]],insight:"Dravidian languages say “I don't know X” as “to me, X doesn't come.” Knowing is treated as something that <i>comes</i> to you — the same engine powers “meeku inglish vacchaa?”."},
   "meeku inglish vacchaa?":{lit:"To-you English comes?",parts:[["meeku","to you"],["inglish","English"],["vacchaa","does it come?"]],insight:"The exact mirror of “naaku telugu raadu.” <code>raadu</code> = doesn't come; <code>vacchaa</code> = comes? Flip the verb, flip the meaning."},
-  "ikkada aapandi":{lit:"Here stop.",parts:[["ikkada","here"],["aapandi","stop (polite)"]],casual:"ikkada aapu",insight:"Place before action — Telugu wants <i>where</i> before <i>what</i>, the same order most Northeast languages use. No word for “the”."},
+  "ikkada aapandi":{lit:"Here stop.",parts:[["ikkada","here"],["aapandi","stop (polite)"]],casual:"ikkada aapu",insight:"Place before action — Telugu wants <i>where</i> before <i>what</i>, the same order as Hindi. No word for “the”."},
   "…andi":{lit:"(do it) + politely.",parts:[["verb","the command"],["andi","respect marker"]],insight:"Telugu glues respect on instead of adding a word. <code>raa</code>+andi → randi (please come), <code>po</code>+andi → pondi (please go), <code>aapu</code>+andi → aapandi (please stop). Drop the <code>andi</code> and you have the casual form."},
   "idi kaavaali":{lit:"This is-wanted.",parts:[["idi","this"],["kaavaali","is wanted"]],insight:"<code>kaavaali</code> means “is needed,” so the <i>thing</i> is the subject — you never say “I”. “water kaavaali” = water-is-wanted."},
   "kaaram takkuva":{lit:"Spice less.",parts:[["kaaram","spice / heat"],["takkuva","less"]],insight:"Swap <code>takkuva</code> → <code>ekkuva</code> for the opposite: “kaaram ekkuva” = more spicy. Two words flip the whole request."},
   "chivari reetu enta?":{lit:"Final rate how-much?",parts:[["chivari","final"],["reetu","rate"],["enta","how much"]],insight:"Modifiers stack left to right, the question sits at the very end — the bargaining knockout phrase."},
-  "meeter veeyandi":{lit:"Meter put.",parts:[["meeter","meter"],["veeyandi","put (polite)"]],casual:"meeter veyyi",insight:"<code>veeyu</code> = to put; the +andi makes it a polite command. Object first, verb last — always."},
-  "meeru ekkadi nunchi?":{lit:"You which-place from?",parts:[["meeru","you"],["ekkadi","which place"],["nunchi","from"]],insight:"“from” comes <i>after</i> the place (a postposition), not before it. Most Northeast languages do exactly the same."},
+  "meeter veyandi":{lit:"Meter put.",parts:[["meeter","meter"],["veyandi","put (polite)"]],casual:"meeter veyyi",insight:"<code>veyu</code> = to put; the +andi makes it a polite command. Object first, verb last — always."},
+  "meeru ekkadi nunchi?":{lit:"You which-place from?",parts:[["meeru","you"],["ekkadi","which place"],["nunchi","from"]],insight:"“from” comes <i>after</i> the place (a postposition), not before it — the same order as Hindi."},
   "oka nimisham aagandi":{lit:"One minute wait.",parts:[["oka","one"],["nimisham","minute"],["aagandi","wait (polite)"]],casual:"oka nimisham aagu",insight:"Number + thing + action — an easy one, because the order matches English here too."},
   "elaa unnaaru?":{lit:"How are-you?",parts:[["elaa","how"],["unnaaru","are-you (respectful)"]],insight:"<code>unnaaru</code> already <i>contains</i> “you, politely.” The casual <code>unnaav</code> swaps the tail for friends. The verb carries the person."},
   "baagunnaanu":{lit:"Well I-am.",parts:[["baaga","well"],["unnaanu","I am"]],insight:"The <code>-aanu</code> tail means “I”. Telugu changes a verb's ending to show who acts — no separate word for “I” needed."},
@@ -573,7 +573,9 @@ const store=(()=>{ let mem={}; let ok=false; try{ const k="__nt"; localStorage.s
            set(k,v){ try{ ok?localStorage.setItem(k,v):(mem[k]=v); }catch(e){ mem[k]=v; } } }; })();
 let state = { mode:"book", tier:1, cat:"all", q:"", fav:new Set(), hi:false, sub:"cards" };
 function saveFav(){ store.set("nt_fav", JSON.stringify([...state.fav].map(id=>P[id].ro))); }
-function loadFav(){ try{ const ros=JSON.parse(store.get("nt_fav")||"[]"); const set=new Set(); P.forEach(p=>{ if(ros.includes(p.ro)) set.add(p.id); }); state.fav=set; }catch(e){} }
+/* romanization tidy (Nov 2026) renamed these phrases; favourites are stored by ro, so map old -> new once */
+const RO_RENAMES={"malli cheppandi": "mallee cheppandi", "eenti?": "enti?", "saree": "sare", "dayacheesi": "dayachesi", "neerugaa": "nerugaa", "meeter veeyandi": "meeter veyandi", "reepu": "repu", "neenu … nunchi": "nenu … nunchi", "meeru eem cheestaaru?": "meeru em chestaaru?", "parvaaleedu": "parvaaledu", "eedu": "edu"};
+function loadFav(){ try{ const raw=JSON.parse(store.get("nt_fav")||"[]"); const ros=raw.map(r=>RO_RENAMES[r]||r); if(ros.some((r,i)=>r!==raw[i])) store.set("nt_fav",JSON.stringify(ros)); const set=new Set(); P.forEach(p=>{ if(ros.includes(p.ro)) set.add(p.id); }); state.fav=set; }catch(e){} }
 const catObj  = id => CATS.find(c=>c.id===id);
 const catName = id => (catObj(id)||{}).name||"";
 const catTier = id => (catObj(id)||{}).tier;
@@ -1002,9 +1004,9 @@ const SCEN=[
     {who:"them",label:"Driver",en:"Where to?",te:"ఎక్కడికి?",ro:"ekkadiki?"},
     {who:"you",label:"You",en:"Anna, how much to Gachibowli?",te:"అన్నా, గచ్చిబౌలి ఎంత?",ro:"anna, Gachibowli enta?"},
     {who:"them",label:"Driver",en:"Two hundred.",te:"రెండు వందలు",ro:"rendu vandalu"},
-    {who:"you",label:"You",en:"Too much. Go by meter.",te:"చాలా ఎక్కువ. మీటర్ వేయండి.",ro:"chaalaa ekkuva. meeter veeyandi."},
+    {who:"you",label:"You",en:"Too much. Go by meter.",te:"చాలా ఎక్కువ. మీటర్ వేయండి.",ro:"chaalaa ekkuva. meeter veyandi."},
     {who:"them",label:"Driver",en:"No meter. One fifty, final.",te:"మీటర్ లేదు.",ro:"meeter ledu."},
-    {who:"you",label:"You",en:"OK.",te:"సరే.",ro:"saree."},
+    {who:"you",label:"You",en:"OK.",te:"సరే.",ro:"sare."},
     {who:"you",label:"You",en:"Left here. (just say “left” — he understands)"},
     {who:"you",label:"You",en:"Stop here.",te:"ఇక్కడ ఆపండి.",ro:"ikkada aapandi."},
     {who:"you",label:"You",en:"Thanks, anna!",te:"థాంక్స్ అన్నా!",ro:"thanks anna!"},
@@ -1015,7 +1017,7 @@ const SCEN=[
     {who:"you",label:"You",en:"Shillong. (just say the place)"},
     {who:"you",label:"You",en:"I don't know Telugu.",te:"నాకు తెలుగు రాదు.",ro:"naaku telugu raadu."},
     {who:"you",label:"You",en:"Do you know English?",te:"మీకు ఇంగ్లీష్ వచ్చా?",ro:"meeku inglish vacchaa?"},
-    {who:"them",label:"Neighbour",en:"A little. No problem!",te:"కొంచెం. పర్వాలేదు!",ro:"konchem. parvaaleedu!"},
+    {who:"them",label:"Neighbour",en:"A little. No problem!",te:"కొంచెం. పర్వాలేదు!",ro:"konchem. parvaaledu!"},
     {who:"you",label:"You",en:"Thank you.",te:"ధన్యవాదాలు.",ro:"dhanyavaadaalu."},
   ]},
   {tier:2,emoji:"🛍️",title:"Haggling at the market",setting:"A vendor's selling mangoes. Talk the price down to something fair.",turns:[
@@ -1023,10 +1025,10 @@ const SCEN=[
     {who:"them",label:"Vendor",en:"Two hundred a kilo.",te:"కిలో రెండు వందలు",ro:"kilo rendu vandalu"},
     {who:"you",label:"You",en:"That's too much.",te:"చాలా ఎక్కువ.",ro:"chaalaa ekkuva."},
     {who:"you",label:"You",en:"Reduce the price.",te:"రేటు తగ్గించండి.",ro:"reetu tagginchandi."},
-    {who:"them",label:"Vendor",en:"Fine — one fifty.",te:"సరే, నూట యాభై",ro:"saree, noota yaabhai"},
+    {who:"them",label:"Vendor",en:"Fine — one fifty.",te:"సరే, నూట యాభై",ro:"sare, noota yaabhai"},
     {who:"you",label:"You",en:"What's the last price?",te:"చివరి రేటు ఎంత?",ro:"chivari reetu enta?"},
     {who:"them",label:"Vendor",en:"One twenty. Final.",te:"నూట ఇరవై. చివరి.",ro:"noota iravai. chivari."},
-    {who:"you",label:"You",en:"OK. Give me one kilo.",te:"సరే. ఒక కిలో ఇవ్వండి.",ro:"saree. oka kilo ivvandi."},
+    {who:"you",label:"You",en:"OK. Give me one kilo.",te:"సరే. ఒక కిలో ఇవ్వండి.",ro:"sare. oka kilo ivvandi."},
   ]},
   {tier:2,emoji:"☕",title:"The tiffin stop",setting:"Busy tiffin centre at 8am. Idli, not too spicy, and a chai.",turns:[
     {who:"you",label:"You",en:"One plate idli.",te:"ఒక ప్లేట్ ఇడ్లీ.",ro:"oka pleet idli."},
@@ -1048,11 +1050,11 @@ const SCEN=[
   {tier:1,emoji:"🧹",title:"Talking to the maid / cook",setting:"She comes every morning. Ten words cover a month of instructions — point at things and keep the nouns English.",turns:[
     {who:"them",label:"Akka",en:"Morning. Anything today?",te:"ఏమైనా ఉందా?",ro:"emainaa undaa?"},
     {who:"you",label:"You",en:"Akka, this — a little less salt.",te:"అక్కా, ఇది — ఉప్పు కొంచెం తక్కువ.",ro:"akka, idi — uppu konchem takkuva."},
-    {who:"them",label:"Akka",en:"OK. Tomorrow?",te:"సరే. రేపు?",ro:"saree. repu?"},
+    {who:"them",label:"Akka",en:"OK. Tomorrow?",te:"సరే. రేపు?",ro:"sare. repu?"},
     {who:"you",label:"You",en:"Tomorrow don't come. (just say “tomorrow” + vaddu)",te:"రేపు వద్దు.",ro:"repu vaddu."},
     {who:"you",label:"You",en:"What do you call this in Telugu?",te:"ఇది తెలుగులో ఏం అంటారు?",ro:"idi telugu lo em antaaru?"},
     {who:"them",label:"Akka",en:"Chintapandu. (tamarind)",te:"చింతపండు.",ro:"chintapandu."},
-    {who:"you",label:"You",en:"Say it again, slowly.",te:"మళ్ళీ, నెమ్మదిగా చెప్పండి.",ro:"malli, nemmadigaa cheppandi."},
+    {who:"you",label:"You",en:"Say it again, slowly.",te:"మళ్ళీ, నెమ్మదిగా చెప్పండి.",ro:"mallee, nemmadigaa cheppandi."},
     {who:"you",label:"You",en:"Got it. Thanks, akka.",te:"అర్థం అయింది. థాంక్స్ అక్కా.",ro:"artham ayindi. thanks akka."},
   ]},
   {tier:2,emoji:"🍛",title:"Lunch with a colleague",setting:"Office canteen. He's Telugu, you're not. This is the conversation that turns a colleague into a teacher.",turns:[
