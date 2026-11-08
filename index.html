@@ -316,13 +316,15 @@ const TIERS = [
 const CATS = [
   {id:"learn", tier:1, name:"Make them teach you", em:"🪜", tip:"The single biggest shortcut: every Telugu speaker around you is a free teacher if you ask. These eight phrases turn any auto ride or chai break into a lesson — and saying you're learning earns instant goodwill."},
   {id:"address", tier:1, name:"Who to call what", em:"🙋", tip:"Hyderabad runs on <b>anna</b> and <b>akka</b>. Nobody opens with “namaskaaram” at an auto stand — they say “anna, Gachibowli?”. Pick the right word and you sound like you belong before you've said a single sentence. Sir/madam is fine for offices and anyone clearly senior."},
-  {id:"verbs", tier:1, name:"Power Verbs", em:"🔑", tip:"The trader's trick: don't conjugate. Learn one usable form of each verb and let context do the rest. “kaavaali” (want), “ivvandi” (give), “undaa?” (do you have) carry half your day."},
+  {id:"verbs", tier:1, name:"Power Verbs", em:"🔑", tip:"The trader's trick: don't conjugate. One usable form per verb, and let context do the rest. <b>kaavaali</b>, <b>ivvandi</b>, <b>undaa?</b> carry half your day."},
   {id:"frames",tier:1, name:"Question Frames", em:"🧩", tip:"These are slots. Put any English noun in front and you have a sentence: “water enta?”, “ATM ekkada?”. Six frames plus pointing equals a hundred questions."},
   {id:"glue",  tier:1, name:"Glue Words", em:"✅", tip:"Tiny words that keep a conversation moving. Bonus hack: stick “andi” on almost anything to make it polite — “raa” becomes “randi”."},
   {id:"first", tier:1, name:"First Words", em:"🙏", tip:"Five seconds of effort that buys instant goodwill. Two of these — “naaku telugu raadu” and “meeku inglish vacchaa?” — are your escape hatches when you're stuck."},
-  {id:"autobase", tier:1, name:"Auto Survival", em:"🛺", tip:"The words that get you home. Drivers often understand English “left/right” too, but saying it in Telugu quietly changes the fare conversation in your favour."},
+  {id:"autobase", tier:1, name:"Auto Survival", em:"🛺", tip:"The words that get you home. Say the place name in English, say <b>anna</b>, and these five do the rest. Left/right/straight are in Ears only — drivers understand the English."},
+  {id:"ears", tier:1, name:"Ears only", em:"🎧", tip:"You don't need to SAY these — English works — but you'll HEAR them constantly. Learn to recognise them; don't spend speaking effort on them."},
   {id:"auto",  tier:2, name:"Autos & Directions", em:"🧭", tip:"Open with “meeter veeyandi”. If refused: “enta?” then “chaalaa ekkuva”. Builds on the Auto Survival words from Base."},
   {id:"shop",  tier:2, name:"Shopping & Bargaining", em:"🛍️", tip:"Bargaining is expected in markets, not malls. “idi enta?” → “tagginchandi” → “chivari reetu enta?”. A smile moves the price more than grammar."},
+  {id:"polite", tier:2, name:"Formal & polite", em:"🎩", tip:"Correct, but rarely needed on the street. “sorry” and “please” are understood everywhere, and <b>-andi</b> already makes any request polite. Keep these for offices, elders and forms."},
   {id:"food",  tier:2, name:"Food & Chai", em:"☕", tip:"Hyderabadi food runs hot — “kaaram takkuva” is survival. Say veg/non-veg in English anywhere; the Telugu is here for when you want it."},
   {id:"time",  tier:2, name:"Time", em:"🕒", tip:"Mix freely with English clock times: “reepu 5 ki” = tomorrow at 5. You almost never need Telugu numbers for the hour."},
   {id:"talk",  tier:3, name:"Small Talk", em:"💬", tip:"“Meeru ekkadi nunchi?” is the universal icebreaker. This is the tier where you stop transacting and start connecting."},
@@ -351,7 +353,7 @@ const P = [
   ["verbs","Come","రండి","randi"],
   ["verbs","Go","వెళ్ళండి","vellandi"],
   ["verbs","Stop","ఆపండి","aapandi"],
-  ["verbs","Show / look","చూపించండి","choopinchandi"],
+  ["polite","Show / look","చూపించండి","choopinchandi"],
   ["verbs","Tell / say","చెప్పండి","cheppandi"],
   ["verbs","Is there? / Do you have?","ఉందా?","undaa?","Frame: <code>noun + undaa?</code>  Try: “change undaa?”.",[{te:"ఉంది",ro:"undi",eng:"yes, there is"},{te:"లేదు",ro:"ledu",eng:"no, none"},{te:"అయిపోయింది",ro:"aipoyindi",eng:"finished / sold out"},{te:"రేపు రండి",ro:"repu randi",eng:"come tomorrow"}]],
   ["verbs","Yes, there is","ఉంది","undi"],
@@ -370,25 +372,25 @@ const P = [
   ["glue","…andi  (politeness suffix)","…అండి","…andi","The magic syllable. Add it to a request to make it respectful: raa → randi, cheppu → cheppandi."],
   ["first","Hello / Greetings","నమస్కారం","namaskaaram"],
   ["first","Thank you","ధన్యవాదాలు","dhanyavaadaalu"],
-  ["first","Sorry / excuse me","క్షమించండి","kshaminchandi"],
+  ["polite","Sorry / excuse me","క్షమించండి","kshaminchandi"],
   ["first","How are you?","ఎలా ఉన్నారు?","elaa unnaaru?",null,[{te:"బాగున్నాను, మీరు?",ro:"baagunnaanu, meeru?",eng:"fine, and you?"},{te:"ఏం లేదు",ro:"em ledu",eng:"nothing much"}]],
   ["first","I'm fine","బాగున్నాను","baagunnaanu"],
   ["first","I don't know Telugu","నాకు తెలుగు రాదు","naaku telugu raadu","Your honest escape hatch — say it and people switch to English or Hindi."],
   ["first","Do you know English?","మీకు ఇంగ్లీష్ వచ్చా?","meeku inglish vacchaa?"],
-  ["first","Please","దయచేసి","dayacheesi"],
-  ["autobase","Straight","నేరుగా","neerugaa"],
-  ["autobase","Left","ఎడమ","edama"],
-  ["autobase","Right","కుడి","kudi"],
+  ["polite","Please","దయచేసి","dayacheesi"],
+  ["ears","Straight","నేరుగా","neerugaa"],
+  ["ears","Left","ఎడమ","edama"],
+  ["ears","Right","కుడి","kudi"],
   ["autobase","Here","ఇక్కడ","ikkada"],
   ["autobase","Stop here","ఇక్కడ ఆపండి","ikkada aapandi"],
-  ["auto","Go by meter","మీటర్ వేయండి","meeter veeyandi",null,[{te:"ఎక్కడికి?",ro:"ekkadiki?",eng:"where to?"},{te:"రాను",ro:"raanu",eng:"I won't come (not going that way)"},{te:"మీటర్ లేదు",ro:"meeter ledu",eng:"no meter"},{te:"ఎక్కువ ఇవ్వండి",ro:"ekkuva ivvandi",eng:"give a bit extra"},{te:"షేరింగ్ ఆ?",ro:"sharing aa?",eng:"shared ride?"}]],
-  ["auto","That's too much","చాలా ఎక్కువ","chaalaa ekkuva"],
+  ["autobase","Go by meter","మీటర్ వేయండి","meeter veeyandi",null,[{te:"ఎక్కడికి?",ro:"ekkadiki?",eng:"where to?"},{te:"రాను",ro:"raanu",eng:"I won't come (not going that way)"},{te:"మీటర్ లేదు",ro:"meeter ledu",eng:"no meter"},{te:"ఎక్కువ ఇవ్వండి",ro:"ekkuva ivvandi",eng:"give a bit extra"},{te:"షేరింగ్ ఆ?",ro:"sharing aa?",eng:"shared ride?"}]],
+  ["autobase","That's too much","చాలా ఎక్కువ","chaalaa ekkuva"],
   ["auto","Is it near?","దగ్గరా?","daggaraa?"],
   ["auto","It's far","దూరం","dooram"],
   ["auto","Wait a minute","ఒక నిమిషం ఆగండి","oka nimisham aagandi"],
   ["auto","Let's go","వెళ్దాం","veldaam"],
   ["auto","Slow down","నెమ్మదిగా","nemmadigaa"],
-  ["auto","I'll get down here","ఇక్కడ దిగుతాను","ikkada digutaanu"],
+  ["autobase","I'll get down here","ఇక్కడ దిగుతాను","ikkada digutaanu"],
   ["shop","Too expensive","చాలా ఖరీదు","chaalaa khareedu"],
   ["shop","Reduce the price","రేటు తగ్గించండి","reetu tagginchandi"],
   ["shop","What's the last price?","చివరి రేటు ఎంత?","chivari reetu enta?"],
@@ -442,31 +444,36 @@ const P = [
   ["num","100","వంద","vanda"],
   ["num","500","ఐదు వందలు","aidu vandalu"],
   ["num","1000","వెయ్యి","veyyi"],
+  ["autobase","Anna, how much to Gachibowli?","అన్నా, గచ్చిబౌలి ఎంత?","anna, Gachibowli enta?","The whole auto negotiation in four words. Swap in any place name, in English."],
+  ["ears","Wait a bit (you'll hear this at every counter)","కొంచెం ఆగండి","konchem aagandi"],
+  ["ears","Not available / finished","అయిపోయింది","aipoyindi","Shops say this constantly. It just means “that one's done”. Point at the next thing."],
 ].map((r,i)=>({id:i,cat:r[0],eng:r[1],te:r[2],ro:r[3],note:r[4]||null,hb:r[5]||null}));
 
 /* ---------------- guided path (day 1 / day 2), keyed by romanization ---------------- */
 const DAY = {
-  "namaskaaram":1,"dhanyavaadaalu":1,"enta?":1,"ekkada?":1,"idi":1,"kaavaali":1,"vaddu":1,"avunu":1,"ledu":1,"naaku telugu raadu":1,
-  "ivvandi":2,"undaa?":2,"saree":2,"chaalu":2,"konchem":2,"…andi":2,"meeku inglish vacchaa?":2,"elaa unnaaru?":2,"neerugaa":2,"edama":2,"kudi":2,"ikkada aapandi":2
+  "anna":1,"akka":1,"idi":1,"enta?":1,"ekkada?":1,"kaavaali":1,"vaddu":1,"undaa?":1,"ledu":1,"saree":1,"ivvandi":1,"idi telugu lo em antaaru?":1,"naaku telugu raadu":1,
+  "…andi":2,"undi":2,"avunu":2,"kaadu":2,"chaalu":2,"konchem":2,"elaa unnaaru?":2,"baagunnaanu":2,"meeku inglish vacchaa?":2,"nenu telugu nerchukuntunnaanu":2,"malli cheppandi":2,"artham kaaledu":2,"ikkada aapandi":2,"meeter veeyandi":2
 };
 const DAYTIP = {
-  day1:{em:"🌱",lbl:"Day 1 · ten words",txt:"With just these you can ask a price, ask where, say what you want, refuse, agree — and bail out to English when stuck. That is a functioning first day in the city."},
-  day2:{em:"🌿",lbl:"Day 2 · twelve more",txt:"Now you can give and receive, soften any request with “andi”, survive an auto, and open a conversation. Day 1 + Day 2 = a 22-word working kit."}
+  day1:{em:"🌱",lbl:"Day 1 · the kit",txt:"Address someone, point, ask price, ask where, want, refuse, check, close — and recruit a teacher. English nouns everywhere. Say three of these to a real person today."},
+  day2:{em:"🌿",lbl:"Day 2 · the upgrade",txt:"Yes/no/enough, the politeness syllable, a greeting exchange, and the phrases that make people slow down and teach you. Day 1 + Day 2 = everything you need to start every conversation."}
 };
 
 /* ---------------- optional romanized Hindi (Base tier), keyed by romanization ---------------- */
 const HI = {
   "kaavaali":"chahiye","vaddu":"nahi chahiye","ivvandi":"do / dijiye","randi":"aao / aaiye","vellandi":"jao / jaiye","aapandi":"roko / rokiye",
-  "choopinchandi":"dikhao / dikhaiye","cheppandi":"batao / bataiye","undaa?":"hai kya?","undi":"hai",
+  "cheppandi":"batao / bataiye","undaa?":"hai kya?","undi":"hai",
   "enta?":"kitna?","ekkada?":"kahaan?","eenti?":"kya?","idi":"yeh","adi":"woh","elaa?":"kaise?",
   "avunu":"haan","kaadu":"nahi","ledu":"nahi hai","saree":"theek hai","chaalu":"bas","konchem":"thoda","…andi":"ji / aap (aadar)",
-  "namaskaaram":"namaste","dhanyavaadaalu":"dhanyavaad / shukriya","kshaminchandi":"maaf kijiye","elaa unnaaru?":"kaise hain?","baagunnaanu":"main theek hoon",
-  "naaku telugu raadu":"mujhe telugu nahi aati","meeku inglish vacchaa?":"aapko english aati hai?","dayacheesi":"kripya / please",
+  "namaskaaram":"namaste","dhanyavaadaalu":"dhanyavaad / shukriya","elaa unnaaru?":"kaise hain?","baagunnaanu":"main theek hoon",
+  "naaku telugu raadu":"mujhe telugu nahi aati","meeku inglish vacchaa?":"aapko english aati hai?",
   "neerugaa":"seedha","edama":"baayein / left","kudi":"daayein / right","ikkada":"yahaan","ikkada aapandi":"yahaan roko",
   "idi telugu lo em antaaru?":"isko telugu mein kya kehte hain?","malli cheppandi":"phir se boliye","nemmadigaa cheppandi":"dheere boliye",
   "artham kaaledu":"samajh nahi aaya","artham ayindi":"samajh gaya","nenu telugu nerchukuntunnaanu":"main telugu seekh raha hoon",
   "naaku telugu konchem vastundi":"mujhe thodi telugu aati hai","idi correct aa?":"yeh sahi hai?",
-  "anna":"bhai / bhaiyya","akka":"didi","bhaiyya":"bhaiyya","uncle / aunty":"uncle / aunty"
+  "anna":"bhai / bhaiyya","akka":"didi","bhaiyya":"bhaiyya","uncle / aunty":"uncle / aunty",
+  "meeter veeyandi":"meter se chalo","chaalaa ekkuva":"bahut zyada","ikkada digutaanu":"main yahaan utarta hoon",
+  "anna, Gachibowli enta?":"bhaiyya, Gachibowli kitna?","konchem aagandi":"thoda rukiye","aipoyindi":"khatam ho gaya"
 };
 
 /* ---------------- word breakdowns, keyed by romanization ---------------- */
@@ -914,7 +921,7 @@ function showWelcome(){
     <div class="w-glyph">తె</div>
     <div class="sh-eyebrow">Survival Telugu · Hyderabad</div>
     <h2 class="w-title">Land in Hyderabad. Start <em>speaking Telugu</em> by the weekend.</h2>
-    <p class="w-sub">Built the way migrant traders actually pick up a city's language — learn the skeleton that makes broken sentences first, then add depth.</p>
+    <p class="w-sub">Built the way migrant traders pick up a city's language: speak broken on day one, keep the nouns English, and let every Telugu speaker around you teach you the rest.</p>
     <div class="w-mhead">The four tricks</div>
     <div class="mgrid">${METHOD.map(m=>`<div class="mcard"><div class="mn">${m.n}</div><h4>${m.h}</h4><p>${m.p}</p></div>`).join("")}</div>
     <button class="w-start" data-wclose>Start learning &rarr;</button>
